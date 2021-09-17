@@ -8,7 +8,7 @@ public class StringUtil {
 		String s = "enere";
 		String s2 = new String("cenere");
 
-		String s6 = " e";
+		String s6 = " \te \n";
 		String s7 = "amb";
 		String s10 = "";
 		System.out.println(trim(s6));
@@ -226,13 +226,13 @@ public class StringUtil {
 
 	public static String trim(String s) {
 		String st = "";
+		int indice = 0;
 		if (s != null) {
-			for(int i = 0; i < s.length(); i++) {
-				if (s.charAt(i) =='\u0020' ) {
-					st = substring(s, i+1, s.length() );
-				} else if(s.charAt(i) > '\u0020') {
-					st = s;
-				}
+			char[] ch = s.toCharArray();
+			for(int i = 0; i < ch.length; i++) {
+				if ((ch[i] != ' ') && (ch[i] != '\t') && (ch[i] != '\n')) {
+					st += ch[i];
+				} 
 			}
 			
 		}

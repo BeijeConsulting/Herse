@@ -8,10 +8,12 @@ public class Yet {
 	Yet() { add(5); }
 	static { add(4); }
 	{ add(6); }
-	static { new Yet(); }
-	static { add(8); }
+	{ new Yet(); }
+	 static{ add(8); }
 	
 	public static void main(String[] args) { 
-		
-	} 
+		new Yet();
+	}
+
+	
 }

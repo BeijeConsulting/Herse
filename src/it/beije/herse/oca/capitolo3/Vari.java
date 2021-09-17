@@ -9,14 +9,17 @@ import java.util.Scanner;
 public class Vari {
 
 	public static void main(String[] args) {
-		stampaData("13/09/2021");
+		//stampaData("13/09/2021");
 		
 		//DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		//LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
 		//String s1 = date.format(f);
 		//stampaData(s1);
+	
 		
 	}
+	
+		
 
 	public static void morra(String a, String b) {
 		String s1 = "carta";
@@ -56,10 +59,7 @@ public class Vari {
 		Scanner s = new Scanner(System.in);
 		System.out.println("inserisci una stringa o più stringhe contenenti operazioni");
 		String st = s.next();
-	
-		 int i = 0;
-		 int num = 0;
-		 boolean isNeg = false;
+		char[] ch = st.toCharArray();
 		    
 		while (!st.equalsIgnoreCase("exit")) {
 			
