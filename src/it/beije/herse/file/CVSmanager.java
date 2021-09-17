@@ -10,6 +10,13 @@ import java.util.List;
 public class CVSmanager {
 	
 /*
+ 
+"NOME";"COGNOME";"TELEFONO";"EMAIL";"NOTE"
+"mario";"rossi";"333333333";"mario@rossi.it";"zio mario"
+"carlo maria";"rossi";"333333334";"carlo@rossi.it";"nonno carlo"
+"giovanni";"rossi";"333333335";"giovanni@rossi.it";"vicino di casa; persona gentile"	
+
+
  * esercizio: aggiungere da parametro le informazioni con cui andare a riorganizzare gli elementi rubrica del primo file
  * dove il primo arg è separatore da utilizzare ed i restanti i nomi delle colonne, SE viene specificata una colonna di valori
  * NON presente nel file iniziale, aggiungere comunque la nuova colonna con valori "vuoti"
@@ -87,5 +94,5 @@ public class CVSmanager {
 		writer.flush();
 		writer.close();
 	}
-
+	
 }
