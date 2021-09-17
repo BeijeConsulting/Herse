@@ -64,12 +64,12 @@ public class CSVmanager {
 		scanner.close();
 		
 		String[] destFileTitle = input.split(" ");
-		
+			
 		FileWriter writer = new FileWriter(destFile);
 		
 		for(int i=1;i<destFileTitle.length;i++) {
 			writer.write(destFileTitle[i].toUpperCase());
-			if(i!=destFileTitle.length-1) writer.write(destFileTitle[0].charAt(0));
+			if(i!=destFileTitle.length-1) writer.write(destFileTitle[0]);
 			else writer.write('\n');
 		}
 		
@@ -79,11 +79,12 @@ public class CSVmanager {
 			boolean newCol = false;
 			for(int i=1;i<destFileTitle.length;i++) {
 				for(int j=0;j<title.length;j++) {
-					// Se ho già la colonna, ricopio i dati
+					// Se ho già la colonna, ricopia i dati + passa alla nuova colonna
 					if(destFileTitle[i].equalsIgnoreCase(title[j])) {
 						newCol = false;
 						writer.write(columns[j]);
-						if(i!=destFileTitle.length-1) writer.write(destFileTitle[0].charAt(0));
+						// se non sono all'ultimo campo, scrivi il separatore
+						if(i!=destFileTitle.length-1) writer.write(destFileTitle[0]);
 						else writer.write('\n');
 						break;
 					}
@@ -91,8 +92,8 @@ public class CSVmanager {
 				}
 				// Se ho una nuova colonna, inserisco un dato di default
 				if(newCol) {
-					writer.write("...");
-					if(i!=destFileTitle.length-1) writer.write(destFileTitle[0].charAt(0));
+					writer.write("   ");
+					if(i!=destFileTitle.length-1) writer.write(destFileTitle[0]);
 					else writer.write('\n');
 				}
 			}
@@ -102,6 +103,18 @@ public class CSVmanager {
 		
 		writer.flush();
 		writer.close();
+	}
+	
+	public void printAllContent(File f) {
+		if(!f.isDirectory()) System.out.println("Not a directory");
+		else {
+			List<String[]> dirList = new ArrayList<>();
+			dirList.add(f.list());
+			for(String[] s : dirList)
+				for(int i=0;i<s.length;i++) {
+					System.out.println(s[i]);
+				}
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
