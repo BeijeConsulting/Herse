@@ -23,7 +23,9 @@ public class ListaFileDirectory {
 		
 	public static void main (String[] args) {
 		
-		//C:\Users\PC-HP\Desktop\vuze
-		getNameDirectory("/Users/PC-HP/Desktop/vuze");
+		if(args.length>0)
+			getNameDirectory(args[0]);
+		else 
+			getNameDirectory("/Users/PC-HP/Desktop/vuze");
 	}
 }
