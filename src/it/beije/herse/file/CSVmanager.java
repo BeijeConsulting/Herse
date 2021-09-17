@@ -105,18 +105,6 @@ public class CSVmanager {
 		writer.close();
 	}
 	
-	public void printAllContent(File f) {
-		if(!f.isDirectory()) System.out.println("Not a directory");
-		else {
-			List<String[]> dirList = new ArrayList<>();
-			dirList.add(f.list());
-			for(String[] s : dirList)
-				for(int i=0;i<s.length;i++) {
-					System.out.println(s[i]);
-				}
-		}
-	}
-	
 	public static void main(String[] args) throws Exception {
 		File f = new File("/temp/file/CSVmanager/info.txt");
 		
