@@ -71,7 +71,7 @@ public class RubricaCSVmia {
 			}
 			
 			contatti.add(contatto);
-			System.out.println();
+		//	System.out.println();
 		}
 		
 		reader.close();
@@ -102,9 +102,9 @@ public class RubricaCSVmia {
 		
 		//readRubricaCSV("/temp/prova.txt", ";");
 		//readRubricaCSV("/temp/prova1.txt", ",");
-		List<Contatto> contatti = readRubricaCSV("/temp/prova.txt", "\t");
-			System.out.println("contatti number: " + contatti.size());
-		writeRubricaCSV("/temp/scrittura.txt", ";", contatti);
+		List<Contatto> contatti = readRubricaCSV("/temp/prova.txt", ";");
+			writeRubricaCSV("/temp/RubricaCSV.txt", "\t", contatti);
+			
 		
 	}
 

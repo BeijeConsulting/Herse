@@ -80,9 +80,8 @@ public class RubricaCSV {
 		
 		//readRubricaCSV("/temp/prova.txt", ";");
 		//readRubricaCSV("/temp/prova1.txt", ",");
-		List<Contatto> contatti = readRubricaCSV("/temp/prova2.txt", "\t");
+		List<Contatto> contatti = readRubricaCSV("/temp/prova.txt", ";");
 		System.out.println("contatti number: " + contatti.size());
-		
 	}
 
 }
