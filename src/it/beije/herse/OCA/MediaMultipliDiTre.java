@@ -1,4 +1,4 @@
-package esarray;
+package it.beije.herse.OCA;
 
 public class MediaMultipliDiTre {
 

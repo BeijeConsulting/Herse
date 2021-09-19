@@ -1,4 +1,4 @@
-package cicli;
+package it.beije.herse.OCA;
 
 	public class Figura {
 	 

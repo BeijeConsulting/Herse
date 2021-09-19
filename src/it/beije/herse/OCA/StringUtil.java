@@ -1,4 +1,4 @@
-package metodistringa;
+package it.beije.herse.OCA;
 
 public class StringUtil {
 	

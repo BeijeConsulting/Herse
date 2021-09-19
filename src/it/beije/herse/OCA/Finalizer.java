@@ -1,4 +1,4 @@
-package finale;
+package it.beije.herse.OCA;
 public class Finalizer{
 	
 	protected void finalize() {

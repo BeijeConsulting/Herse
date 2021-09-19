@@ -1,4 +1,4 @@
-package stringa;
+package it.beije.herse.OCA;
 public class Stringhe{
 	
 	static void SoloVocali(String name){

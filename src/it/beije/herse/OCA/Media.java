@@ -1,4 +1,4 @@
-package esarray;
+package it.beije.herse.OCA;
 
 public class Media {
 		int [] a = {15, 123, 277, 185, 88};

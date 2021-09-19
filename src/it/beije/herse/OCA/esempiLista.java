@@ -1,4 +1,4 @@
-package liste;
+package it.beije.herse.OCA;
 import java.util.*;
 
 public class esempiLista{

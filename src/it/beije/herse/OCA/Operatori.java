@@ -1,4 +1,4 @@
-package operatori;
+package it.beije.herse.OCA;
 
 public class Operatori{
 	
