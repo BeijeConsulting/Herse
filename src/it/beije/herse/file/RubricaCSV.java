@@ -136,7 +136,7 @@ public class RubricaCSV {
 //		System.out.println("contatti number: " + contatti.size());
 		
 		List<Contatto> contatti = new ArrayList<>();
-		contatti.add(new Contatto("Theo", "Capitano", "333", "thecap@gmail.com", ""));
+		contatti.add(new Contatto("Matteo", "Capitano", "333", "thecap@gmail.com", ""));
 		contatti.add(new Contatto("Hugo", "Boss", "444", "boss@gmail.com", ""));
 		
 		writeRubricaCSV(contatti);

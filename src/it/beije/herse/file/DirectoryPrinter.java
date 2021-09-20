@@ -5,7 +5,7 @@ import java.io.FileWriter;
 
 public class DirectoryPrinter {
 	
-	private static String tab = "";
+	private String tab = "";
 	private FileWriter writer;
 
 	public DirectoryPrinter(File output) throws Exception {
@@ -24,7 +24,7 @@ public class DirectoryPrinter {
 				
 				tab += '\t';
 				printAllContent(nextFile);
-				tab = tab.substring(1);
+				tab = tab.substring(0, tab.length()-1);
 			}
 		}
 	}
@@ -42,7 +42,7 @@ public class DirectoryPrinter {
 				
 				tab += '\t';
 				writeAllContent(nextFile);
-				tab = tab.substring(1);
+				tab = tab.substring(0, tab.length()-1);
 			}
 		}
 	}
@@ -52,8 +52,8 @@ public class DirectoryPrinter {
 		File directory = new File("/temp");
 		
 		DirectoryPrinter p = new DirectoryPrinter(output);
-		//p.printAllContent(directory);
-		p.writeAllContent(directory);
+		p.printAllContent(directory);
+		//p.writeAllContent(directory);
 		p.writer.flush();
 		p.writer.close();
 		System.out.println("File creato");
