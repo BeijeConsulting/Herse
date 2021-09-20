@@ -23,7 +23,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class RubricaXML {
+public class RubricaXMLArrayList {
 	
 	public static List<Element> getChildElements(Element element) {
 		List<Element> childElements = new ArrayList<Element>();
@@ -65,6 +65,45 @@ public class RubricaXML {
 		}
 		
 	}
+	
+	public static List<Contatto> readXMLToList() throws ParserConfigurationException, IOException, SAXException {
+		List<Contatto> rubricaList = new ArrayList<Contatto>();
+		File f = new File("/temp/rubrica.xml");
+		System.out.println("exists ? " + f.exists());
+		
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		
+		Document document = documentBuilder.parse(f);
+		
+		Element rubrica = document.getDocumentElement();
+		System.out.println("documentElement:" + rubrica.getTagName());
+		
+		NodeList contatti = rubrica.getElementsByTagName("contatto");
+		System.out.println("num contatti: " + contatti.getLength());
+		Contatto c = new Contatto();
+		Element el = null;
+		for (int i = 0; i < contatti.getLength(); i++) {
+			el = (Element)contatti.item(i);
+			System.out.println("el name:" + el.getTagName());
+			System.out.println("el eta:" + el.getAttribute("eta"));
+			
+			List<Element> riferimenti = getChildElements(el);
+			for (Element r : riferimenti) {
+				c.setNome(r.getAttribute("nome"));
+				c.setCognome(r.getAttribute("cognome"));
+				c.setTelefono(r.getAttribute("telefono"));
+				c.setEmail(r.getAttribute("email"));
+				c.setNote(r.getAttribute("note"));
+				
+				rubricaList.add(c);
+			}
+			
+			System.out.println();
+		}
+		return rubricaList;
+	}
+
 	
 	public static void main(String args[]) throws TransformerConfigurationException, ParserConfigurationException,
 	TransformerException, IOException, SAXException {
@@ -111,7 +150,8 @@ public class RubricaXML {
 		transformer.transform(source, result);
 		transformer.transform(source, syso);
 
-		System.out.println("File saved!");		
+		System.out.println("File saved!");	
+		readXML();
 	}
 
 }
