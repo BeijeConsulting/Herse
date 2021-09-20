@@ -67,7 +67,7 @@ public class RubricaCSV {
 				}
 			}
 			
-			contatti.add(contatto);
+			//contatti.add(contatto);
 			System.out.println();
 		}
 		
