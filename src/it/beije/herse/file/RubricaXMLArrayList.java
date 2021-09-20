@@ -90,20 +90,76 @@ public class RubricaXMLArrayList {
 			
 			List<Element> riferimenti = getChildElements(el);
 			for (Element r : riferimenti) {
-				c.setNome(r.getAttribute("nome"));
-				c.setCognome(r.getAttribute("cognome"));
-				c.setTelefono(r.getAttribute("telefono"));
-				c.setEmail(r.getAttribute("email"));
-				c.setNote(r.getAttribute("note"));
-				
-				rubricaList.add(c);
+				switch (r.getTagName()) {
+				case "nome":
+					c.setNome(r.getTextContent());
+					break;
+				case "cognome":
+					c.setCognome(r.getTextContent());
+					break;
+				case "email":
+					c.setEmail(r.getTextContent());
+					break;
+				case "telefono":
+					c.setTelefono(r.getTextContent());
+					break;
+				case "note":
+					c.setNote(r.getTextContent());
+					break;
+				default:
+					break;
+				}
 			}
-			
-			System.out.println();
+			rubricaList.add(c);
 		}
 		return rubricaList;
 	}
 
+	
+	public static void  writeXMLfromList(List<Contatto> rubricaLista, String pathname) throws ParserConfigurationException, TransformerException{
+		Contatto c = null;
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.newDocument();
+		Element documentElement = document.createElement("contatti");
+		document.appendChild(documentElement);
+		
+		
+		for(int i = 0; i<rubricaLista.size(); i++) {
+			Element contatto1 = document.createElement("contatto");
+			c = rubricaLista.get(i);
+			Element nome = document.createElement("nome");
+			nome.setTextContent(c.getNome());
+			Element cognome = document.createElement("cognome");
+			cognome.setTextContent(c.getCognome());
+			Element telefono = document.createElement("telefono");
+			telefono.setTextContent(c.getTelefono());
+			Element email = document.createElement("email");
+			email.setTextContent(c.getEmail());
+			Element note = document.createElement("note");
+			note.setTextContent(c.getNote());
+			
+			contatto1.appendChild(nome);
+			contatto1.appendChild(cognome);
+			contatto1.appendChild(telefono);
+			documentElement.appendChild(contatto1);
+		}
+		
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		
+		StreamResult result = new StreamResult(new File("/temp/new_rubrica.xml"));
+
+		// Output to console for testing
+		StreamResult syso = new StreamResult(System.out);
+
+		transformer.transform(source, result);
+		transformer.transform(source, syso);
+
+		System.out.println("File saved!");	
+		
+	}
 	
 	public static void main(String args[]) throws TransformerConfigurationException, ParserConfigurationException,
 	TransformerException, IOException, SAXException {
@@ -151,7 +207,10 @@ public class RubricaXMLArrayList {
 		transformer.transform(source, syso);
 
 		System.out.println("File saved!");	
-		readXML();
+	//	readXML();
+		List<Contatto> rubrica = readXMLToList();
+		writeXMLfromList(rubrica, "/temp/list_new_rubrica.xml");
+//		System.out.println(rubrica.get(0).getNome());
 	}
 
 }
