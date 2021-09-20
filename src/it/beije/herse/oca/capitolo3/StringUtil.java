@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class StringUtil {
 
 	public static void main(String[] args) {
-		String s = "enere";
+		String s = "cenerece";
 		String s2 = new String("cenere");
 
-		String s6 = " \te \n";
+		String s6 = "ce";
 		String s7 = "amb";
 		String s10 = "";
-		System.out.println(trim(s6));
+		System.out.println(replace(s, s6, s7));
 	}
 
 
@@ -188,35 +188,26 @@ public class StringUtil {
 		}
 		return sr;
 	}
-//&& substring(s, i, oldChar.length()).equals(oldChar)//	&& j < oldChar.length() //s.charAt(i) == oldChar.charAt(0)
-	// // s.charAt(i) == oldChar.charAt(0)
-	// substring(s, i, s.charAt(oldChar.charAt(oldChar.length()-1)))
+
 
 	public static String replace(String s, String oldChar, String newChar) {
 		boolean contains = contains(s, oldChar);
 		String st = "";
-		// int indice = 0;
-		// enere e am amnamram
+		
 		if (s != null && oldChar != null && newChar != null) {
 			if (contains) {
-				for (int i = 0; i < s.length(); i++) {
+				
+				for(int i = 0;i<s.length();i++) {
+			        i = s.indexOf(oldChar);
+			        System.out.println(i);
+			        if (i == -1) {
+			            break;
+			        }
+			        s = s.substring(0, i) + newChar + s.substring(i + oldChar.length());
+			        System.out.println(s);
+			    }
+			    return s;
 
-					if (substring(s, i, oldChar.length()).equals(oldChar)) {
-						// st = substring(s, i, oldChar.length()) + newChar;
-						// System.out.println("primo passo");
-						st += replace(s, s.charAt(i), newChar.charAt(0)) + substring(newChar, 1, newChar.length());
-						System.out.println(replace(s, s.charAt(i), newChar.charAt(i)));
-						System.out.println(substring(newChar, 1, newChar.length()));
-						// st += substring(s, i, oldChar.length()) + newChar;
-						// for ( int x = 0; x < newChar.length(); x++) {
-
-						// st += substring(newChar, 0, newChar.length());
-						// System.out.println(replace(s, s.charAt(i), newChar.charAt(x)));
-						// System.out.println(substring(newChar, x, newChar.length()));
-						// }
-
-					}
-				}
 			}
 		}
 		System.out.println(st);

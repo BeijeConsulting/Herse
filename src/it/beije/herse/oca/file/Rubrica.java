@@ -12,10 +12,10 @@ public class Rubrica {
 
 	public static void main(String[] args) throws Exception {
 		List<String> titleToFileWritten = new ArrayList<String>();
-		titleToFileWritten.add("eta");
-		titleToFileWritten.add("nome");
+		titleToFileWritten.add("cognome");
 		titleToFileWritten.add("telefono");
 		titleToFileWritten.add("email");
+		titleToFileWritten.add("eta");
 		leggiScriviFile("\";\"", titleToFileWritten);
 
 	}
@@ -55,41 +55,33 @@ public class Rubrica {
 
 		FileWriter writer = new FileWriter(destFile);
 
-		//MAIN_HEADING: for (String element : title) {
-			for (int i = 0; i < titleCsv.size(); i++) {
-				if (titleCsv.get(i).equalsIgnoreCase(title[i])) {
-					writer.write(titleCsv.get(i).toUpperCase());
+		for (int j = 0; j < titleCsv.size(); j++) {
+			for (int i = 0; i < title.length; i++) {
+				if (titleCsv.get(j).equalsIgnoreCase(title[i])) {
+					writer.write(titleCsv.get(j).toUpperCase());
 					writer.write('\t');
-					if (i == titleCsv.size() - 1) {
-						writer.write('\n');
-					}
-					
-				} else {
-					writer.write(titleCsv.get(i).toUpperCase());
-					writer.write('\t');
-					if (i == titleCsv.size() - 1) {
-						writer.write('\n');
-					}
-//					for (String[] columns : rows) {
-//						writer.write(columns[i] = "");
-//						writer.write('\t');
-//						if (i == titleCsv.size() - 1) {
-//							writer.write('\n');
-//						}
-//					}
-
-				}
-				for (String[] columns : rows) {
-
-					writer.write(columns[i]);
-					writer.write('\t');
-					if (columns[i] == columns[3]) {
-						writer.write('\n');
-					}
-				}
-
+				} 
 			}
-		//}
+			if(!titleCsv.contains(title[j])) {
+				writer.write(titleCsv.get(j).toUpperCase());
+				writer.write('\t');
+			}
+			
+
+		}
+		writer.write('\n');
+		for (String[] columns : rows) {
+			writer.write(columns[1]);
+			writer.write('\t');
+			writer.write(columns[0]);
+			writer.write('\t');
+			writer.write(columns[2]);
+			writer.write('\t');
+			writer.write(columns[3]);
+			writer.write('\n');
+		}
+
+
 		writer.flush();
 		writer.close();
 	}
