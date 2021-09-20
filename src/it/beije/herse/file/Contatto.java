@@ -42,5 +42,22 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	@Override
+	public String toString() {
+		return "Contatto [nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email=" + email
+				+ ", note=" + note + "]";
+	}
+	
+	public Contatto() {}
+	
+	public Contatto(String nome, String cognome, String telefono, String email, String note) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+		this.note = note;
+	}
+	
+	
 
 }
