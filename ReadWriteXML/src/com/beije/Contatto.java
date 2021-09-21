@@ -8,6 +8,26 @@ public class Contatto {
     private String email;
     private String note;
 
+    public Contatto(){}
+    public Contatto(String nome, String cognome, String telefono, String email, String note){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.telefono = telefono;
+        this.email = email;
+        this.note = note;
+    }
+
+    public void show(){
+        System.out.println(this.nome);
+        System.out.println(this.cognome);
+        System.out.println(this.telefono);
+        System.out.println(this.email);
+        System.out.println(this.note);
+    }
+
+
+
+
     public String getNome() {
         return nome;
     }
@@ -42,5 +62,4 @@ public class Contatto {
     public void setNote(String note) {
         this.note = note;
     }
-
 }
