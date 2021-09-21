@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Rubrica {
@@ -57,31 +58,34 @@ public class Rubrica {
 
 		for (int j = 0; j < titleCsv.size(); j++) {
 			for (int i = 0; i < title.length; i++) {
-				if (titleCsv.get(j).equalsIgnoreCase(title[i])) {
+				if (titleCsv.get(j).equalsIgnoreCase(title[i]) || !titleCsv.contains(title[i])) {
 					writer.write(titleCsv.get(j).toUpperCase());
 					writer.write('\t');
-				} 
+					break;
+				}
+
 			}
-			if(!titleCsv.contains(title[j])) {
-				writer.write(titleCsv.get(j).toUpperCase());
-				writer.write('\t');
-			}
-			
 
 		}
 		writer.write('\n');
 		for (String[] columns : rows) {
-			writer.write(columns[1]);
-			writer.write('\t');
-			writer.write(columns[0]);
-			writer.write('\t');
-			writer.write(columns[2]);
-			writer.write('\t');
-			writer.write(columns[3]);
-			writer.write('\n');
+
+			try {
+				writer.write(columns[Arrays.asList(title).indexOf(titleCsv.get(0))]);
+				writer.write('\t');
+				writer.write(columns[Arrays.asList(title).indexOf(titleCsv.get(1))]);
+				writer.write('\t');
+				writer.write(columns[Arrays.asList(title).indexOf(titleCsv.get(2))]);
+				writer.write('\t');
+				writer.write(columns[Arrays.asList(title).indexOf(titleCsv.get(3))]);
+				writer.write('\n');
+			} catch(IndexOutOfBoundsException e) {
+				writer.write("-");
+				writer.write('\n');
+			}
+			
 		}
-
-
+		
 		writer.flush();
 		writer.close();
 	}

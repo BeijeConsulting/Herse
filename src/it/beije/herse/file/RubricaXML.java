@@ -37,6 +37,7 @@ public class RubricaXML {
 	}
 
 	public static void readXML() throws ParserConfigurationException, IOException, SAXException {
+		
 		File f = new File("C://Users//Account//Desktop/esercizi/file/rubrica.xml");
 		System.out.println("exists ? " + f.exists());
 
@@ -80,7 +81,7 @@ public class RubricaXML {
 
 	public static void main(String args[]) throws ParserConfigurationException, TransformerException {
 		//readXML();
-		writeXml();
+		//writeXml();
 		
 	}
 	
@@ -177,5 +178,7 @@ public class RubricaXML {
 
 		System.out.println("File saved!");
 	}
+	
+	
 
 }
