@@ -81,9 +81,11 @@ public class RubricaCSVmia {
 	
 	public static void writeRubricaCSV(String pathFile, String separatorChar, List<Contatto> contatti) throws IOException {
 		File f = new File(pathFile);
-		FileWriter writer = new FileWriter(f);
+		FileWriter writer = new FileWriter(f, f.exists());
+		if(!f.exists()) {
 		writer.write("NOME" + separatorChar + "COGNOME" + separatorChar + "TELEFONO" + separatorChar);
 		writer.write("EMAIL" + separatorChar + "NOTE\n");
+		}
 		Contatto contatto = null;
 		for(int i = 0; i<contatti.size(); i++) {
 			contatto = contatti.get(i);
@@ -103,7 +105,7 @@ public class RubricaCSVmia {
 		//readRubricaCSV("/temp/prova.txt", ";");
 		//readRubricaCSV("/temp/prova1.txt", ",");
 		List<Contatto> contatti = readRubricaCSV("/temp/prova.txt", ";");
-			writeRubricaCSV("/temp/RubricaCSV.txt", "\t", contatti);
+			writeRubricaCSV("/temp/RubricaCSV.csv", "\t", contatti);
 			
 		
 	}

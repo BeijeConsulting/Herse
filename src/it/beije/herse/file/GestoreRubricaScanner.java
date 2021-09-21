@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 
 
-public class RubricaTastiera {
+public class GestoreRubricaScanner {
 	
 //	static String inputScanner() {
 //		Scanner sc = new Scanner(System.in);

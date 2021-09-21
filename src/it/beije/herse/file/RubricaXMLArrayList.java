@@ -81,13 +81,13 @@ public class RubricaXMLArrayList {
 		
 		NodeList contatti = rubrica.getElementsByTagName("contatto");
 		System.out.println("num contatti: " + contatti.getLength());
-		Contatto c = new Contatto();
+		
 		Element el = null;
 		for (int i = 0; i < contatti.getLength(); i++) {
 			el = (Element)contatti.item(i);
 			System.out.println("el name:" + el.getTagName());
 			System.out.println("el eta:" + el.getAttribute("eta"));
-			
+			Contatto c = new Contatto();
 			List<Element> riferimenti = getChildElements(el);
 			for (Element r : riferimenti) {
 				switch (r.getTagName()) {
@@ -110,7 +110,14 @@ public class RubricaXMLArrayList {
 					break;
 				}
 			}
+			if(c.getNome()==null) c.setNome("");
+			if(c.getCognome()==null) c.setCognome("");
+			if(c.getEmail()==null) c.setEmail("");
+			if(c.getNote()==null) c.setNote("");
+			if(c.getTelefono()==null) c.setTelefono("");
+			
 			rubricaList.add(c);
+
 		}
 		return rubricaList;
 	}
@@ -149,7 +156,7 @@ public class RubricaXMLArrayList {
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(document);
 		
-		StreamResult result = new StreamResult(new File("/temp/new_rubrica.xml"));
+		StreamResult result = new StreamResult(new File(pathname));
 
 		// Output to console for testing
 		StreamResult syso = new StreamResult(System.out);
@@ -159,6 +166,56 @@ public class RubricaXMLArrayList {
 
 		System.out.println("File saved!");	
 		
+	}
+	
+	
+	static void writeXMLifExist(List<Contatto> contatti, String path) throws ParserConfigurationException, TransformerException, SAXException, IOException {
+		File f = new File(path);
+		if(f.exists()) {
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			
+			Document document = documentBuilder.parse(f);
+			
+			Element rubrica = document.getDocumentElement();
+			Contatto c = null;
+			for(int i = 0; i<contatti.size(); i++) {
+				Element contatto1 = document.createElement("contatto");
+				c = contatti.get(i);
+				Element nome = document.createElement("nome");
+				nome.setTextContent(c.getNome());
+				Element cognome = document.createElement("cognome");
+				cognome.setTextContent(c.getCognome());
+				Element telefono = document.createElement("telefono");
+				telefono.setTextContent(c.getTelefono());
+				Element email = document.createElement("email");
+				email.setTextContent(c.getEmail());
+				Element note = document.createElement("note");
+				note.setTextContent(c.getNote());
+				
+				contatto1.appendChild(nome);
+				contatto1.appendChild(cognome);
+				contatto1.appendChild(telefono);
+				rubrica.appendChild(contatto1);
+			}
+			
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(document);
+			
+			StreamResult result = new StreamResult(new File(path));
+
+			// Output to console for testing
+			StreamResult syso = new StreamResult(System.out);
+
+			transformer.transform(source, result);
+			transformer.transform(source, syso);
+
+			System.out.println("File saved!");	
+			
+		}
+		else
+			writeXMLfromList(contatti, path);
 	}
 	
 	public static void main(String args[]) throws TransformerConfigurationException, ParserConfigurationException,
@@ -209,8 +266,11 @@ public class RubricaXMLArrayList {
 		System.out.println("File saved!");	
 	//	readXML();
 		List<Contatto> rubrica = readXMLToList();
-		writeXMLfromList(rubrica, "/temp/list_new_rubrica.xml");
+		System.out.println(rubrica.get(1).getNote());
+//		writeXMLfromList(rubrica, "/temp/list_new_rubrica.xml");
 //		System.out.println(rubrica.get(0).getNome());
+		
+		writeXMLifExist(rubrica, "/temp/list_new_rubrica.xml" );
 	}
 
 }
