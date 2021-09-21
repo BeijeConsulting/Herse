@@ -1,4 +1,4 @@
-package it.beije.herse.file;
+package it.beije.herse.file.csv;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
