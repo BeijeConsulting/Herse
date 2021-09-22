@@ -15,10 +15,12 @@ public class PhoneContactsCSV {
 	public static List<Contatto> readRubricaCSV(String pathFile, String separatorChar) {
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
+		BufferedReader reader = null;
+		
 		try {
 			FileReader fileReader = new FileReader(pathFile);
 			
-			BufferedReader reader = new BufferedReader(fileReader);
+			reader = new BufferedReader(fileReader);
 			String row = reader.readLine();
 			String separator1 = new StringBuilder("\'").append(separatorChar).append('\'').toString();	
 			String separator2 = new StringBuilder("\"").append(separatorChar).append('\"').toString();
@@ -77,11 +79,17 @@ public class PhoneContactsCSV {
 				System.out.println();
 			}
 			
-			reader.close();
 		}
 		catch(IOException e){
 			e.printStackTrace();
 			contatti.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
+		}
+		finally {
+			try {
+				reader.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return contatti;
@@ -89,9 +97,12 @@ public class PhoneContactsCSV {
 	
 	public static void writeRubricaCSV(List<Contatto> contatti, String pathFile, String separator) {
 		File destFile = new File(pathFile);
-		Boolean fileExists = destFile.exists();		
+		Boolean fileExists = destFile.exists();	
+		
+		FileWriter writer = null;
+		
 		try {
-			FileWriter writer = new FileWriter(destFile, fileExists);
+			writer = new FileWriter(destFile, fileExists);
 			
 			String[] rubricaTitle = {"NOME", "COGNOME", "TELEFONO", "EMAIL", "NOTE"};
 			
@@ -127,14 +138,20 @@ public class PhoneContactsCSV {
 					else writer.write("\"\n");	
 				}
 			}
-			writer.flush();
-			writer.close();
 			
 			//System.out.println("File creato");
 		}
 		catch (Exception e){
 			e.printStackTrace();
-		}		
+		}
+		finally {
+			try {
+				writer.flush();
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
