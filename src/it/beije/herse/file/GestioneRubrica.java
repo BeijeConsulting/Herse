@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +32,22 @@ public class GestioneRubrica {
 
 	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 
-		List<Contatto> contatti = loadRubricaXml("C://Users//Account//Desktop/esercizi/file/rubrica.xml");
-		System.out.println(contatti);
-		writeRubricaXML(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
-		loadRubricaFromCSV("C://Users//Account//Desktop/esercizi/file/prova.txt", ";");
-		addRubricaInFileXml(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
-		writeRubricaCSV(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.csv", ";");
+//		List<Contatto> contatti = loadRubricaXml("C://Users//Account//Desktop/esercizi/file/rubrica.xml");
+//		System.out.println(contatti);
+//		writeRubricaXML(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
+//		loadRubricaFromCSV("C://Users//Account//Desktop/esercizi/file/prova.txt", ";");
+//		addRubricaInFileXml(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
+//		writeRubricaCSV(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.csv", ";");
+//		Contatto contatto1 = new Contatto("Roberta", "Bianchi", "423903", "rb@yahoo.it", "contatto bianchi");
+//		try {
+//			insertContattoInDb(contatto1);
+//			//readContattoFromDb();
+//		} catch (ClassNotFoundException | SQLException e) {	
+//			e.printStackTrace();
+//		}
+		Contatto contatto = new Contatto("mattia","pistacchio","42789421","gs@gmail.com","email esistente");
+	
+	
 	}
 
 
@@ -211,7 +226,7 @@ public class GestioneRubrica {
 			DOMSource source = new DOMSource(document);
 			
 			StreamResult result = new StreamResult(new File(path));
-			// Output to console for testing
+			
 			StreamResult syso = new StreamResult(System.out);
 			transformer.transform(source, result);
 			transformer.transform(source, syso);
@@ -239,7 +254,7 @@ public class GestioneRubrica {
 		} else {
 			separator = separatorChar;
 		}
-		System.out.println("separator: " + separator);
+		//System.out.println("separator: " + separator);
 		
 		String[] title = row.split(separator);
 		int last = title.length - 1;
@@ -253,7 +268,7 @@ public class GestioneRubrica {
 		String[] cols = null;
 		while (reader.ready()) {
 			row = reader.readLine();
-			System.out.println(row);
+			//System.out.println(row);
 			
 			cols = row.split(separator);
 			if (separator.length() > 1) {
@@ -327,5 +342,92 @@ public class GestioneRubrica {
 		writer.flush();
 		writer.close();
 	}
+	
+	public static boolean cercaContattoCSV(String pathFile, String separatorChar, Contatto c) throws IOException {
+		boolean isFound = false;
+		List<Contatto> contatti = loadRubricaFromCSV(pathFile, separatorChar);
+		for(Contatto cont1 : contatti) {
+			System.out.println(cont1);
+		}
+		for (Contatto con : contatti) {
+			if(c.getNome().equals(con.getNome()) && c.getCognome().equals(con.getCognome()) && c.getTelefono().equals(con.getTelefono()) && c.getEmail().equals(con.getEmail()) && c.getNote().equals(con.getNote())) {
+				isFound = true;
+				break;
+			}
+		}
+		
+		return isFound;
+	}
+	
+	
+	public static boolean insertContattoInDb(Contatto c) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "Collura1");
+		
+		System.out.println("connection open ? " + !connection.isClosed());
+
+		Statement statement = connection.createStatement();
+		
+		boolean isInserted = false;
+		
+		String nome = c.getNome();
+		String cognome = c.getCognome();
+		String telefono = c.getTelefono();
+		String email = c.getEmail();
+		String note = c.getNote();
+		
+		int numInsert = 0;
+		numInsert= statement.executeUpdate("INSERT INTO rubrica (cognome, nome, telefono, email, note) VALUES ('" + nome + "', '" + cognome + "', '" + telefono + "', '" + email + "', '" + note + "')");
+		
+		ResultSet rs = statement.getResultSet();
+		
+		if(numInsert > 0) {
+			isInserted = true;
+		}
+		
+		return true;
+	}
+	
+	public static List<Contatto> readContattoFromDb() throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "Collura1");
+		
+		System.out.println("connection open ? " + !connection.isClosed());
+		
+		Statement statement = connection.createStatement();
+		
+		ResultSet rs = statement.executeQuery("SELECT * FROM rubrica");
+		
+		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		
+		while (rs.next()) {
+			Contatto c = new Contatto();
+			System.out.println("id : " + rs.getInt("id"));
+			System.out.println("nome : " + rs.getString("nome"));
+			c.setNome(rs.getString("nome"));
+			System.out.println("cognome : " + rs.getString("cognome"));
+			c.setCognome(rs.getString("cognome"));
+			System.out.println("telefono : " + rs.getString("telefono"));
+			c.setTelefono(rs.getString("telefono"));
+			System.out.println("email : " + rs.getString("email"));
+			c.setEmail(rs.getString("email"));
+			System.out.println("note : " + rs.getString("note"));
+			c.setNote(rs.getString("note"));
+			System.out.println();
+			
+			listaContatti.add(c);
+		}
+		
+		rs.close();
+		statement.close();
+		connection.close();
+		
+		for(Contatto ct : listaContatti) {
+			System.out.println("contatto lista"+ct);
+		}
+		return listaContatti;
+	}
+	
+	
 	
 }

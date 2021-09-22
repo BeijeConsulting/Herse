@@ -11,7 +11,7 @@ public class RubricaJDBC {
 	public static Connection openConnection() throws ClassNotFoundException, SQLException {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "beije");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "Collura1");
 		 
 	}
 
@@ -62,11 +62,12 @@ public class RubricaJDBC {
 				statement.close();
 				connection.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				e.getMessage();
 			}
 		}
 
 
 	}
 
+	
 }
