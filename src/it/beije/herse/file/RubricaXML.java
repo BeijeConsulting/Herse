@@ -107,11 +107,19 @@ public class RubricaXML {
 		Element contatto1 = document.createElement("contatto");
 		contatto1.setAttribute("eta", "50");
 		Element nome1 = document.createElement("nome");
+
 		nome1.setTextContent("Mario");
 		c1.setNome(nome1.getTextContent());
+
+		nome1.setTextContent("Pippo");
+
 		Element cognome1 = document.createElement("cognome");
+
 		cognome1.setTextContent("Rossi");
 		c1.setCognome(cognome1.getTextContent());
+
+		cognome1.setTextContent("rossi");
+
 		Element telefono1 = document.createElement("telefono");
 		telefono1.setTextContent("3331234567");
 		c1.setTelefono(telefono1.getTextContent());
