@@ -10,7 +10,7 @@ import java.util.List;
 
 import it.beije.herse.file.Contatto;
 
-public class RubricaCSV {
+public class PhoneContactsCSV {
 
 	public static List<Contatto> readRubricaCSV(String pathFile, String separatorChar) {
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -81,6 +81,7 @@ public class RubricaCSV {
 		}
 		catch(IOException e){
 			e.printStackTrace();
+			contatti.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		}
 		
 		return contatti;
