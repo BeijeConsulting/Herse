@@ -1,12 +1,9 @@
 package it.beije.herse.file;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.crypto.dsig.TransformException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,7 +16,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -36,7 +32,7 @@ public class RubricaXML {
 	}
 
 	public static void readXML() throws ParserConfigurationException, IOException, SAXException {
-		File f = new File("/temp/rubrica.xml");
+		File f = new File("/Users/Dinamite/Desktop/rubrica.xml");
 		System.out.println("exists ? " + f.exists());
 		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -103,7 +99,7 @@ public class RubricaXML {
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(document);
 		
-		StreamResult result = new StreamResult(new File("/temp/new_rubrica.xml"));
+		StreamResult result = new StreamResult(new File("/Users/Dinamite/Desktop/rubrica.xml"));
 
 		// Output to console for testing
 		StreamResult syso = new StreamResult(System.out);
