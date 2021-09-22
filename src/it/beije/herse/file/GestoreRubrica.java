@@ -14,11 +14,15 @@ import java.util.List;
  */
 
 public class GestoreRubrica {
+	
 
 	public static void main(String[] args) {
 		List<Contatto> rubrica = new  ArrayList<Contatto>();
+		
+		Contatto c = null; 
+		
 		if(args[0].equals("cerca")) {
-			
+		//	c = cerca(args[1], args[2]);
 		}
 		
 
