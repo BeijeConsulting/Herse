@@ -27,7 +27,7 @@ public class CVSmanager {
  */
 
 	public static void main(String[] args) throws Exception {
-		File f = new File("/temp/prova.txt");
+		File f = new File("C:\\Users\\nicol\\Desktop\\Beije\\rubrica.txt");
 		System.out.println("exists ? " + f.exists());
 		
 		FileReader fileReader = new FileReader(f);//new FileReader("/temp/prova.txt");

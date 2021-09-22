@@ -32,6 +32,7 @@ public class RubricaCSV {
 			title[last] = title[last].substring(0, title[last].length()-1);
 		}
 		
+		/**/
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		Contatto contatto = null;
 		String[] cols = null;
@@ -70,6 +71,10 @@ public class RubricaCSV {
 			contatti.add(contatto);
 			System.out.println();
 		}
+		
+		/*Dato un array di conatti come parametro scriverli su un file csv*/
+		
+		/*Creaere una piccola U.I. per far interagire l'utente con la rubrica*/
 		
 		reader.close();
 		
