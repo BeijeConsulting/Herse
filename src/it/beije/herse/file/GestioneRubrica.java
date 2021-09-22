@@ -38,13 +38,13 @@ public class GestioneRubrica {
 //		loadRubricaFromCSV("C://Users//Account//Desktop/esercizi/file/prova.txt", ";");
 //		addRubricaInFileXml(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
 //		writeRubricaCSV(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.csv", ";");
-//		Contatto contatto1 = new Contatto("Roberta", "Bianchi", "423903", "rb@yahoo.it", "contatto bianchi");
-//		try {
-//			insertContattoInDb(contatto1);
-//			//readContattoFromDb();
-//		} catch (ClassNotFoundException | SQLException e) {	
-//			e.printStackTrace();
-//		}
+		Contatto contatto1 = new Contatto("Roberta", "Bianchi", "423903", "rb@yahoo.it", "contatto bianchi");
+		try {
+			insertContattoInDb(contatto1);
+			//readContattoFromDb();
+		} catch (ClassNotFoundException | SQLException e) {	
+			e.printStackTrace();
+		}
 		Contatto contatto = new Contatto("mattia","pistacchio","42789421","gs@gmail.com","email esistente");
 	
 	
