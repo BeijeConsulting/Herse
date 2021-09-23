@@ -74,7 +74,6 @@ public class RubricaJDBCloadstore {
 
 		Connection connection = null;
 		Statement statement = null;
-		
 		try {
 			connection = openConnection();
 			
@@ -89,8 +88,14 @@ public class RubricaJDBCloadstore {
 			String email = c.getEmail();
 			String telefono = c.getTelefono();
 			String note = c.getNote();
-			 statement.executeUpdate("INSERT INTO rubrica (nome, cognome, telefono, email, note) VALUES ('" + nome + "','"  + cognome +
-					 											"','" + telefono +  "','" + email + "','" + note + "')" ); 
+			
+			StringBuffer sb = new StringBuffer("").append(nome).append("','").append(cognome).append("','").append(telefono).append("','")
+														.append(telefono).append("','").append(note).append("')");
+			String s = sb.toString();
+			statement.executeUpdate("INSERT INTO rubrica (nome, cognome, telefono, email, note) VALUES ('" + s);
+			
+//			statement.executeUpdate("INSERT INTO rubrica (nome, cognome, telefono, email, note) VALUES ('" + nome + "','"  + cognome +
+//					 											"','" + telefono +  "','" + email + "','" + note + "')" ); 
 			}
 			
 		}catch (ClassNotFoundException cnfEx) {
