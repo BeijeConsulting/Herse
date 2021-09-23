@@ -1,4 +1,5 @@
-package it.beije.herse.file;
+package it.beije.herse.mioDb;
+import it.beije.herse.file.Contatto;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,16 +26,6 @@ import org.xml.sax.SAXException;
 
 public class GestioneRubrica {
 
-	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException {
-
-		List<Contatto> contatti = loadRubricaXml("C://Users//Account//Desktop/esercizi/file/rubrica.xml");
-		System.out.println(contatti);
-		writeRubricaXML(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
-		loadRubricaFromCSV("C://Users//Account//Desktop/esercizi/file/prova.txt", ";");
-		addRubricaInFileXml(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.xml");
-		writeRubricaCSV(contatti, "C://Users//Account//Desktop/esercizi/file/new_rubrica.csv", ";");
-	}
-
 
 	public static List<Element> getChildElements(Element element) {
 		List<Element> childElements = new ArrayList<Element>();
@@ -46,8 +37,8 @@ public class GestioneRubrica {
 		return childElements;
 	}
 
-	public static List<Contatto> loadRubricaXml(String path)
-			throws ParserConfigurationException, IOException, SAXException {
+	public static List<Contatto> loadRubricaXml(String path) throws ParserConfigurationException, IOException, SAXException {
+		
 		File f = new File(path);
 		System.out.println("exists ? " + f.exists());
 
@@ -177,6 +168,7 @@ public class GestioneRubrica {
 	
 	
 	static void addRubricaInFileXml(List<Contatto> contatti, String path) throws ParserConfigurationException, TransformerException, SAXException, IOException {
+		
 		File f = new File(path);
 		if(f.exists()) {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -225,6 +217,7 @@ public class GestioneRubrica {
 	
 	
 	public static List<Contatto> loadRubricaFromCSV(String pathFile, String separatorChar) throws IOException {
+		
 		FileReader fileReader = new FileReader(pathFile);
 		
 		BufferedReader reader = new BufferedReader(fileReader);
@@ -239,7 +232,6 @@ public class GestioneRubrica {
 		} else {
 			separator = separatorChar;
 		}
-		System.out.println("separator: " + separator);
 		
 		String[] title = row.split(separator);
 		int last = title.length - 1;
@@ -253,7 +245,6 @@ public class GestioneRubrica {
 		String[] cols = null;
 		while (reader.ready()) {
 			row = reader.readLine();
-			System.out.println(row);
 			
 			cols = row.split(separator);
 			if (separator.length() > 1) {
@@ -294,6 +285,7 @@ public class GestioneRubrica {
 	
 	
 	public static void writeRubricaCSV(List<Contatto> contatti, String pathFile, String separator) throws IOException {
+		
 		File destFile = new File(pathFile);
 		System.out.println("destFile exists ? " + destFile.exists());
 
@@ -326,6 +318,17 @@ public class GestioneRubrica {
 		
 		writer.flush();
 		writer.close();
+	}
+	
+	
+	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+
+		List<Contatto> contatti = loadRubricaXml("/tmp/rubrica.xml");
+		System.out.println(contatti);
+		writeRubricaXML(contatti, "private/tmp/new_rubrica.xml");
+		loadRubricaFromCSV("private/tmp/rubrica.txt", ";");
+		addRubricaInFileXml(contatti, "private/tmp/rubrica.txt");
+		writeRubricaCSV(contatti, "private/tmp/new_rubrica.txt", ";");
 	}
 	
 }
