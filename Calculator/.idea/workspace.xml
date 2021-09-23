@@ -4,7 +4,69 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="beb81f47-5652-491a-b815-93b33992083b" name="Changes" comment="" />
+    <list default="true" id="beb81f47-5652-491a-b815-93b33992083b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/libraries/mysql_connector_java_8_0_15.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/ReadWriteDB.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/db/RubricaJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/CVSmanager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/Contatto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/RubricaCSV.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/RubricaXML.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/oca/Runner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteMain" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaJDBC/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV1(CSV_XML)/ReadWriteXML.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/csv-plugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/description.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/libraries/mysql_connector_java_8_0_15.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/project-template.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/ReadWriteXML.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/com/beije/Contatto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/com/beije/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/com/beije/Rubrica.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/db/DataBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/db/RubricaJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/files/Rubrica.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/files/Rubrica.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/files/RubricaWrite.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../RubricaV2(mySql_DB)/src/files/RubricaWrite.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Herse" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/csv-plugin.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/project-template.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/ReadWriteXML.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/out/production/ReadWriteXML/files/Rubrica.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/out/production/ReadWriteXML/files/Rubrica.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/out/production/ReadWriteXML/files/RubricaWrite.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/out/production/ReadWriteXML/files/RubricaWrite.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/com/beije/Contatto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/com/beije/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/com/beije/Rubrica.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/files/Rubrica.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/files/Rubrica.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/files/RubricaWrite.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReadWriteXML/src/files/RubricaWrite.xml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +79,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1xuOVPcUfm649my1wzFGNKVkq73" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
@@ -78,7 +144,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/BeijeConsulting/Herse" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">

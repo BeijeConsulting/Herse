@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a807f9ef-1ed3-4ce1-9e66-f018802688ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/db/RubricaJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/CVSmanager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/Contatto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/RubricaCSV.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/file/RubricaXML.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteDB/src/it/beije/herse/oca/Runner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReadWriteMain" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Herse" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1yUlTI1sovO3uqNA2Y87S6ygW2X" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ReadWriteDB" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.beije.RubricaJDBC" />
+      <module name="RubricaJDBC" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a807f9ef-1ed3-4ce1-9e66-f018802688ae" name="Changes" comment="" />
+      <created>1632314056097</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1632314056097</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/RubricaJDBC$Unnamed.ic" NAME="Unnamed Coverage Results" MODIFIED="1632315193423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
