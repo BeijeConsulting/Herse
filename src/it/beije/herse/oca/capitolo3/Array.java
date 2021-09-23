@@ -3,9 +3,14 @@ package it.beije.herse.oca.capitolo3;
 import java.util.ArrayList;
 
 public class Array {
+	
+	
+	
 	public static void main(String[] args) {
 		int[] numbers2 = new int[]{12, 12, 13, 21, 12, 1, 1};
 		System.out.println("il numero ricorsivo è: " + mostRecurrent(numbers2));
+		
+		
 		/*
 		int[] numbers = {1, 76, 830, 102, 5, 3};
 		
