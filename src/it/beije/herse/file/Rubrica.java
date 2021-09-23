@@ -117,7 +117,6 @@ public class Rubrica {
 
 	}
 
-
 	public void print(List<Contatto> list) {
 
 		for(Contatto c : list) {
@@ -133,23 +132,51 @@ public class Rubrica {
 	}
 
 	public void writeRubricaCSV(List<Contatto> list, String pathFile, String separator) throws IOException {
+		
+		FileWriter fw;
+		
+		if(!new File(pathFile).exists()) {
 
-		FileWriter fw = new FileWriter(pathFile);
+			fw = new FileWriter(pathFile);
 
-		fw.write("\"COGNOME" + separator + "NOME" + separator + "TELEFONO" + separator + "EMAIL" + separator + "NOTE" + "\"\n");
+			fw.write("\"COGNOME" + separator + "NOME" + separator + "TELEFONO" + separator + "EMAIL" + separator + "NOTE" + "\"\n");
 
-		for(Contatto c : list) {
-			String s = "\"" + c.getCognome() + separator + c.getNome() + separator + c.getTelefono() + separator + c.getEmail() + separator + c.getNote() + "\"\n";
-			fw.write(s);
+			for(Contatto c : list) {
+				
+				String s = "\"" + c.getCognome() + separator + c.getNome() + separator + c.getTelefono() + separator + c.getEmail() + separator + c.getNote() + "\"\n";
+				fw.write(s);
+				
+			}
+
+		} else {
+			
+			fw = new FileWriter(pathFile,true);
+			
+			for(Contatto c : list) {
+				
+				String s = "\"" + c.getCognome() + separator + c.getNome() + separator + c.getTelefono() + separator + c.getEmail() + separator + c.getNote() + "\"\n";
+				fw.write(s);
+				
+			}
+			
 		}
-
+		
 		fw.flush();
 		fw.close();
 
 	}
 
-	public void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, TransformerException {
+	public void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, TransformerException, SAXException, IOException {
 
+		if(new File(pathFile).exists()) {
+			
+			List<Contatto> oldContatti = loadRubricaFromXML(pathFile);
+			
+			for(int i = oldContatti.size()-1; i >= 0; i--)
+				contatti.add(0, oldContatti.get(i));
+			
+		}	
+		
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
@@ -190,7 +217,7 @@ public class Rubrica {
 		DOMSource source = new DOMSource(doc);
 
 		StreamResult result = new StreamResult(new File(pathFile));
-		
+
 		transformer.transform(source, result);
 
 	}
@@ -202,11 +229,11 @@ public class Rubrica {
 
 		Rubrica r = new Rubrica();
 
-		list = r.loadRubricaFromCSV("\\Users\\savin\\Desktop\\fileTest\\rubrica.csv", "\";\"");
+		list = r.loadRubricaFromCSV("\\Users\\savin\\Desktop\\fileTest\\rubrica.csv","\";\"");
 
 		r.print(list);
 
-		r.writeRubricaXML(list, "\\Users\\savin\\Desktop\\fileTest\\newRubricaCSV.xml");
+		r.writeRubricaXML(list, "\\Users\\savin\\Desktop\\fileTest\\newProvaRubricaXML.xml");
 
 	}
 
