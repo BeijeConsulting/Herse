@@ -2,6 +2,7 @@ package it.beije.herse.db;
 
 import it.beije.herse.file.RubricaFile;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
