@@ -15,8 +15,13 @@ public class Vari {
 		//LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
 		//String s1 = date.format(f);
 		//stampaData(s1);
-	
+		//prova(args[0]);
 		
+		
+	}
+	
+	public static void prova(String s) {
+		System.out.println(5);
 	}
 	
 		
