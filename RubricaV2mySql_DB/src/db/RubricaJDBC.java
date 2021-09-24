@@ -13,6 +13,11 @@ public class RubricaJDBC {
 
 	public static void main(String[] args)  {
 
+		for(int i=40; i<81;i++){
+			System.out.println(i);
+		}
+
+
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rs = null;

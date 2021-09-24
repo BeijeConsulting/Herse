@@ -119,8 +119,6 @@ public class Rubrica {
             List<Element> riferimenti = getChildElements(el);
             List<String> valori = new ArrayList<String>();
 
-            System.out.println(riferimenti);
-
             for (int j=0; j<riferimenti.size(); j++){
                 valori.add(riferimenti.get(j).getTextContent());
             }
