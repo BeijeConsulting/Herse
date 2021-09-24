@@ -1,8 +1,4 @@
 package Esercizi;
-
-import it.beije.herse.oca.Es1;
-import it.beije.herse.oca.Es2;
-
 public class Main {
 	public static void main(String[] args) {
 		int[] n= {5,3,8,1,3,35,80,3,65,32};
