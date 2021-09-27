@@ -311,22 +311,64 @@ public class PhoneContactsJDBC {
 		}
 	}
 	
+	public static void modifyRubricaJDBC(String attr, String attrVal, String where, String whereVal) {
+		try {
+			connection = openConnection();
+			statement = connection.createStatement();
+			
+			if(!contatto.contains(where.toUpperCase()) || !contatto.contains(attr.toUpperCase())) throw new Exception();
+			
+			where = where.toLowerCase();
+			Integer whereId=null;
+			
+			attr = attr.toLowerCase();
+			Integer attrId=null;
+			if(where.equalsIgnoreCase("id")) {
+				whereId = Integer.parseInt(whereVal);
+				if(attr.equalsIgnoreCase("id")) {
+					attrId = Integer.parseInt(attrVal);
+					statement.executeUpdate("UPDATE rubrica SET "+attr+"="+"'"+attrId+"' WHERE "+where+"="+"'"+whereId+"'");
+				}
+				else statement.executeUpdate("UPDATE rubrica SET "+attr+"="+"'"+attrVal+"' WHERE "+where+"="+"'"+whereId+"'");
+			}
+			else statement.executeUpdate("UPDATE rubrica SET "+attr+"="+"'"+attrVal+"' WHERE "+where+"="+"'"+whereVal+"'");
+			
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("NESSUNA COLONNA VALIDA");
+		} finally {
+			try {
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 //		List<Contatto> rubrica = new ArrayList<>();
 //		rubrica.add(new Contatto("Francesco", "Gialli", "312345678", "francesco.gialli@gmail.com", "Cugino"));
 //		rubrica.add(new Contatto("Carolina", "Marrone", "321654987", "", ""));
 //		insertRubricaJDBC(rubrica);
-		
+//		
 //		rubrica.clear();
 //		rubrica.add(new Contatto("Lorenzo", "Rossi", "0372999777555", "lorenzo.rossi@gmail.com", ""));
 //		rubrica.add(new Contatto("Elisa", "Indaco", "398765421", "", "Sorella"));
 //		preparedInsertRubricaJDBC(rubrica);
 //		
-		deleteRubricaJDBC("note", "Sorella");
+//		deleteRubricaJDBC("note", "Sorella");
 		readRubricaJDBC();
-//		readRubricaJDBC(new String[] {"iod", "Cognom", "None"});
+//		readRubricaJDBC(new String[] {"iod", "Cognom", "None"}); 
 //		readRubricaJDBC(new String[] {"id", "Cognome", "NoMe"});
 //		readRubricaJDBC("cognome", "Gialli");
 //		readRubricaJDBC("cognome");
+		
+//		modifyRubricaJDBC("nome", "Cristina", "id", "6");
+//		modifyRubricaJDBC("cognome", "Bianchi", "note", "Cugino");
+//		modifyRubricaJDBC("Età", "32", "Età", "Rossi");
 	}
 }

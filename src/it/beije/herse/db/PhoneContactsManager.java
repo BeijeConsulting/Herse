@@ -14,19 +14,19 @@ import it.beije.herse.file.xml.PhoneContactsXML;
 *	X vedi lista contatti (con possibilità di ordinare per nome e cognome a scelta)
 *	X cerca contatto
 *	X inserisci nuovo contatto
-*	->modifica contatto
+*	X modifica contatto
 *	X cancella contatto
 *	->trova contatti duplicati
 *	->unisci contatti duplicati
-*	->import XML/CSV
+*	X import XML/CSV
 *	->export XML/CSV
 */
 public class PhoneContactsManager {
 	
 	private static Scanner s = new Scanner(System.in);
 	private static String input;
-	private static final String pathCSV = "/temp/file/RubricaManager/rubricaCSV.csv";
-	private static final String pathXML = "/temp/file/RubricaManager/rubricaXML.xml";
+	private static final String pathExportCSV = "/temp/file/RubricaManager/rubricaCSV.csv";
+	private static final String pathExportXML = "/temp/file/RubricaManager/rubricaXML.xml";
 	
 	private static void menu() {
 		do {
@@ -105,18 +105,19 @@ public class PhoneContactsManager {
 	}
 	
 	public static void importXMLorCSV() {
-		System.out.println("INSERIRE PATH DEL FILE: ");
-		
 		boolean notValidInput = false;
 		do {
+			System.out.println("INSERIRE PATH DEL FILE: ");
 			notValidInput = false;
-			input = s.nextLine().toLowerCase();
+			String path = s.nextLine().toLowerCase();
 			
-			if(input.endsWith("csv")) {
-				//TODO IMPORT
+			if(path.endsWith("csv") && new File(path).exists()) {
+				System.out.println("INSERIRE SEPARATORE: ");
+				String separator = s.nextLine();
+				PhoneContactsJDBC.insertRubricaJDBC(PhoneContactsCSV.readRubricaCSV(path, separator));
 			}
-			else if(input.endsWith("xml")) {
-				//TODO IMPORT
+			else if(path.endsWith("xml") && new File(path).exists()) {
+				PhoneContactsJDBC.insertRubricaJDBC(PhoneContactsXML.readRubricaXML(path));
 			}
 			else{
 				notValidInput = true;
@@ -145,6 +146,9 @@ public class PhoneContactsManager {
 			notValidInput = false;
 			input = s.nextLine().toUpperCase();
 			switch(input) {
+			case "ID":
+				where = "id";
+				break;
 			case "NOME":
 				where = "nome";
 				break;
@@ -174,7 +178,81 @@ public class PhoneContactsManager {
 	}
 
 	private static void modifyContatto() {
-		// TODO Auto-generated method stub
+		boolean notValidInput = false;
+		String attr = null;
+		do {
+			System.out.println();
+			System.out.println("SPECIFICARE CAMPO DA MODIFICARE : ");
+			
+			notValidInput = false;
+			input = s.nextLine().toUpperCase();
+			switch(input) {
+			case "ID":
+				attr = "id";
+				break;
+			case "NOME":
+				attr = "nome";
+				break;
+			case "COGNOME":
+				attr = "cognome";
+				break;
+			case "TELEFONO":
+				attr = "telefono";
+				break;
+			case "EMAIL":
+				attr = "email";
+				break;
+			case "NOTE":
+				attr = "note";
+				break;
+			default:
+				notValidInput = true;
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				break;
+			}
+		}while(notValidInput);
+		System.out.println();
+		System.out.println("SPECIFICARE VALORE DEL CAMPO: ");
+		String attrVal = s.nextLine();
+		
+		notValidInput = false;
+		String where = null;
+		do {
+			System.out.println();
+			System.out.println("SPECIFICARE CAMPO PER LA RICERCA: ");
+			
+			notValidInput = false;
+			input = s.nextLine().toUpperCase();
+			switch(input) {
+			case "ID":
+				where = "id";
+				break;
+			case "NOME":
+				where = "nome";
+				break;
+			case "COGNOME":
+				where = "cognome";
+				break;
+			case "TELEFONO":
+				where = "telefono";
+				break;
+			case "EMAIL":
+				where = "email";
+				break;
+			case "NOTE":
+				where = "note";
+				break;
+			default:
+				notValidInput = true;
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				break;
+			}
+		}while(notValidInput);
+		System.out.println();
+		System.out.println("SPECIFICARE VALORE DEL CAMPO: ");
+		String whereVal = s.nextLine();
+		
+		PhoneContactsJDBC.modifyRubricaJDBC(attr, attrVal, where, whereVal);
 	}
 
 	private static void writeContatto() {
@@ -209,6 +287,9 @@ public class PhoneContactsManager {
 			notValidInput = false;
 			input = s.nextLine().toUpperCase();
 			switch(input) {
+			case "ID":
+				where = "id";
+				break;
 			case "NOME":
 				where = "nome";
 				break;
