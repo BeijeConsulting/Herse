@@ -1,10 +1,13 @@
 package it.beije.herse.file;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class RubricaCSV {
 	
@@ -31,6 +34,7 @@ public class RubricaCSV {
 			title[0] = title[0].substring(1);
 			title[last] = title[last].substring(0, title[last].length()-1);
 		}
+		
 		
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		Contatto contatto = null;
@@ -75,13 +79,88 @@ public class RubricaCSV {
 		
 		return contatti;
 	}
+	
+	public static void writeRubricaCSV(String path, String separator) throws IOException {
+				
+		File addInRubrica = new File(path);
+		
+		FileWriter writer =  null;
+		
+		if(addInRubrica.exists()) {
+			writer = new FileWriter(addInRubrica, true);
+		} else {
+			writer = new FileWriter(addInRubrica);
+		}
+		
+		String[] titles = new String[] {"nome", "cognome", "telefono", "email", "note"};
+		
+		FileReader f = new FileReader(path);
+		BufferedReader r = new BufferedReader(f);
+		String row = r.readLine();
+		
+		for(int x = 0; x < titles.length; x++) {
+			if(row == null) {
+				writer.write(titles[x].toUpperCase());
+				writer.write(separator);
+			}
+		}
+		
+		writer.write('\n');
+		
+		Contatto contatto = new Contatto();
+		
+		for(int i = 0; i < titles.length; i++) {
+			switch (titles[i].toUpperCase()) {
+			case "NOME":
+				contatto.setNome();
+				writer.write(contatto.getNome());
+				writer.write(separator);
+				break;
+			case "COGNOME":
+				contatto.setCognome();
+				writer.write(contatto.getCognome());	
+				writer.write(separator);
+				break;
+			case "TELEFONO":
+				contatto.setTelefono();
+				writer.write(contatto.getTelefono());
+				writer.write(separator);
+				break;
+			case "EMAIL":
+				contatto.setEmail();
+				writer.write(contatto.getEmail());	
+				writer.write(separator);
+				break;
+			case "NOTE":
+				contatto.setNote();
+				writer.write(contatto.getNote());	
+				writer.write(separator);
+				break;
+			}
+		}
+		
+		
+		writer.flush();
+		writer.close();
+		
+	}
 
 	public static void main(String[] args) throws Exception {
-		
-		//readRubricaCSV("/temp/prova.txt", ";");
-		//readRubricaCSV("/temp/prova1.txt", ",");
-		List<Contatto> contatti = readRubricaCSV("/temp/prova2.txt", "\t");
+	
+		List<Contatto> contatti = readRubricaCSV("/temp/prova.txt", ";");
 		System.out.println("contatti number: " + contatti.size());
+		
+		boolean b = true;
+		while(b) {
+			writeRubricaCSV("/temp/rubrica.txt", "\t");
+			System.out.println("Vuoi inserire un altro contatto?");
+			Scanner input = new Scanner(System.in);
+			String answer = input.next();
+			
+			if(!answer.equalsIgnoreCase("si"))
+				b = false;
+		}
+		
 		
 	}
 
