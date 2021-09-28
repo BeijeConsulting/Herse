@@ -2,11 +2,20 @@ package it.beije.herse.file;
 
 public class Contatto {
 	
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
 	private String note;
+	
+		
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getNome() {
 		return nome;
@@ -42,11 +51,12 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	@Override
-	public String toString() {
-		return "Contatto [nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email=" + email
-				+ ", note=" + note + "]";
-	}
+
+//	@Override
+//	public String toString() {
+//		return "Contatto [nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email=" + email
+//				+ ", note=" + note + "]";
+//	}
 	
 	public Contatto() {}
 	
@@ -61,5 +71,26 @@ public class Contatto {
 	
 	
 	
+
+	
+	
+	public String toString() {
+//		StringBuilder builder = new StringBuilder("{id: ").append(id);
+//		builder.append(", nome: ").append(nome);
+//		builder.append(", cognome: ").append(cognome);
+//		builder.append(", telefono: ").append(telefono);
+//		builder.append(", email: ").append(email);
+//		builder.append(", note: ").append(note).append("}");
+
+		StringBuilder builder = new StringBuilder("{id: ").append(id)
+				.append(", nome: ").append(nome)
+				.append(", cognome: ").append(cognome)
+				.append(", telefono: ").append(telefono)
+				.append(", email: ").append(email)
+				.append(", note: ").append(note).append("}");
+		
+		return builder.toString();
+	}
+
 
 }
