@@ -19,7 +19,7 @@ import it.beije.herse.file.xml.PhoneContactsXML;
 *	->trova contatti duplicati
 *	->unisci contatti duplicati
 *	X import XML/CSV
-*	->export XML/CSV
+*	X export XML/CSV
 */
 public class PhoneContactsManager {
 	
@@ -38,7 +38,7 @@ public class PhoneContactsManager {
 			System.out.println("-> MODIFICARE CONTATTO");
 			System.out.println("-> RIMUOVERE CONTATTO");
 			System.out.println("-> TROVARE CONTATTI DUPLICATI");
-			System.out.println("-> ELIMINARE CONTATTI DUPLICATI");
+			System.out.println("-> UNIRE CONTATTI DUPLICATI");
 			System.out.println("-> IMPORTARE RUBRICA");
 			System.out.println("-> ESPORTARE RUBRICA");
 			System.out.println("-> USCIRE");
@@ -91,10 +91,12 @@ public class PhoneContactsManager {
 			input = s.nextLine().toUpperCase();
 			switch(input) {
 			case "CSV":
-				//TODO EXPORT
+				System.out.println("INSERIRE SEPARATORE: ");
+				String separator = s.nextLine();
+				PhoneContactsCSV.writeRubricaCSV(PhoneContactsJDBC.readRubricaJDBC(), pathExportCSV, separator);
 				break;
 			case "XML":
-				//TODO EXPORT
+				PhoneContactsXML.writeRubricaXML(PhoneContactsJDBC.readRubricaJDBC(), pathExportXML);
 				break;
 			default:
 				notValidInput = true;
@@ -174,7 +176,9 @@ public class PhoneContactsManager {
 		System.out.println("SPECIFICARE VALORE DEL CAMPO: ");
 		String val = s.nextLine();
 		
-		PhoneContactsJDBC.readRubricaJDBC(where, val);
+		PhoneContactsJDBC.deleteRubricaJDBC(where, val);
+		
+		System.out.println("CONTATTO RIMOSSO");
 	}
 
 	private static void modifyContatto() {
@@ -253,6 +257,8 @@ public class PhoneContactsManager {
 		String whereVal = s.nextLine();
 		
 		PhoneContactsJDBC.modifyRubricaJDBC(attr, attrVal, where, whereVal);
+		
+		System.out.println("CONTATTO MODIFICATO");
 	}
 
 	private static void writeContatto() {
@@ -315,7 +321,7 @@ public class PhoneContactsManager {
 		System.out.println("SPECIFICARE VALORE DEL CAMPO: ");
 		String val = s.nextLine();
 		
-		PhoneContactsJDBC.readRubricaJDBC(where, val);
+		PhoneContactsJDBC.printRubrica(PhoneContactsJDBC.readRubricaJDBC(where, val));
 	}
 
 	private static void readListaContatti() {
@@ -331,13 +337,13 @@ public class PhoneContactsManager {
 			input = s.nextLine().toUpperCase();
 			switch(input) {
 			case "NOME":
-				PhoneContactsJDBC.readRubricaJDBC("nome");
+				PhoneContactsJDBC.printRubrica(PhoneContactsJDBC.readRubricaJDBC("nome"));
 				break;
 			case "COGNOME":
-				PhoneContactsJDBC.readRubricaJDBC("cognome");
+				PhoneContactsJDBC.printRubrica(PhoneContactsJDBC.readRubricaJDBC("cognome"));
 				break;
 			case "NON ORDINARE":
-				PhoneContactsJDBC.readRubricaJDBC();
+				PhoneContactsJDBC.printRubrica(PhoneContactsJDBC.readRubricaJDBC());
 				break;
 			default:
 				notValidInput = true;

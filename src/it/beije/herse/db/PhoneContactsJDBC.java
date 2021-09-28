@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import it.beije.herse.file.Contatto;
+import it.beije.herse.file.xml.PhoneContactsXML;
 
 public class PhoneContactsJDBC {
 	
@@ -27,7 +28,8 @@ public class PhoneContactsJDBC {
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "Vecchia");
 	}
 	
-	public static void readRubricaJDBC(){
+	public static List<Contatto> readRubricaJDBC(){
+		List<Contatto> rubrica = new ArrayList<>();
 		try {
 			connection = openConnection();
 			statement = connection.createStatement();
@@ -37,19 +39,22 @@ public class PhoneContactsJDBC {
 			
 			rs = statement.executeQuery("SELECT * FROM rubrica");
 			while (rs.next()) {
-				System.out.println("ID : " + rs.getInt("id"));
-				System.out.println("NOME : " + rs.getString("nome"));
-				System.out.println("COGNOME : " + rs.getString("cognome"));
-				System.out.println("TELEFONO : " + rs.getString("telefono"));
-				System.out.println("EMAIL : " + rs.getString("email"));
-				System.out.println("NOTE : " + rs.getString("note"));
-				System.out.println();
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				rubrica.add(c);
 			}
 			
 		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} finally {
 			try {
 				rs.close();
@@ -57,11 +62,14 @@ public class PhoneContactsJDBC {
 				connection.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 			}
 		}
+		return rubrica;
 	}
 
-	public static void readRubricaJDBC(String where, String val){
+	public static List<Contatto> readRubricaJDBC(String where, String val){
+		List<Contatto> rubrica = new ArrayList<>();
 		try {
 			connection = openConnection();
 			statement = connection.createStatement();
@@ -79,21 +87,25 @@ public class PhoneContactsJDBC {
 //			statement.executeUpdate("DELETE FROM rubrica WHERE id = 8 OR id = 9");
 			
 			while (rs.next()) {
-				System.out.println("id : " + rs.getInt("id"));
-				System.out.println("nome : " + rs.getString("nome"));
-				System.out.println("cognome : " + rs.getString("cognome"));
-				System.out.println("telefono : " + rs.getString("telefono"));
-				System.out.println("email : " + rs.getString("email"));
-				System.out.println("note : " + rs.getString("note"));
-				System.out.println();
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				rubrica.add(c);
 			}
 			
 		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} catch (Exception e) {
 			System.out.println("NESSUNA COLONNA VALIDA");
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} finally {
 			try {
 				rs.close();
@@ -101,11 +113,14 @@ public class PhoneContactsJDBC {
 				connection.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 			}
 		}
+		return rubrica;
 	}
 	
-	public static void readRubricaJDBC(String orderBy){
+	public static List<Contatto> readRubricaJDBC(String orderBy){
+		List<Contatto> rubrica = new ArrayList<>();
 		try {
 			connection = openConnection();
 			statement = connection.createStatement();
@@ -118,21 +133,25 @@ public class PhoneContactsJDBC {
 //			statement.executeUpdate("DELETE FROM rubrica WHERE id = 8 OR id = 9");
 			
 			while (rs.next()) {
-				System.out.println("id : " + rs.getInt("id"));
-				System.out.println("nome : " + rs.getString("nome"));
-				System.out.println("cognome : " + rs.getString("cognome"));
-				System.out.println("telefono : " + rs.getString("telefono"));
-				System.out.println("email : " + rs.getString("email"));
-				System.out.println("note : " + rs.getString("note"));
-				System.out.println();
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				rubrica.add(c);
 			}
 			
 		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} catch (Exception e) {
 			System.out.println("NESSUNA COLONNA VALIDA");
+			rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 		} finally {
 			try {
 				rs.close();
@@ -140,10 +159,25 @@ public class PhoneContactsJDBC {
 				connection.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				rubrica.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
 			}
+		}
+		return rubrica;
+	}
+	
+	public static void printRubrica(List<Contatto> rubrica) {
+		for(Contatto c : rubrica) {
+			System.out.println("ID: "+c.getId());
+			System.out.println("NOME: "+c.getNome());
+			System.out.println("COGNOME: "+c.getCognome());
+			System.out.println("TELEFONO: "+c.getTelefono());
+			System.out.println("EMAIL: "+c.getEmail());
+			System.out.println("NOTE: "+c.getNote());
+			System.out.println();
 		}
 	}
 	
+	// NON SERVE IN PHONE CONTACTS MANAGER
 	public static void readRubricaJDBC(String[] select){
 		try {
 			connection = openConnection();
@@ -206,6 +240,7 @@ public class PhoneContactsJDBC {
 		}
 	}
 	
+	// NON SERVE IN PHONE CONTACTS MANAGER
 	public static void insertRubricaJDBC(List<Contatto> rubrica) {
 		try {
 			connection = openConnection();
@@ -351,6 +386,7 @@ public class PhoneContactsJDBC {
 		}
 	}
 	
+	// NON SERVE IN PHONE CONTACTS MANAGER
 	public static void breakConnectionPool(int i) {
 		try {
 			Connection breakableConnection = openConnection();
@@ -388,6 +424,6 @@ public class PhoneContactsJDBC {
 //		modifyRubricaJDBC("cognome", "Bianchi", "note", "Cugino");
 //		modifyRubricaJDBC("Età", "32", "Età", "Rossi");
 		
-		for(int i=1;i<=151;i++) breakConnectionPool(i);
+//		for(int i=1;i<=151;i++) breakConnectionPool(i);
 	}
 }
