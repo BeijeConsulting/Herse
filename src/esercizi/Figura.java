@@ -1,4 +1,4 @@
-package it.beije.herse.OCA;
+package esercizi;
 
 	public class Figura {
 	 

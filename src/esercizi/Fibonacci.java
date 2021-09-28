@@ -1,4 +1,4 @@
-package it.beije.herse.OCA;
+package esercizi;
 public class Fibonacci{
 	public static void main(String args[]){
 		int fib = 1;

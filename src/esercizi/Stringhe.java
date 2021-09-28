@@ -1,4 +1,4 @@
-package it.beije.herse.OCA;
+package esercizi;
 public class Stringhe{
 	
 	static void SoloVocali(String name){

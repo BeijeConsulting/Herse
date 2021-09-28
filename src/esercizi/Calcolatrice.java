@@ -1,9 +1,9 @@
-package it.beije.herse.OCA;
+package esercizi;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.Math;
 
-public class CalcolatriceParentesi {
+public class Calcolatrice {
 	
 	static int  StringtoInt(String s) {
 		int l = s.length()-1;
@@ -51,29 +51,17 @@ public class CalcolatriceParentesi {
 		System.out.println("Inserire espressione ");
 		Scanner scann = new Scanner (System.in);
 		String s = scann.next();
-		String buff = new String("");
 		scann.close();
 		
 		ArrayList <String>  a = new ArrayList<>();
 		int j = 0;
 		int x1, x2, ris=0, temp=0;
 	 
-	/*	for(int i =0; i<s.length(); i++) {
-			System.out.println(s + "\t indice " + i);
-			if(s.charAt(i) == '(') {
-				a.add(String.valueOf(s.charAt(i)));
-				s = s.substring(i+1);
-				i = 0;
-			}
+		for(int i =0; i<s.length(); i++) {
 			
-			 if(s.charAt(i) == '+' || s.charAt(i) == '-'
+			if(i<s.length())
+			if(s.charAt(i) == '+' || s.charAt(i) == '-'
 						|| s.charAt(i) == '*' || s.charAt(i) == '/' ) {
-				a.add(s.substring(0, i));
-				a.add(String.valueOf(s.charAt(i)));
-				s = s.substring(i+1);
-				i = 0;
-			 }
-			 if(s.charAt(i) == ')') {
 				a.add(s.substring(0, i));
 				a.add(String.valueOf(s.charAt(i)));
 				s = s.substring(i+1);
@@ -81,26 +69,9 @@ public class CalcolatriceParentesi {
 			}
 		}
 
-		a.add(s);	*/
+		a.add(s);	
 		
-		
-		for(int i = 0; i<s.length(); i++) {
-			if(s.charAt(i)== '(' || s.charAt(i) == ')') {
-				a.add(String.valueOf(s.charAt(i)));
-				a.add(buff);
-			}
-			
-			else if(s.charAt(i) == '+' || s.charAt(i) == '-'
-					|| s.charAt(i) == '*' || s.charAt(i) == '/' ) {
-				a.add(String.valueOf(s.charAt(i)));
-				a.add(buff);
-			}
-			else buff += s.charAt(i); 
-		}
-		
-		System.out.println(a);
-		
-	/*	for(int i =0; i<a.size(); i++) {
+		for(int i =0; i<a.size(); i++) {
 			System.out.println(a);
 			if(a.get(i).equals("*") || a.get(i).equals("/")) {
 				x1 = StringtoInt(a.get(i-1));
@@ -126,7 +97,7 @@ public class CalcolatriceParentesi {
 		}
 		
 		
-		System.out.println(temp);*/
+		System.out.println(temp);
 		
 	}
 }

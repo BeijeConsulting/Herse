@@ -1,4 +1,4 @@
-package it.beije.herse.OCA;
+package esercizi;
 import java.util.Arrays;
 
 public class EsArray {
