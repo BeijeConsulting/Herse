@@ -26,5 +26,10 @@ hs_err_pid*
 =======
 /.classpath
 /.project
+<<<<<<< HEAD
 >>>>>>> refs/remotes/origin/main
 /.DS_Store
+=======
+/target/
+/.settings/
+>>>>>>> refs/remotes/origin/main

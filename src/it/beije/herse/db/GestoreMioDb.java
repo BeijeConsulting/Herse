@@ -1,16 +1,12 @@
 package it.beije.herse.db;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import it.beije.herse.mioDb.GestioneRubrica;
-
 import it.beije.herse.file.*;
 
 public class GestoreMioDb {
@@ -93,9 +89,6 @@ public class GestoreMioDb {
 		Connection connection = null;
 		PreparedStatement prepStat = null;
 		ResultSet rs = null;
-		int verifica = 0;
-
-
 		try {
 
 			connection = openConnection();
