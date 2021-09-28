@@ -4,6 +4,7 @@ public class StringBuilderUtil {
 
 	/**/
 	public static String substring(StringBuilder sb, int beginIndex) {
+		//Nuova stringa
 		String newS = "";
 
 		for (int i = beginIndex; i < sb.length(); i++) {
