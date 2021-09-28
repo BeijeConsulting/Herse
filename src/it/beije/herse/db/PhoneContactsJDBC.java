@@ -20,6 +20,8 @@ public class PhoneContactsJDBC {
 	private static ResultSet rs = null;
 	private static final List<String> contatto = Arrays.asList("ID", "NOME", "COGNOME", "TELEFONO", "EMAIL", "NOTE");
 	
+	private static List<Connection> openedConnection = new ArrayList<>();
+	
 	public static Connection openConnection() throws ClassNotFoundException, SQLException {	
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "Vecchia");
@@ -349,7 +351,21 @@ public class PhoneContactsJDBC {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void breakConnectionPool(int i) {
+		try {
+			Connection breakableConnection = openConnection();
+			openedConnection.add(breakableConnection);
+			
+			System.out.println("Connection number: "+i);
+			
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) throws Throwable{
 //		List<Contatto> rubrica = new ArrayList<>();
 //		rubrica.add(new Contatto("Francesco", "Gialli", "312345678", "francesco.gialli@gmail.com", "Cugino"));
 //		rubrica.add(new Contatto("Carolina", "Marrone", "321654987", "", ""));
@@ -360,8 +376,9 @@ public class PhoneContactsJDBC {
 //		rubrica.add(new Contatto("Elisa", "Indaco", "398765421", "", "Sorella"));
 //		preparedInsertRubricaJDBC(rubrica);
 //		
-//		deleteRubricaJDBC("note", "Sorella");
-		readRubricaJDBC();
+//		deleteRubricaJDBC("nome", "AAA");
+		
+//		readRubricaJDBC();
 //		readRubricaJDBC(new String[] {"iod", "Cognom", "None"}); 
 //		readRubricaJDBC(new String[] {"id", "Cognome", "NoMe"});
 //		readRubricaJDBC("cognome", "Gialli");
@@ -370,5 +387,7 @@ public class PhoneContactsJDBC {
 //		modifyRubricaJDBC("nome", "Cristina", "id", "6");
 //		modifyRubricaJDBC("cognome", "Bianchi", "note", "Cugino");
 //		modifyRubricaJDBC("Età", "32", "Età", "Rossi");
+		
+		for(int i=1;i<=151;i++) breakConnectionPool(i);
 	}
 }
