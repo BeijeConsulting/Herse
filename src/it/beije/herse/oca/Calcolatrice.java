@@ -86,6 +86,7 @@ public class Calcolatrice {
 		boolean error = false;
 
 		while(true) {
+			
 			Scanner s = new Scanner(System.in);
 			System.out.println("Scrivi l'espressione da valutare o scrivi 'exit' per uscire");
 			String x = s.nextLine();
@@ -95,7 +96,6 @@ public class Calcolatrice {
 			int risultato = 0;
 			int num1=0;
 			int num2=0;
-			boolean change = false;
 			int in=0,out=0;
 			boolean negStamp=false;
 

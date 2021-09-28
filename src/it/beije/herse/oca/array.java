@@ -115,7 +115,6 @@ public class array {
             boolean p = booly.contains(56, x);
             System.out.println(p);
             Object e = new Object();
-            Object e2 = new Object();
             Object[] array = {e};
             boolean p2 = booly.contains(e, array);
             System.out.println(p2);

@@ -17,8 +17,6 @@ import org.xml.sax.SAXException;
 public class CreaRubricaXML {
 
 	public static void main(String[] args) {
-
-		List<Contatto> lista = new ArrayList<Contatto>();
 		
 
 		
