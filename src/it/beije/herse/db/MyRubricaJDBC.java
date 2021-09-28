@@ -6,9 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import it.beije.herse.file.Contatto;
 
@@ -17,6 +20,24 @@ public class MyRubricaJDBC {
 	public static void main(String[] args) {
 		List<Contatto> contattiLoad = new ArrayList<Contatto>();
 		List<Contatto> contattiWrite = new ArrayList<Contatto>();
+		/*numero di connection che puo creare il mio server*/
+		int count = 0;
+		boolean infiniteloop = true;
+		LocalTime start = LocalTime.now();
+		
+		while (infiniteloop) {
+			try {
+			getContatti();
+			count++;
+			}catch (Throwable e) {
+				//fixare il tempo
+				LocalTime end = LocalTime.now();
+				LocalTime delta = LocalTime.now();
+				System.out.println(count);
+				System.out.println();
+				infiniteloop = false;
+			}
+		}
 
 		// contattiLoad = getContatti();
 		// stampaContatti(contattiLoad);
@@ -24,7 +45,7 @@ public class MyRubricaJDBC {
 		// contattiWrite = createContatto();
 
 		// System.out.println("Added ? "+addContatti(contattiWrite));
-		//System.out.println(updateContatto(13));
+		// System.out.println(updateContatto(13));
 		// getContatto(contattiLoad);
 	}
 
@@ -151,7 +172,7 @@ public class MyRubricaJDBC {
 		}
 	}
 
-	public static List<Contatto> getContatti() {
+	public static List<Contatto> getContatti() throws SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -182,13 +203,13 @@ public class MyRubricaJDBC {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
+			
 				resultSet.close();
 				statement.close();
-				connection.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				// connection.close();
+			
+				
+			
 		}
 		return contatti;
 	}
@@ -237,3 +258,5 @@ public class MyRubricaJDBC {
 	}
 
 }
+
+
