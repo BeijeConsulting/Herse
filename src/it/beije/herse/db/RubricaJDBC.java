@@ -75,7 +75,7 @@ public class RubricaJDBC {
 	public static void main(String[] args)  {
 		
 		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+		//PreparedStatement preparedStatement = null;
 		PreparedStatement preparedQuery = null;
 		ResultSet rs = null;
 		
@@ -84,7 +84,7 @@ public class RubricaJDBC {
 			
 			System.out.println("connection open ? " + !connection.isClosed());
 
-			int r = 0;
+			//int r = 0;
 			
 //			String nome = "Gertrude";
 //			preparedStatement  = connection.prepareStatement("INSERT INTO rubrica (cognome, nome) VALUES (?,?)");
@@ -118,7 +118,7 @@ public class RubricaJDBC {
 		} finally {
 			try {
 				rs.close();
-				preparedStatement.close();
+				//preparedStatement.close();
 				preparedQuery.close();
 				connection.close();
 			} catch (Exception e) {

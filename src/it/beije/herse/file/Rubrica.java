@@ -41,6 +41,9 @@ public class Rubrica {
 
 		switch(fieldName.toLowerCase()) {
 
+		case "id":
+			c.setId(Integer.parseInt(fieldValue));
+			break;
 		case "nome":
 			c.setNome(fieldValue);
 			break;
@@ -117,24 +120,10 @@ public class Rubrica {
 
 	}
 
-	public void print(List<Contatto> list) {
-
-		for(Contatto c : list) {
-
-			System.out.println("Cognome: " + (c.getCognome() != null ? c.getCognome() : ""));
-			System.out.println("Nome: " + (c.getNome() != null ? c.getNome() : ""));
-			System.out.println("Telefono: " + (c.getTelefono() != null ? c.getTelefono() : ""));
-			System.out.println("Email: " + (c.getEmail() != null ? c.getEmail() : ""));
-			System.out.println("Note: " + (c.getNote() != null ? c.getNote() : "") + "\n");
-
-		}
-
-	}
-
 	public void writeRubricaCSV(List<Contatto> list, String pathFile, String separator) throws IOException {
-		
+
 		FileWriter fw;
-		
+
 		if(!new File(pathFile).exists()) {
 
 			fw = new FileWriter(pathFile);
@@ -142,25 +131,25 @@ public class Rubrica {
 			fw.write("\"COGNOME" + separator + "NOME" + separator + "TELEFONO" + separator + "EMAIL" + separator + "NOTE" + "\"\n");
 
 			for(Contatto c : list) {
-				
+
 				String s = "\"" + c.getCognome() + separator + c.getNome() + separator + c.getTelefono() + separator + c.getEmail() + separator + c.getNote() + "\"\n";
 				fw.write(s);
-				
+
 			}
 
 		} else {
-			
+
 			fw = new FileWriter(pathFile,true);
-			
+
 			for(Contatto c : list) {
-				
+
 				String s = "\"" + c.getCognome() + separator + c.getNome() + separator + c.getTelefono() + separator + c.getEmail() + separator + c.getNote() + "\"\n";
 				fw.write(s);
-				
+
 			}
-			
+
 		}
-		
+
 		fw.flush();
 		fw.close();
 
@@ -169,14 +158,14 @@ public class Rubrica {
 	public void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, TransformerException, SAXException, IOException {
 
 		if(new File(pathFile).exists()) {
-			
+
 			List<Contatto> oldContatti = loadRubricaFromXML(pathFile);
-			
+
 			for(int i = oldContatti.size()-1; i >= 0; i--)
 				contatti.add(0, oldContatti.get(i));
-			
+
 		}	
-		
+
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
@@ -190,6 +179,8 @@ public class Rubrica {
 
 			Element contatto = doc.createElement("Contatto");
 
+			Element id = doc.createElement("Id");
+			id.setTextContent(String.valueOf(c.getId()));
 			Element cognome = doc.createElement("Cognome");
 			cognome.setTextContent(c.getCognome());
 			Element nome = doc.createElement("Nome");
@@ -201,6 +192,7 @@ public class Rubrica {
 			Element note = doc.createElement("Note");
 			note.setTextContent(c.getNote());
 
+			contatto.appendChild(id);
 			contatto.appendChild(cognome);
 			contatto.appendChild(nome);
 			contatto.appendChild(telefono);
@@ -222,6 +214,31 @@ public class Rubrica {
 
 	}
 
+
+	/*
+	 * vedi lista contatti (con possibilità di ordinare per nome e cognome a scelta)
+	 * cerca contatto
+	 * inserisci nuovo contatto
+     * modifica contatto
+     * cancella contatto
+     * trova contatti duplicati
+     * unisci contatti duplicati
+	 */
+	
+	private void showContact(List<Contatto> list) {
+
+		for(Contatto c : list) {
+
+			System.out.println("Cognome: " + (c.getCognome() != null ? c.getCognome() : ""));
+			System.out.println("Nome: " + (c.getNome() != null ? c.getNome() : ""));
+			System.out.println("Telefono: " + (c.getTelefono() != null ? c.getTelefono() : ""));
+			System.out.println("Email: " + (c.getEmail() != null ? c.getEmail() : ""));
+			System.out.println("Note: " + (c.getNote() != null ? c.getNote() : "") + "\n");
+
+		}
+
+	}
+
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, TransformerException {
 		// TODO Auto-generated method stub
 
@@ -231,9 +248,9 @@ public class Rubrica {
 
 		list = r.loadRubricaFromCSV("\\Users\\savin\\Desktop\\fileTest\\rubrica.csv","\";\"");
 
-		r.print(list);
+		r.showContact(list);
 
-		r.writeRubricaXML(list, "\\Users\\savin\\Desktop\\fileTest\\newProvaRubricaXML.xml");
+		//r.writeRubricaXML(list, "\\Users\\savin\\Desktop\\fileTest\\newProvaRubricaXML.xml");
 
 	}
 
