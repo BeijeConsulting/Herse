@@ -14,7 +14,7 @@ public class Parser {
 	 * difficoltà: oggetto senza tutte le caratteristiche, considerare gli attributi
 	 */
 	public static void main(String[] args) throws IOException {
-		String path="C:\\Program Files\\Java\\Bejie\\src\\parse5\\file.xml";
+		String path="/temp/test_parser1.xml";
 		//leggiFileXml(path);;
 	//	System.out.println(getRootElement(path););
 	//	getTagName(path);
