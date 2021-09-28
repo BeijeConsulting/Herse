@@ -2,6 +2,7 @@ package it.beije.herse.file;
 
 public class Contatto {
 	
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
@@ -19,6 +20,13 @@ public class Contatto {
 		this.telefono = telefono;
 		this.email = email;
 		this.note = note;
+	}
+		
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getNome() {
@@ -54,6 +62,25 @@ public class Contatto {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	
+	public String toString() {
+//		StringBuilder builder = new StringBuilder("{id: ").append(id);
+//		builder.append(", nome: ").append(nome);
+//		builder.append(", cognome: ").append(cognome);
+//		builder.append(", telefono: ").append(telefono);
+//		builder.append(", email: ").append(email);
+//		builder.append(", note: ").append(note).append("}");
+
+		StringBuilder builder = new StringBuilder("{id: ").append(id)
+				.append(", nome: ").append(nome)
+				.append(", cognome: ").append(cognome)
+				.append(", telefono: ").append(telefono)
+				.append(", email: ").append(email)
+				.append(", note: ").append(note).append("}");
+		
+		return builder.toString();
 	}
 
 }
