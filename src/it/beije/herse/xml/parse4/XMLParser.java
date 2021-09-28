@@ -82,6 +82,10 @@ public class XMLParser {
 
 	public static OggettoXML parse(File file) throws IOException {
 		XMLParser xmlParser = new XMLParser();
+
+		System.out.println(xmlParser.exist(file));
+		System.out.println(xmlParser.isXML(file)!=null);
+		
 		if (xmlParser.exist(file) && xmlParser.isXML(file)!=null) {
 			OggettoXML oggettoXML = new OggettoXML();
 			List<String> oList = new ArrayList<String>();
@@ -90,7 +94,7 @@ public class XMLParser {
 				System.out.println(string);
 			}
 			return new OggettoXML();
-		}
+		} else System.out.println("KO");
 		return null;
 	}
 }
