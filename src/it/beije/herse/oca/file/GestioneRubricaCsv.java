@@ -161,10 +161,11 @@ public class GestioneRubricaCsv {
 		}
 	}
 	
-	public static void modificaContatto(String datoDaModificare, String[] infoNuove, String pathFile, String separator) throws IOException {
+	public static void modificaContatto(int id, String[] infoNuove, String pathFile, String separator) throws IOException {
 		List<Contatto> contatti = loadRubricaFromCSV(pathFile, separator);
-		for(Contatto cont1 : contatti) {
-			System.out.println(cont1);
+		for(int i = 0; i < contatti.size(); i++) {
+			if(contatti.get(i).getId() == id) {
+			}
 		}
 	}
 }
