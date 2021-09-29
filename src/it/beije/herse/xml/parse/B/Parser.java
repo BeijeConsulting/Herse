@@ -30,11 +30,11 @@ public class Parser {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		System.out.println(xmlParse(""));
+		System.out.println(xmlParse("/temp/xmlParse/test_parser1.xml"));
 	}
 
 	public static Document xmlParse(String path) throws Throwable {
-		String pathFile = "";
+		String pathFile = "/temp/xmlParse/test_parser1.xml";
 		File file = new File(pathFile);
 		if (file.exists()) {
 			return parse(file);
@@ -63,7 +63,7 @@ public class Parser {
 		if (sb.indexOf("<?xml") != -1) {
 			int fineInt = sb.indexOf("?>") + 2;
 			intestazione = sb.substring(sb.indexOf("<?xml"), fineInt);
-			sb.delete(sb.indexOf(intestazione),intestazione.length());
+			sb.delete(sb.indexOf(intestazione),sb.indexOf("<", intestazione.length()));
 			if (intestazione.contains("version")) {
 				String numVersion = intestazione.substring(
 						intestazione.indexOf("\"", intestazione.indexOf("version")) + 1,
@@ -80,35 +80,42 @@ public class Parser {
 				document.setEncoding(encoding);;
 			}
 		}
-		for(int i = 0; i < sb.length(); i++) {
+		for(int i = 0; i < sb.length();i++) {
 			if(sb.charAt(i)!='<') {
 				Node node = new Node();
 				node.setElement(false);
 				String s = "";
-
+//				i++;
 				while(sb.charAt(i)!='<') {
+					
 					s+=sb.charAt(i);
 					i++;
 				}
-
+				
+				s = s.substring(1);
 				node.setTextContent(s);
 				--i;
+				System.out.println(s);
 				documento.add(node);
 
-			}else {
+			}
+			else {
+				i++;
 				if(!root) {
-					root=true;       
+					root=true;  
+					countEl++;
 					String s = "";
 					Element el = new Element();
 					
 					while(sb.charAt(i)!='>') {
+						
 						s+=sb.charAt(i);
 						i++;
 					}
                     
-					if(s.endsWith("/")) {
-					   
-					    s=s.substring(0,s.length()-2);
+					if(s.endsWith("/>")) {
+					   countEl--;
+					    s=s.substring(0,s.length()-3);
 					    el.setTagName(s);
 					    document.setRootElement(el);
 					    documento.add(el);
@@ -117,13 +124,43 @@ public class Parser {
 					    
 					}
 					
-					el.setTagName(s);
+				    el.setTagName(s); 
+					System.out.println(s);
 					document.setRootElement(el);
 					documento.add(el);
 					--i;	
-					System.out.println(s);
+					
 						
 			}
+				else {
+					countEl++;
+					String s = "";
+					Element el = new Element();
+					
+					while(sb.charAt(i)!='>') {
+						
+						s+=sb.charAt(i);
+						i++;
+					}
+                    
+					if(s.endsWith("/>")) {
+					   countEl--;
+					    s=s.substring(0,s.length()-3);
+					    el.setTagName(s);
+					    documento.add(el);
+					} else if(s.startsWith("/")) {
+						countEl--;
+						s=s.substring(1);
+					    el.setTagName(s);
+					    String content = sb.substring(sb.indexOf("<"+el.getTagName()+">")+el.getTagName().length()+2, 
+					    		sb.indexOf("</"+el.getTagName()+">"));
+					    if(!content.contains("<")) el.setTextValue(content);
+					    documento.add(el);
+					} else {
+						
+					}
+					
+				}
 			
 			//crei un element
 		}
