@@ -28,8 +28,6 @@ public class ConnectionTest {
 				while(rs.next()) {
 					System.out.println(conn + " = " + rs.getString("nome") + " " + rs.getString("cognome"));
 				}
-				
-				conn.closeConnection();
 
 			} else {
 				System.out.println("Non puoi aprire altre connessioni");
