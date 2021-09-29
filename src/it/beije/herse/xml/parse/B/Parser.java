@@ -21,16 +21,20 @@ import java.util.List;
  */
 public class Parser {
 
+	static List<Node> documento = new ArrayList<>();
+	static int countEl = 0;
+	static boolean root = false;
+
 	public Parser() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) throws Throwable {
-		System.out.println(xmlParse("C:\\Users\\nicol\\Desktop\\Beije\\test_parser1.xml"));
+		System.out.println(xmlParse(""));
 	}
 
 	public static Document xmlParse(String path) throws Throwable {
-		String pathFile = "C:\\Users\\nicol\\Desktop\\Beije\\test_parser1.xml";
+		String pathFile = "";
 		File file = new File(pathFile);
 		if (file.exists()) {
 			return parse(file);
@@ -55,7 +59,7 @@ public class Parser {
 			char carattere = (char) reader.read();
 			sb.append(carattere);
 		}
-		
+
 		if (sb.indexOf("<?xml") != -1) {
 			int fineInt = sb.indexOf("?>") + 2;
 			intestazione = sb.substring(sb.indexOf("<?xml"), fineInt);
@@ -80,15 +84,55 @@ public class Parser {
 			if(sb.charAt(i)!='<') {
 				Node node = new Node();
 				node.setElement(false);
-			}else {
-				//crei un element
-			}
-		}
-		
-//		System.out.println(intestazione);
-//		System.out.println();
-	System.out.println(sb);
-		return null;
+				String s = "";
 
+				while(sb.charAt(i)!='<') {
+					s+=sb.charAt(i);
+					i++;
+				}
+
+				node.setTextContent(s);
+				--i;
+				documento.add(node);
+
+			}else {
+				if(!root) {
+					root=true;       
+					String s = "";
+					Element el = new Element();
+					
+					while(sb.charAt(i)!='>') {
+						s+=sb.charAt(i);
+						i++;
+					}
+                    
+					if(s.endsWith("/")) {
+					   
+					    s=s.substring(0,s.length()-2);
+					    el.setTagName(s);
+					    document.setRootElement(el);
+					    documento.add(el);
+					    
+					    return document;
+					    
+					}
+					
+					el.setTagName(s);
+					document.setRootElement(el);
+					documento.add(el);
+					--i;	
+					System.out.println(s);
+						
+			}
+			
+			//crei un element
+		}
 	}
+
+	//		System.out.println(intestazione);
+	//		System.out.println();
+	System.out.println(sb);
+	return null;
+
+}
 }

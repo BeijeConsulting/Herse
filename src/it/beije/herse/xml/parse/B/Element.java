@@ -9,5 +9,27 @@ public class Element extends Node {
 	private String textValue;
 	//private Map<String, String> attributes;
 	private List<Node> childNodes;
-	
+
+	public String getTagName() {
+		return tagName;
+	}
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+	public String getTextValue() {
+		return textValue;
+	}
+	public void setTextValue(String textValue) {
+		this.textValue = textValue;
+	}
+
+	public List<Node> getChildNodes() {
+		return childNodes;
+	}
+	public void setChildNodes(List<Node> childNodes) {
+		this.childNodes = childNodes;
+	}
+
+
 }

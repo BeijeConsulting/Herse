@@ -5,6 +5,8 @@ public class Document {
 	private double xmlVersion;
 	private String encoding;
 	private Element rootElement;
+	
+	
 	public double getXmlVersion() {
 		return xmlVersion;
 	}
