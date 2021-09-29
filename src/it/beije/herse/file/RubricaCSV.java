@@ -32,6 +32,7 @@ public class RubricaCSV {
 			title[last] = title[last].substring(0, title[last].length()-1);
 		}
 		
+		
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		Contatto contatto = null;
 		String[] cols = null;

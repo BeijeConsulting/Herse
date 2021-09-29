@@ -52,7 +52,6 @@ public class Contatto {
 		this.note = note;
 	}
 	
-	
 	public String toString() {
 //		StringBuilder builder = new StringBuilder("{id: ").append(id);
 //		builder.append(", nome: ").append(nome);
