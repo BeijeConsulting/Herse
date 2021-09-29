@@ -15,7 +15,7 @@ public class ConnectionManager {
 		
 		if (connection == null || connection.isClosed()) {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "beije");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "abcabcde");
 		}
 		
 		return connection;

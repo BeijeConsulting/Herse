@@ -1,6 +1,7 @@
 package it.beije.herse.file;
 
-public class Contatto {
+public class Contatto{
+
 
 	private int id;
 	private String nome;
@@ -72,4 +73,14 @@ public class Contatto {
 		return builder.toString();
 	}
 
+
+public Contatto() {}
+
+public Contatto(String nome, String cognome, String telefono, String email, String note) {
+	this.nome = nome;
+	this.cognome = cognome;
+	this.telefono = telefono;
+	this.email = email;
+	this.note = note;
+}
 }
