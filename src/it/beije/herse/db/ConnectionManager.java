@@ -30,7 +30,7 @@ public class ConnectionManager {
 		
 	}
 	
-	public ResultSet executeQuery(String query) throws SQLException {	
+	public ResultSet executeQuery(String query) throws SQLException {
 		return connection.createStatement().executeQuery(query);		
 	}
 	
@@ -38,12 +38,12 @@ public class ConnectionManager {
 		return connection.createStatement().execute(query);
 	}
 	
-	public static boolean closeConnection(ConnectionManager conn) throws SQLException {
+	public boolean closeConnection() throws SQLException {
 		
 		boolean closed;
 		
-		if(!(closed = conn.connection.isClosed())) {
-			conn.connection.close();
+		if(!(closed = connection.isClosed())) {
+			connection.close();
 			count--;
 		}
 		

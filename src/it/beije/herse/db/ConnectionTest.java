@@ -29,7 +29,7 @@ public class ConnectionTest {
 					System.out.println(conn + " = " + rs.getString("nome") + " " + rs.getString("cognome"));
 				}
 				
-				ConnectionManager.closeConnection(conn);
+				conn.closeConnection();
 
 			} else {
 				System.out.println("Non puoi aprire altre connessioni");
