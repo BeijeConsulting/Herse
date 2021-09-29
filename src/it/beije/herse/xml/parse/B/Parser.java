@@ -47,9 +47,6 @@ public class Parser {
 		// corretta chiusura del tag </>
 		Document document = new Document();
 		StringBuilder sb = new StringBuilder();
-		List<String> element = new ArrayList<>();
-		List<String> node = new ArrayList<>();
-		List<String> index = new ArrayList<>();
 		String intestazione = null;
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
@@ -79,7 +76,13 @@ public class Parser {
 				document.setEncoding(encoding);;
 			}
 		}
-		if(true) {
+		for(int i = 0; i < sb.length(); i++) {
+			if(sb.charAt(i)!='<') {
+				Node node = new Node();
+				node.setElement(false);
+			}else {
+				//crei un element
+			}
 		}
 		
 //		System.out.println(intestazione);
