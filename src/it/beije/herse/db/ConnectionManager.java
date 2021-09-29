@@ -2,23 +2,53 @@ package it.beije.herse.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 public class ConnectionManager {
 	
-	private ConnectionManager() {}
+	private static int count = 0;
+	private static final int maxInstance = 5;
+	private Connection connection;
 	
-	private static Connection connection;
-	
-	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	private ConnectionManager() {
+		count++;
+	}
+
+	public static ConnectionManager newInstance() throws ClassNotFoundException, SQLException {
 		
-		if (connection == null || connection.isClosed()) {
+		ConnectionManager c = new ConnectionManager();
+		
+		if (count <= maxInstance) {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "beije");
+			c.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "savino");
+		} else {
+			return null;
 		}
 		
-		return connection;
+		return c;
+		
+	}
+	
+	public ResultSet executeQuery(String query) throws SQLException {	
+		return connection.createStatement().executeQuery(query);		
+	}
+	
+	public boolean execute(String query) throws SQLException {		
+		return connection.createStatement().execute(query);
+	}
+	
+	public static boolean closeConnection(ConnectionManager conn) throws SQLException {
+		
+		boolean closed;
+		
+		if(!(closed = conn.connection.isClosed())) {
+			conn.connection.close();
+			count--;
+		}
+		
+		return closed;
+		
 	}
 	
 }
