@@ -22,7 +22,7 @@ import java.util.List;
 public class Parser {
 
 	static List<Node> documento = new ArrayList<>();
-	static int countEl = 0;
+	static int countEl = -1;
 	static boolean root = false;
 
 	public Parser() {
@@ -52,6 +52,8 @@ public class Parser {
 		Document document = new Document();
 		StringBuilder sb = new StringBuilder();
 		String intestazione = null;
+		List<String> instance = new ArrayList<>();
+		
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
 
@@ -95,7 +97,7 @@ public class Parser {
 				s = s.substring(1);
 				node.setTextContent(s);
 				--i;
-				System.out.println(s);
+//				System.out.println(s);
 				documento.add(node);
 
 			}
@@ -103,7 +105,7 @@ public class Parser {
 				i++;
 				if(!root) {
 					root=true;  
-					countEl++;
+//					countEl++;
 					String s = "";
 					Element el = new Element();
 					
@@ -117,23 +119,30 @@ public class Parser {
 					   countEl--;
 					    s=s.substring(0,s.length()-3);
 					    el.setTagName(s);
+					    el.setElement(true);
 					    document.setRootElement(el);
 					    documento.add(el);
 					    
 					    return document;
 					    
+					} else if(s.startsWith("/") && s.equals(instance.get(countEl))) {
+						instance.remove(countEl);
+						
+						countEl--;
+						s=s.substring(1);
+					    el.setTagName(s);
+					    el.setElement(true);
+					    document.setRootElement(el);
+					    documento.add(el);
+					} else {
+						countEl++;
+						instance.add(s);
 					}
 					
-				    el.setTagName(s); 
-					System.out.println(s);
-					document.setRootElement(el);
-					documento.add(el);
 					--i;	
-					
-						
 			}
 				else {
-					countEl++;
+//					countEl++;
 					String s = "";
 					Element el = new Element();
 					
@@ -147,28 +156,30 @@ public class Parser {
 					   countEl--;
 					    s=s.substring(0,s.length()-3);
 					    el.setTagName(s);
+					    el.setElement(true);
 					    documento.add(el);
-					} else if(s.startsWith("/")) {
+					} else if(s.startsWith("/") && s.equals(instance.get(countEl))) {
+						instance.remove(countEl);
+						
 						countEl--;
 						s=s.substring(1);
 					    el.setTagName(s);
+					    el.setElement(true);
 					    String content = sb.substring(sb.indexOf("<"+el.getTagName()+">")+el.getTagName().length()+2, 
 					    		sb.indexOf("</"+el.getTagName()+">"));
 					    if(!content.contains("<")) el.setTextValue(content);
 					    documento.add(el);
 					} else {
-						
+						instance.add(s);
+						countEl++;
 					}
 					
 				}
 			
-			//crei un element
 		}
 	}
 
-	//		System.out.println(intestazione);
-	//		System.out.println();
-	System.out.println(sb);
+	for(Node n : documento) System.out.println(n);
 	return null;
 
 }

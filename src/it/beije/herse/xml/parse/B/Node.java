@@ -17,6 +17,10 @@ public class Node{
 	public void setTextContent(String textContent) {
 		this.textContent = textContent;
 	}
+	@Override
+	public String toString() {
+		return "Node [isElement=" + isElement + ", textContent=" + textContent + "]";
+	}
 
 	
 }

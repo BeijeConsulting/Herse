@@ -10,6 +10,10 @@ public class Element extends Node {
 	//private Map<String, String> attributes;
 	private List<Node> childNodes;
 
+	public Element() {
+		super();
+		super.setElement(true);
+	}
 	public String getTagName() {
 		return tagName;
 	}
@@ -29,6 +33,11 @@ public class Element extends Node {
 	}
 	public void setChildNodes(List<Node> childNodes) {
 		this.childNodes = childNodes;
+	}
+	@Override
+	public String toString() {
+		return "Element [tagName=" + tagName + ", textValue=" + textValue + ", childNodes=" + childNodes + "]";
+		//return this.isElement();
 	}
 
 
