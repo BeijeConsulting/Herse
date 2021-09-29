@@ -134,8 +134,10 @@ public class PhoneContactsManager {
 	}
 
 	private static void findDuplicate() {
-		// TODO Auto-generated method stub
-		
+//		select distinct r1.*
+//		from rubrica as r1 join rubrica as r2
+//		on r1.nome = r2.nome AND r1.cognome = r2.cognome AND r1.telefono = r2.telefono AND
+//		r1.email = r2.email AND r1.note = r2.note AND r1.id <> r2.id;
 	}
 
 	private static void removeContatto() {
