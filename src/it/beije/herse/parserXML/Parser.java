@@ -31,7 +31,7 @@ public class Parser {
 		
 	}
 	
-	private boolean x(Element e, String str) {}
+	//private boolean x(Element e, String str) {}
 
 	public String parseComment(String str) {
 
