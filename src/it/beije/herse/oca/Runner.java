@@ -6,11 +6,11 @@ public class Runner {
 		
 		//Singleton singleton = new Singleton();
 
-		System.out.println(Singleton.getInstance());
-		System.out.println(Singleton.getInstance());
-		System.out.println(Singleton.getInstance());
-		System.out.println(Singleton.getInstance());
-		System.out.println(Singleton.getInstance());
+//		System.out.println(Singleton.getInstance());
+//		System.out.println(Singleton.getInstance());
+//		System.out.println(Singleton.getInstance());
+//		System.out.println(Singleton.getInstance());
+//		System.out.println(Singleton.getInstance());
 
 	}
 
