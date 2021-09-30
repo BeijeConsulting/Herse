@@ -87,7 +87,7 @@ public class Parser {
 		if(e != null)
 			System.out.println(e.getTagName());
 		else
-			System.out.println("non funziona un cazzo");
+			System.out.println("non funziona");
 
 	}
 
