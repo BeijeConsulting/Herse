@@ -1,4 +1,4 @@
-package it.beije.herse.OCA;
+package it.beije.herse.oca;
 
 public class Singleton {
 	
