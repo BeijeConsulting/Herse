@@ -13,11 +13,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
 import it.beije.herse.file.Contatto;
 
 
 
-public class RubricaJDBCloadstore {
+public class RubricaDB {
 
 
 
@@ -114,7 +120,7 @@ public class RubricaJDBCloadstore {
 		}
 	}
 
-	public static List<Contatto> exportDB(){
+	public static List<Contatto> importDB(){
 		List <Contatto> rubricaDB = new ArrayList<>();
 
 		Connection connection = null;
@@ -157,7 +163,7 @@ public class RubricaJDBCloadstore {
 		return rubricaDB;  	
 	}
 
-	public static void importDB(List<Contatto> rubricaDB) {
+	public static void exportDB(List<Contatto> rubricaDB) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -195,22 +201,63 @@ public class RubricaJDBCloadstore {
 			}
 		}
 	}		
+	
+	
+	public static List<Contatto> exportHBM() {
+		
+		Configuration configuration = new Configuration().configure()
+				.addAnnotatedClass(Contatto.class);
+		
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		
+		Session session = sessionFactory.openSession();
+		
+		System.out.println("session is open ? " + session.isOpen());
+		
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
+		
+		List<Contatto> contatti = query.getResultList();
+		
+		session.close();
+		
+		return contatti;
+	}
+	
+	
+	public static void importHB(List<Contatto> contatti) {
 
+		Configuration configuration = new Configuration().configure()
+				.addAnnotatedClass(Contatto.class);
+		
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		
+		Session session = sessionFactory.openSession();
+		
+		System.out.println("session is open ? " + session.isOpen());
+		
+		Transaction transaction = session.beginTransaction();
+		
+		for(Contatto c : contatti) {
+			Contatto newContatto = new Contatto();
+			newContatto.setCognome(c.getCognome());
+			newContatto.setNome(c.getNome());
+			newContatto.setEmail(c.getEmail());
+			newContatto.setNote(c.getNote());
+			System.out.println("contatto PRE : " + newContatto);
+			session.save(newContatto);
+			System.out.println("contatto POST : " + newContatto);
 
-	public static void main(String[] args) throws IOException {
-		List <Contatto> rubricaDB = null;
-
-		try {
-			rubricaDB = RubricaFile.loadRubricaFromCSV("/temp/prova.csv", ";");
-		}catch(IOException ioe){
-			ioe.printStackTrace();
 		}
+		
+		transaction.commit();
+		session.close();
+		
+	}
 
 
-		importDB(rubricaDB);
-		RubricaFile.writeRubricaCSV(rubricaDB, "/temp/RubricaCSV.csv", ";");
-		rubricaDB = exportDB();
-
+	public static void main(String[] args)  {
+		
+			System.out.print("ciao" + '\n' + '\n' + "ciao");
 
 	}
 
