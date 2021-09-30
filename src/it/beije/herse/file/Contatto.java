@@ -1,13 +1,16 @@
 package it.beije.herse.file;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "rubrica")
 public class Contatto {
-	
-	private int id;
-	private String nome;
-	private String cognome;
-	private String telefono;
-	private String email;
-	private String note;
 	
 	public Contatto() {
 		super();
@@ -21,7 +24,35 @@ public class Contatto {
 		this.email = email;
 		this.note = note;
 	}
-		
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	
+	@Column(name="nome")
+	private String nome;
+
+	@Column(name="cognome")
+	private String cognome;
+	
+	//@Column(name="telefono")
+	private String telefono;
+
+	//@Column(name="email")
+	//@Column
+	private String email;
+
+	@Column(name="note")
+	private String note;
+//	private String annotazioni;
+//	public String getAnnotazioni() {
+//		return annotazioni;
+//	}
+//	public void setAnnotazioni(String annotazioni) {
+//		this.annotazioni = annotazioni;
+//	}
+
 	public int getId() {
 		return id;
 	}
@@ -78,7 +109,8 @@ public class Contatto {
 				.append(", cognome: ").append(cognome)
 				.append(", telefono: ").append(telefono)
 				.append(", email: ").append(email)
-				.append(", note: ").append(note).append("}");
+				.append(", note: ").append(note)
+				.append("}");
 		
 		return builder.toString();
 	}
