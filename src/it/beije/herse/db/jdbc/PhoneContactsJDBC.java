@@ -1,4 +1,4 @@
-package it.beije.herse.db;
+package it.beije.herse.db.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

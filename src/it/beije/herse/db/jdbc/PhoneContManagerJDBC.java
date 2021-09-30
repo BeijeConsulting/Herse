@@ -1,4 +1,4 @@
-package it.beije.herse.db;
+package it.beije.herse.db.jdbc;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import it.beije.herse.file.xml.PhoneContactsXML;
 *	X import XML/CSV
 *	X export XML/CSV
 */
-public class PhoneContactsManager {
+public class PhoneContManagerJDBC {
 	
 	private static Scanner s = new Scanner(System.in);
 	private static String input;
