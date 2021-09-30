@@ -1,7 +1,7 @@
 package database;
 
 public class Contatto {
-	
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
@@ -41,6 +41,12 @@ public class Contatto {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

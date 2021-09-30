@@ -1,28 +1,22 @@
 package database;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-
-	
 
 public class RubricaJDBC {
 	
-public static Connection openConnection() throws ClassNotFoundException, SQLException {
+	public static Connection openConnection() throws ClassNotFoundException, SQLException {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/herse?serverTimezone=CET", "root", "caba");
 		 
 	}
-	
-	public static List <Contatto>  loadRubricaDB(){
-		List<Contatto> rubrica = new ArrayList<Contatto>();
+
+	public static void mainStatement(String[] args)  {
 		
 		Connection connection = null;
 		Statement statement = null;
@@ -34,20 +28,32 @@ public static Connection openConnection() throws ClassNotFoundException, SQLExce
 			System.out.println("connection open ? " + !connection.isClosed());
 
 			statement = connection.createStatement();
+
+			int r = 0;
+
+//			String nome = "Gertrude";
+//			r = statement.executeUpdate("INSERT INTO rubrica (cognome, nome) VALUES ('Bianchi', '" + nome + "')");
+
+//			r = statement.executeUpdate("UPDATE rubrica SET telefono = '98767544', email = 'ger.white@tin.it' WHERE id = 14");
+
+//			r = statement.executeUpdate("DELETE FROM rubrica WHERE id = 13");
+
+			System.out.println("r : " + r);
+
 			
-			 rs = statement.getResultSet();
-			 rs = statement.executeQuery("SELECT * FROM rubrica");
+//			statement.execute("SELECT * FROM rubrica");
+//			ResultSet rs = statement.getResultSet();
+			rs = statement.executeQuery("SELECT * FROM rubrica");
 			while (rs.next()) {
-				Contatto c = new Contatto();
-				c.setNome(rs.getString("nome"));
-				c.setCognome(rs.getString("cognome"));
-				c.setEmail(rs.getString("email"));
-				c.setTelefono(rs.getString("telefono"));
-				c.setNote(rs.getString("note"));
-				rubrica.add(c);
-				}
-			
-		}catch (ClassNotFoundException cnfEx) {
+				System.out.println("id : " + rs.getInt("id"));
+				System.out.println("nome : " + rs.getString("nome"));
+				System.out.println("cognome : " + rs.getString("cognome"));
+				System.out.println("telefono : " + rs.getString("telefono"));
+				System.out.println("email : " + rs.getString("email"));
+				System.out.println("note : " + rs.getString("note"));
+				System.out.println();
+			}
+		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
@@ -60,57 +66,68 @@ public static Connection openConnection() throws ClassNotFoundException, SQLExce
 				e.printStackTrace();
 			}
 		}
-		
-		
-		return rubrica;
-	}
-	
-	public static void writeRubricaDB(List<Contatto> rubrica) {
 
+		//SELECT * FROM USERS WHERE USERNAME='XXX'
+		// ' or username <> '
+		//SELECT * FROM USERS WHERE USERNAME='' or username <> '' 
+	}
+
+	public static void main(String[] args)  {
+		
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedQuery = null;
+		ResultSet rs = null;
 		
 		try {
 			connection = openConnection();
 			
 			System.out.println("connection open ? " + !connection.isClosed());
 
-			statement = connection.createStatement();
+			int r = 0;
 			
-			for(int i = 0; i<rubrica.size(); i++) {
-			Contatto c = rubrica.get(i);
-			String nome = c.getNome();
-			String cognome = c.getCognome();
-			String email = c.getEmail();
-			String telefono = c.getTelefono();
-			String note = c.getNote();
-			 statement.executeUpdate("INSERT INTO rubrica (nome, cognome, telefono, email, note) VALUES ('" + nome + "','"  + cognome +
-					 											"','" + telefono +  "','" + email + "','" + note + "')" ); 
+//			String nome = "Gertrude";
+//			preparedStatement  = connection.prepareStatement("INSERT INTO rubrica (cognome, nome) VALUES (?,?)");
+//			preparedStatement.setString(1, "Verdi");
+//			preparedStatement.setString(2, "Giuseppe");
+			
+//			preparedStatement  = connection.prepareStatement("UPDATE rubrica SET telefono = ?, email = ? WHERE id = ?");
+//			preparedStatement.setString(1, "09098088");
+//			preparedStatement.setString(2, "g.verdi@tin.it");
+//			preparedStatement.setInt(3, 15);
+//
+//			r = preparedStatement.executeUpdate();
+//			System.out.println("r : " + r);
+
+			preparedQuery = connection.prepareStatement("SELECT * FROM rubrica where cognome = ?");
+			preparedQuery.setString(1, "Verdi");
+			rs = preparedQuery.executeQuery();
+			while (rs.next()) {
+				System.out.println("id : " + rs.getInt("id"));
+				System.out.println("nome : " + rs.getString("nome"));
+				System.out.println("cognome : " + rs.getString("cognome"));
+				System.out.println("telefono : " + rs.getString("telefono"));
+				System.out.println("email : " + rs.getString("email"));
+				System.out.println("note : " + rs.getString("note"));
+				System.out.println();
 			}
-			
-		}catch (ClassNotFoundException cnfEx) {
+		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace();
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		} finally {
 			try {
-				statement.close();
+				rs.close();
+				preparedStatement.close();
+				preparedQuery.close();
 				connection.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
 
-	public static void main(String[] args) throws IOException {
-		List <Contatto> rubricaDB = RubricaFile.loadRubricaFromCSV("/temp/prova.csv", ";");
-//		System.out.println(rubricaList.get(0).getNome());
-	
-//		System.out.println(rubricaDB.get(0).getNome());
-		writeRubricaDB(rubricaDB);
-		List <Contatto> rubrica = loadRubricaDB();
-		
-		
+		//SELECT * FROM USERS WHERE USERNAME='XXX'
+		// ' or username <> '
+		//SELECT * FROM USERS WHERE USERNAME='' or username <> '' 
 	}
-
 }
