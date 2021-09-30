@@ -36,7 +36,7 @@ public class Element extends Node {
 	}
 	@Override
 	public String toString() {
-		return "Element [tagName=" + tagName + ", textValue=" + textValue + ", childNodes=" + childNodes + "]";
+		return "Element [tagName=" + tagName + ", textValue=" + textValue + ", childNodes=" + childNodes + ", isElement="+ super.isElement()+"]";
 		//return this.isElement();
 	}
 

@@ -53,6 +53,7 @@ public class Parser {
 		StringBuilder sb = new StringBuilder();
 		String intestazione = null;
 		List<String> instance = new ArrayList<>();
+		List<String> textVal = new ArrayList<>();
 		
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
@@ -83,6 +84,7 @@ public class Parser {
 			}
 		}
 		for(int i = 0; i < sb.length();i++) {
+			// IF NODE
 			if(sb.charAt(i)!='<') {
 				Node node = new Node();
 				node.setElement(false);
@@ -94,16 +96,25 @@ public class Parser {
 					i++;
 				}
 				
-				s = s.substring(1);
-				node.setTextContent(s);
+				if(s.trim().equals("")) {
+					node.setTextContent(s);
+					documento.add(node);
+				}
+				else {
+					textVal.add(s);
+				}
+				//s = s.substring(1);
+//				node.setTextContent(s);
 				--i;
 //				System.out.println(s);
-				documento.add(node);
+				
 
 			}
+			// IF ELEMENT
 			else {
 				i++;
 				if(!root) {
+					//System.out.println("ROOT");
 					root=true;  
 //					countEl++;
 					String s = "";
@@ -142,6 +153,7 @@ public class Parser {
 					--i;	
 			}
 				else {
+					//System.out.println("EL");
 //					countEl++;
 					String s = "";
 					Element el = new Element();
@@ -151,14 +163,17 @@ public class Parser {
 						s+=sb.charAt(i);
 						i++;
 					}
-                    
+//					countEl++;
+//					System.out.println(s);
+					
 					if(s.endsWith("/>")) {
 					   countEl--;
 					    s=s.substring(0,s.length()-3);
 					    el.setTagName(s);
 					    el.setElement(true);
 					    documento.add(el);
-					} else if(s.startsWith("/") && s.equals(instance.get(countEl))) {
+					} else if(s.startsWith("/") && s.equals("/"+instance.get(countEl))) {
+						//System.out.println("TAG CHIUSO");
 						instance.remove(countEl);
 						
 						countEl--;
@@ -167,11 +182,16 @@ public class Parser {
 					    el.setElement(true);
 					    String content = sb.substring(sb.indexOf("<"+el.getTagName()+">")+el.getTagName().length()+2, 
 					    		sb.indexOf("</"+el.getTagName()+">"));
-					    if(!content.contains("<")) el.setTextValue(content);
+					    if(!content.contains("<")) {
+					    	el.setTextValue(textVal.get(countEl));
+					    	textVal.remove(countEl);
+					    }
+					    System.out.println(s);
 					    documento.add(el);
 					} else {
 						instance.add(s);
 						countEl++;
+//						System.out.println(instance.get(countEl));
 					}
 					
 				}
@@ -180,7 +200,8 @@ public class Parser {
 	}
 
 	for(Node n : documento) System.out.println(n);
+//	System.out.println(countEl);
 	return null;
 
-}
+	}
 }
