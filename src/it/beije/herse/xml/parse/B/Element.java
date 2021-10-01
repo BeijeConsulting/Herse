@@ -8,7 +8,7 @@ public class Element extends Node {
 	private String tagName;
 	private String textValue;
 	//private Map<String, String> attributes;
-	private List<Node> childNodes;
+	private List<Element> childNodes;
 
 	public Element() {
 		super();
@@ -28,12 +28,17 @@ public class Element extends Node {
 		this.textValue = textValue;
 	}
 
-	public List<Node> getChildNodes() {
+	public List<Element> getChildNodes() {
 		return childNodes;
 	}
-	public void setChildNodes(List<Node> childNodes) {
+	public void setChildNodes(List<Element> childNodes) {
 		this.childNodes = childNodes;
 	}
+	
+	public String getTextContent() {
+		return this.tagName;
+		}
+	
 	@Override
 	public String toString() {
 		return "Element [tagName=" + tagName + ", textValue=" + textValue + ", childNodes=" + childNodes + ", isElement="+ super.isElement()+"]";

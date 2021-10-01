@@ -25,17 +25,12 @@ public class Parser {
 	static int countEl = -1;
 	static boolean root = false;
 
-	public Parser() {
-		// TODO Auto-generated constructor stub
-	}
+	public Parser() {}
 
-	public static void main(String[] args) throws Throwable {
-		System.out.println(xmlParse("/temp/xmlParse/test_parser1.xml"));
-	}
 
-	public static Document xmlParse(String path) throws Throwable {
-		String pathFile = "/temp/xmlParse/test_parser1.xml";
-		File file = new File(pathFile);
+	public static Document xmlParse(String path) throws Throwable {		//completata
+		//		String pathFile = "/temp/xmlParse/test_parser1.xml";
+		File file = new File(path);
 		if (file.exists()) {
 			return parse(file);
 		}
@@ -54,32 +49,35 @@ public class Parser {
 		String intestazione = null;
 		List<String> instance = new ArrayList<>();
 		List<String> textVal = new ArrayList<>();
-		
+
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
 
 		while (reader.ready()) {
-			char carattere = (char) reader.read();
+			char carattere = (char) reader.read();			
 			sb.append(carattere);
 		}
+		//		System.out.println(sb);
 
 		if (sb.indexOf("<?xml") != -1) {
 			int fineInt = sb.indexOf("?>") + 2;
 			intestazione = sb.substring(sb.indexOf("<?xml"), fineInt);
+			//			System.out.println("intestazione " + intestazione);
 			sb.delete(sb.indexOf(intestazione),sb.indexOf("<", intestazione.length()));
+			//			System.out.println("sb dopo delete" + sb);
 			if (intestazione.contains("version")) {
 				String numVersion = intestazione.substring(
 						intestazione.indexOf("\"", intestazione.indexOf("version")) + 1,
 						intestazione.indexOf("\"", intestazione.indexOf("version=\"") + 9));
 				double version = Double.parseDouble(numVersion);
-				System.out.println(version);
+				//				System.out.println(version);
 				document.setXmlVersion(version);
 			}
 			if (intestazione.contains("encoding")) {
 				String encoding = intestazione.substring(
 						intestazione.indexOf("\"", intestazione.indexOf("encoding")) + 1,
 						intestazione.indexOf("\"", intestazione.indexOf("encoding=\"") + 11));
-				System.out.println(encoding);
+				//				System.out.println(encoding);
 				document.setEncoding(encoding);;
 			}
 		}
@@ -89,25 +87,30 @@ public class Parser {
 				Node node = new Node();
 				node.setElement(false);
 				String s = "";
-//				i++;
-				while(sb.charAt(i)!='<') {
-					
-					s+=sb.charAt(i);
-					i++;
+				//				i++;
+				int j = i;
+//				while(sb.charAt(j)!='<') {
+				while(sb.charAt(j)!='<' && sb.charAt(j)!='>' ) {
+					s+=sb.charAt(j);
+					j++;
 				}
-				
+
 				if(s.trim().equals("")) {
 					node.setTextContent(s);
 					documento.add(node);
 				}
 				else {
+//					System.out.println("s nell'else " + s);
+					if(!s.startsWith("/"))
 					textVal.add(s);
+					i+=s.length();
+//					i++;
 				}
 				//s = s.substring(1);
-//				node.setTextContent(s);
-				--i;
-//				System.out.println(s);
-				
+				//				node.setTextContent(s);
+				//				--i;
+				//				System.out.println(s);
+
 
 			}
 			// IF ELEMENT
@@ -116,92 +119,114 @@ public class Parser {
 				if(!root) {
 					//System.out.println("ROOT");
 					root=true;  
-//					countEl++;
+					//					countEl++;
 					String s = "";
 					Element el = new Element();
-					
-					while(sb.charAt(i)!='>') {
-						
-						s+=sb.charAt(i);
-						i++;
+					int j = i;
+					while(sb.charAt(j)!='>') {
+
+						s+=sb.charAt(j);
+						j++;
 					}
-                    
-					if(s.endsWith("/>")) {
-					   countEl--;
-					    s=s.substring(0,s.length()-3);
-					    el.setTagName(s);
-					    el.setElement(true);
-					    document.setRootElement(el);
-					    documento.add(el);
-					    
-					    return document;
-					    
-					} else if(s.startsWith("/") && s.equals(instance.get(countEl))) {
-						instance.remove(countEl);
+
+//					System.out.println("s dopo while " + s);
+
+
+
+					//if(s.endsWith("/>")) {
+					if(s.endsWith("/")) {
+						System.out.println("STRINGA NELL'if " + s);
+						countEl--;
+						System.out.println("countEl : " + countEl);
+//						s=s.substring(0,s.length()-3);
+						s=s.substring(0,s.length()-1);
+//						System.out.println("s dopo substring " + s);
+						el.setTagName(s);
+						el.setElement(true);
+						document.setRootElement(el);
+						documento.add(el);
 						
+						return document;
+					}
+					 
+					 else if(s.startsWith("/") ) {
+						instance.remove(countEl);
 						countEl--;
 						s=s.substring(1);
-					    el.setTagName(s);
-					    el.setElement(true);
-					    document.setRootElement(el);
-					    documento.add(el);
+						System.out.println("root" + s);
+						el.setTagName(s);
+						el.setElement(true);
+						document.setRootElement(el);
+						documento.add(el);
 					} else {
+						
 						countEl++;
 						instance.add(s);
 					}
-					
+
 					--i;	
-			}
+				}
 				else {
 					//System.out.println("EL");
-//					countEl++;
+					//					countEl++;
 					String s = "";
 					Element el = new Element();
-					
+
 					while(sb.charAt(i)!='>') {
-						
+
 						s+=sb.charAt(i);
 						i++;
 					}
-//					countEl++;
-//					System.out.println(s);
-					
+					//					countEl++;
+					//					System.out.println(s);
+
 					if(s.endsWith("/>")) {
-					   countEl--;
-					    s=s.substring(0,s.length()-3);
-					    el.setTagName(s);
-					    el.setElement(true);
-					    documento.add(el);
+						countEl--;
+						s=s.substring(0,s.length()-3);
+						el.setTagName(s);
+						el.setElement(true);
+						documento.add(el);
 					} else if(s.startsWith("/") && s.equals("/"+instance.get(countEl))) {
 						//System.out.println("TAG CHIUSO");
 						instance.remove(countEl);
-						
+
 						countEl--;
 						s=s.substring(1);
-					    el.setTagName(s);
-					    el.setElement(true);
-					    String content = sb.substring(sb.indexOf("<"+el.getTagName()+">")+el.getTagName().length()+2, 
-					    		sb.indexOf("</"+el.getTagName()+">"));
-					    if(!content.contains("<")) {
-					    	el.setTextValue(textVal.get(countEl));
-					    	textVal.remove(countEl);
-					    }
-					    System.out.println(s);
-					    documento.add(el);
+						el.setTagName(s);
+						el.setElement(true);
+						String content = sb.substring(sb.indexOf("<"+el.getTagName()+">")+el.getTagName().length()+2, 
+								sb.indexOf("</"+el.getTagName()+">"));
+						if(!content.contains("<")) {
+							el.setTextValue(textVal.get(countEl));
+							textVal.remove(countEl);
+						}
+//						System.out.println(s);
+						documento.add(el);
 					} else {
 						instance.add(s);
 						countEl++;
-//						System.out.println(instance.get(countEl));
+						//						System.out.println(instance.get(countEl));
 					}
-					
+
 				}
-			
+
+			}
 		}
+	//	textVal.remove(document.getRootElement());
+
+//		for(Node n : documento) System.out.println(n);
+		//	System.out.println(countEl);
+		for(String text: textVal )
+			System.out.println("textVal " + text);
+//		for(String text: instance )
+//			System.out.println("instance " + text);
+		return document;
+
 	}
 
-	for(Node n : documento) System.out.println(n);
-//	System.out.println(countEl);
-	return null;
+	public static void main(String[] args) throws Throwable {
+		Document document = xmlParse("/temp/test_parser1.xml");
+		for(Node n : documento) System.out.println(n.getTextContent());
 
 	}
 }
