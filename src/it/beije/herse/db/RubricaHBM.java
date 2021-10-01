@@ -26,7 +26,7 @@ public class RubricaHBM {
 		
 		//HQL
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
-		//Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");//SELECT nome FROM rubrica WHERE cognome = 'Rossi'
+//		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");//SELECT nome FROM rubrica WHERE cognome = 'Rossi'
 		List<Contatto> contatti = query.list();
 //		Contatto c = new Contatto();
 //		c.setId(rs.getInt("id"));
@@ -40,19 +40,19 @@ public class RubricaHBM {
 			System.out.println(c);
 		}
 
-		Transaction transaction = session.beginTransaction();
-		//INSERT
-		Contatto newContatto = new Contatto();
-		//newContatto.setId(30);
-		newContatto.setCognome("Savino");
-		newContatto.setNome("Vecchia");
-		newContatto.setEmail("s.vecchia@beije.it");
-		System.out.println("contatto PRE : " + newContatto);
-		session.save(newContatto);
-		System.out.println("contatto POST : " + newContatto);
+//		Transaction transaction = session.beginTransaction();
+//		//INSERT
+//		Contatto newContatto = new Contatto();
+////	newContatto.setId(30);
+//		newContatto.setCognome("Savino");
+//		newContatto.setNome("Vecchia");
+//		newContatto.setEmail("s.vecchia@beije.it");
+//		System.out.println("contatto PRE : " + newContatto);
+//		session.save(newContatto);
+//		System.out.println("contatto POST : " + newContatto);
 
-		//transaction.commit();
-		//transaction.rollback();
+//		transaction.commit();
+//		transaction.rollback();
 		
 		session.close();
 	}
