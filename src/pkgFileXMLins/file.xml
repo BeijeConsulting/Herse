@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rubrica>
+	<utente>
+		<nome>Alexandra</nome>
+		<cognome>Caba</cognome>
+		<eta>21</eta>
+	</utente>
+	<utente>
+		<nome>Samuele</nome>
+		<cognome>Greco</cognome>
+		<eta>19</eta>
+	</utente>
+	<utente>
+		<nome>Chiara</nome>
+		<cognome>Collura</cognome>
+		<eta>25</eta>
+	</utente>
+</rubrica>
