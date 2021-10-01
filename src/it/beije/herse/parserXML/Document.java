@@ -15,6 +15,9 @@ public class Document{
 	public Element getRootElement(){
 		return rootNode.getElement();
 	}
+	public Node getRootNode() {
+		return rootNode;
+	}
 	
 	public List<Element> getElementsByTagName(String tagName) {
 		

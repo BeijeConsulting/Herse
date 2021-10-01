@@ -56,4 +56,10 @@ public class Node {
 		childs.add(child);
 	}
 
+	@Override
+	public String toString() {
+		return "Node [elem=" + elem + ", childs=" + childs + ", next=" + next + ", before=" + before + "]";
+	}
+
+	
 }

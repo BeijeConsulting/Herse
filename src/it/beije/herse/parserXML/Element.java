@@ -39,5 +39,12 @@ public class Element {
 	public boolean equals(String tag) {
 		return this.tag.equals(tag);
 	}
+
+	@Override
+	public String toString() {
+		return "Element [tag=" + tag + ", text=" + text + ", attributes=" + attributes + "]";
+	}
+	
+	
 	
 }
