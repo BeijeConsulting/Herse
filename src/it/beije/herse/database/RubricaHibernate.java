@@ -14,7 +14,7 @@ import it.beije.herse.file.Contatto;
 public class RubricaHibernate {
 
 	public static void main(String[] args) {
-		menu();
+		//menu();
 		
 	}
 
