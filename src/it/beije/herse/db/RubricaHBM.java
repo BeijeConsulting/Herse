@@ -1,4 +1,4 @@
-package it.beije.herse.db;
+
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class RubricaHBM {
 	public static void main(String[] args) {
 		
 		Configuration configuration = new Configuration().configure()
-				.addAnnotatedClass(Contatto.class);
+				//.addAnnotatedClass(Contatto.class);
 		
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		
