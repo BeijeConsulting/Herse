@@ -6,7 +6,7 @@ public class Parser {
 
 		String elem;
 		Element start = new Element();
-
+		//just for commit
 		if(str.contains("<") && str.contains(">")) {
 
 			if(str.indexOf("<") < str.indexOf(">")) {
