@@ -15,7 +15,7 @@ public class Main {
 			switch(scelta) {
 			case 1:
 				//MetodiJDBC.LeggiContatti(connection);
-						hbn.leggiContattiHBN();
+						hbn.leggiContatti();
 				break;
 			case 2:
 				//MetodiJDBC.CaricaContatti(connection);

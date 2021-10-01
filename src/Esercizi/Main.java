@@ -5,6 +5,7 @@ public class Main {
 		int i;
 		String[] s= {"ciao","mi", "chiamo"};
 		String s2="Omar";
+		s2=s2.toString().concat("ciao");
 		Es1 es1=new Es1();
 		Es2 es2=new Es2();
 		Es3 es3=new Es3();
