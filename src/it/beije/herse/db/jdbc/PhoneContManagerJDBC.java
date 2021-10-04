@@ -16,8 +16,8 @@ import it.beije.herse.file.xml.PhoneContactsXML;
 *	X inserisci nuovo contatto
 *	X modifica contatto
 *	X cancella contatto
-*	->trova contatti duplicati
-*	->unisci contatti duplicati
+*	X trova contatti duplicati
+*	X unisci contatti duplicati
 *	X import XML/CSV
 *	X export XML/CSV
 */
@@ -63,7 +63,7 @@ public class PhoneContManagerJDBC {
 			case "TROVARE CONTATTI DUPLICATI":
 				findDuplicate();
 				break;
-			case "ELIMINARE CONTATTI DUPLICATI":
+			case "UNIRE CONTATTI DUPLICATI":
 				removeDuplicate();
 				break;
 			case "IMPORTARE RUBRICA":
@@ -75,7 +75,7 @@ public class PhoneContManagerJDBC {
 			case "USCIRE":
 				return ;
 			default:
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 				break;
 			}
 		}while(!input.equalsIgnoreCase("USCIRE"));
@@ -94,13 +94,15 @@ public class PhoneContManagerJDBC {
 				System.out.println("INSERIRE SEPARATORE: ");
 				String separator = s.nextLine();
 				PhoneContactsCSV.writeRubricaCSV(PhoneContactsJDBC.readRubricaJDBC(), pathExportCSV, separator);
+				System.out.println("CONTATTI ESPORTATI");
 				break;
 			case "XML":
 				PhoneContactsXML.writeRubricaXML(PhoneContactsJDBC.readRubricaJDBC(), pathExportXML);
+				System.out.println("CONTATTI ESPORTATI");
 				break;
 			default:
 				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 				break;
 			}
 		}while(notValidInput);
@@ -117,27 +119,28 @@ public class PhoneContManagerJDBC {
 				System.out.println("INSERIRE SEPARATORE: ");
 				String separator = s.nextLine();
 				PhoneContactsJDBC.insertRubricaJDBC(PhoneContactsCSV.readRubricaCSV(path, separator));
+				System.out.println("CONTATTI IMPORTATI");
 			}
 			else if(path.endsWith("xml") && new File(path).exists()) {
 				PhoneContactsJDBC.insertRubricaJDBC(PhoneContactsXML.readRubricaXML(path));
+				System.out.println("CONTATTI IMPORTATI");
 			}
 			else{
 				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 			}
 		}while(notValidInput);
 	}
 
 	private static void removeDuplicate() {
-		// TODO Auto-generated method stub
-		
+		PhoneContactsJDBC.removeDuplicateJDBC();
+		System.out.println("DUPLICATI UNITI");
 	}
 
 	private static void findDuplicate() {
-//		select distinct r1.*
-//		from rubrica as r1 join rubrica as r2
-//		on r1.nome = r2.nome AND r1.cognome = r2.cognome AND r1.telefono = r2.telefono AND
-//		r1.email = r2.email AND r1.note = r2.note AND r1.id <> r2.id;
+		System.out.println();
+		System.out.println("DUPLICATI: ");
+		PhoneContactsJDBC.printRubrica(PhoneContactsJDBC.findDuplicateJDBC());
 	}
 
 	private static void removeContatto() {
@@ -170,7 +173,7 @@ public class PhoneContManagerJDBC {
 				break;
 			default:
 				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 				break;
 			}
 		}while(notValidInput);
@@ -185,43 +188,6 @@ public class PhoneContManagerJDBC {
 
 	private static void modifyContatto() {
 		boolean notValidInput = false;
-		String attr = null;
-		do {
-			System.out.println();
-			System.out.println("SPECIFICARE CAMPO DA MODIFICARE : ");
-			
-			notValidInput = false;
-			input = s.nextLine().toUpperCase();
-			switch(input) {
-			case "ID":
-				attr = "id";
-				break;
-			case "NOME":
-				attr = "nome";
-				break;
-			case "COGNOME":
-				attr = "cognome";
-				break;
-			case "TELEFONO":
-				attr = "telefono";
-				break;
-			case "EMAIL":
-				attr = "email";
-				break;
-			case "NOTE":
-				attr = "note";
-				break;
-			default:
-				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
-				break;
-			}
-		}while(notValidInput);
-		System.out.println();
-		System.out.println("SPECIFICARE VALORE DEL CAMPO: ");
-		String attrVal = s.nextLine();
-		
-		notValidInput = false;
 		String where = null;
 		do {
 			System.out.println();
@@ -250,13 +216,50 @@ public class PhoneContManagerJDBC {
 				break;
 			default:
 				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 				break;
 			}
 		}while(notValidInput);
 		System.out.println();
 		System.out.println("SPECIFICARE VALORE DEL CAMPO: ");
 		String whereVal = s.nextLine();
+		
+		notValidInput = false;
+		String attr = null;
+		do {
+			System.out.println();
+			System.out.println("INSERIRE CAMPO DA MODIFICARE: ");
+			
+			notValidInput = false;
+			input = s.nextLine().toUpperCase();
+			switch(input) {
+			case "ID":
+				attr = "id";
+				break;
+			case "NOME":
+				attr = "nome";
+				break;
+			case "COGNOME":
+				attr = "cognome";
+				break;
+			case "TELEFONO":
+				attr = "telefono";
+				break;
+			case "EMAIL":
+				attr = "email";
+				break;
+			case "NOTE":
+				attr = "note";
+				break;
+			default:
+				notValidInput = true;
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
+				break;
+			}
+		}while(notValidInput);
+		System.out.println();
+		System.out.println("INSERIRE NUOVO VALORE DEL CAMPO: ");
+		String attrVal = s.nextLine();
 		
 		PhoneContactsJDBC.modifyRubricaJDBC(attr, attrVal, where, whereVal);
 		
@@ -269,15 +272,15 @@ public class PhoneContManagerJDBC {
 		contatto.add(nuovoContatto);
 		
 		System.out.println();
-		System.out.print("INSERIRE NOME: ");
+		System.out.println("INSERIRE NOME: ");
 		nuovoContatto.setNome(s.nextLine());
-		System.out.print("INSERIRE COGNOME: ");
+		System.out.println("INSERIRE COGNOME: ");
 		nuovoContatto.setCognome(s.nextLine());
-		System.out.print("INSERIRE TELEFONO: ");
+		System.out.println("INSERIRE TELEFONO: ");
 		nuovoContatto.setTelefono(s.nextLine());
-		System.out.print("INSERIRE EMAIL: ");
+		System.out.println("INSERIRE EMAIL: ");
 		nuovoContatto.setEmail(s.nextLine());
-		System.out.print("INSERIRE NOTE: ");
+		System.out.println("INSERIRE NOTE: ");
 		nuovoContatto.setNote(s.nextLine());
 		
 		PhoneContactsJDBC.preparedInsertRubricaJDBC(contatto);
@@ -315,7 +318,7 @@ public class PhoneContManagerJDBC {
 				break;
 			default:
 				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 				break;
 			}
 		}while(notValidInput);
@@ -330,10 +333,10 @@ public class PhoneContManagerJDBC {
 		boolean notValidInput = false;
 		do {
 			System.out.println();
-			System.out.print("ORDINARE PER: ");
-			System.out.print("-> NOME");
-			System.out.print("-> COGNOME");
-			System.out.print("-> NON ORDINARE");
+			System.out.println("ORDINARE PER: ");
+			System.out.println("-> NOME");
+			System.out.println("-> COGNOME");
+			System.out.println("-> NON ORDINARE");
 			
 			notValidInput = false;
 			input = s.nextLine().toUpperCase();
@@ -349,7 +352,7 @@ public class PhoneContManagerJDBC {
 				break;
 			default:
 				notValidInput = true;
-				System.out.println("INSERIRE UNA RISPOSTA VALIDA: ");
+				System.out.println("INSERIRE UNA RISPOSTA VALIDA");
 				break;
 			}
 		}while(notValidInput);

@@ -266,8 +266,6 @@ public class PhoneContactsJDBC {
 	}
 
 	public static void preparedInsertRubricaJDBC(List<Contatto> rubrica) {
-
-		
 		try {
 			connection = openConnection();
 			preparedStatement = connection.prepareStatement("INSERT INTO rubrica VALUES (null, ?, ?, ?, ?, ?)");
@@ -386,6 +384,61 @@ public class PhoneContactsJDBC {
 		}
 	}
 	
+	public static List<Contatto> findDuplicateJDBC(){
+		List<Contatto> duplicates = new ArrayList<>();
+		
+		try {
+			connection = openConnection();
+			statement = connection.createStatement();
+			
+//			Delete in caso di errori
+//			statement.executeUpdate("DELETE FROM rubrica WHERE id = 8 OR id = 9");
+			
+			String query = "select id, nome, count(nome), cognome, count(cognome), telefono, count(telefono), "
+					+ "email, count(email), note, count(note) "
+				+"from rubrica group by nome, cognome, telefono, email, note "
+				+"having (count(nome) > 1) and (count(cognome) > 1) and (count(telefono) > 1) and "
+					+ "(count(email) > 1) and (count(note) > 1)";
+			
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				duplicates.add(c);
+			}
+			
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
+			duplicates.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+			duplicates.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
+		} finally {
+			try {
+				rs.close();
+				statement.close();
+				connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				duplicates.add(new Contatto("ERRORE", "ERRORE", "ERRORE", "ERRORE", "ERRORE"));
+			}
+		}
+		
+		return duplicates;
+	}
+	
+	public static void removeDuplicateJDBC() {
+		List<Contatto> duplicates = findDuplicateJDBC();
+		for(Contatto c : duplicates) {
+			deleteRubricaJDBC("id", ""+c.getId());
+		}
+	}
+	
 	// NON SERVE IN PHONE CONTACTS MANAGER
 	public static void breakConnectionPool(int i) {
 		try {
@@ -423,6 +476,12 @@ public class PhoneContactsJDBC {
 //		modifyRubricaJDBC("nome", "Cristina", "id", "6");
 //		modifyRubricaJDBC("cognome", "Bianchi", "note", "Cugino");
 //		modifyRubricaJDBC("Età", "32", "Età", "Rossi");
+		
+//		printRubrica(findDuplicateJDBC());
+//		removeDuplicateJDBC();
+//		
+//		System.out.println("DUPLICATI: ");
+//		printRubrica(findDuplicateJDBC());
 		
 //		for(int i=1;i<=151;i++) breakConnectionPool(i);
 	}
