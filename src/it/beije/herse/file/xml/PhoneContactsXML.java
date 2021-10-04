@@ -70,6 +70,13 @@ public class PhoneContactsXML {
 						break;
 					}
 				}
+				
+				if(c.getNome()==null) c.setNome("");
+				if(c.getCognome()==null) c.setCognome("");
+				if(c.getTelefono()==null) c.setTelefono("");
+				if(c.getEmail()==null) c.setEmail("");
+				if(c.getNote()==null) c.setNote("");
+				
 				rubrica.add(c);
 			}
 		}
@@ -148,7 +155,7 @@ public class PhoneContactsXML {
 	}
 	
 	public static void main(String args[]) {
-		for(Contatto c : PhoneContactsXML.readRubricaXML("/temp/file/RubricaXML/readRubrica.xml")) {
+		for(Contatto c : PhoneContactsXML.readRubricaXML("/temp/xmlParse/test_parser1.xml")) {
 			System.out.println(c.getNome());
 			System.out.println(c.getCognome());
 			System.out.println(c.getTelefono());
@@ -157,14 +164,14 @@ public class PhoneContactsXML {
 			System.out.println();
 		}
 		
-		List<Contatto> rubrica = new ArrayList<>();
-		rubrica.add(new Contatto("Francesco", "Gialli", "333444555", "francesco.gialli@gmail.com", "Cugino"));
-		rubrica.add(new Contatto("Carolina", "Marrone", "321654987", "carolina.marrone@gmail.com", ""));
-		PhoneContactsXML.writeRubricaXML(rubrica, "/temp/file/RubricaXML/writeRubrica.xml");
-		
-		rubrica.add(new Contatto("Raffaele", "Viola", "333123456", "raffa.viola@gmail.com", ""));
-		rubrica.add(new Contatto("Elisa", "Indaco", "398765421", "", "Sorella"));
-		PhoneContactsXML.writeRubricaXML(rubrica, "/temp/file/RubricaXML/writeRubrica.xml");
+//		List<Contatto> rubrica = new ArrayList<>();
+//		rubrica.add(new Contatto("Francesco", "Gialli", "333444555", "francesco.gialli@gmail.com", "Cugino"));
+//		rubrica.add(new Contatto("Carolina", "Marrone", "321654987", "carolina.marrone@gmail.com", ""));
+//		PhoneContactsXML.writeRubricaXML(rubrica, "/temp/file/RubricaXML/writeRubrica.xml");
+//		
+//		rubrica.add(new Contatto("Raffaele", "Viola", "333123456", "raffa.viola@gmail.com", ""));
+//		rubrica.add(new Contatto("Elisa", "Indaco", "398765421", "", "Sorella"));
+//		PhoneContactsXML.writeRubricaXML(rubrica, "/temp/file/RubricaXML/writeRubrica.xml");
 	}
 
 }

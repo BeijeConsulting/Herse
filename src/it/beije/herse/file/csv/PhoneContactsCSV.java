@@ -32,7 +32,7 @@ public class PhoneContactsCSV {
 			} else {
 				separator = separatorChar;
 			}
-			System.out.println("separator: " + separator);
+//			System.out.println("separator: " + separator);
 			
 			String[] title = row.split(separator);
 			int last = title.length - 1;
@@ -45,7 +45,7 @@ public class PhoneContactsCSV {
 			String[] cols = null;
 			while (reader.ready()) {
 				row = reader.readLine();
-				System.out.println(row);
+//				System.out.println(row);
 				
 				cols = row.split(separator);
 				if (separator.length() > 1) {
@@ -55,7 +55,8 @@ public class PhoneContactsCSV {
 				
 				contatto = new Contatto();
 				for (int i = 0; i <= last; i++) {
-					System.out.println(title[i] + ": " + cols[i]);
+					cols[i] = cols[i].substring(1, cols[i].length()-1);
+//					System.out.println(title[i] + ": " + cols[i]);
 					switch (title[i].toUpperCase()) {
 					case "NOME":
 						contatto.setNome(cols[i]);		
@@ -76,7 +77,7 @@ public class PhoneContactsCSV {
 				}
 				
 				contatti.add(contatto);
-				System.out.println();
+//				System.out.println();
 			}
 			
 		}
@@ -155,17 +156,17 @@ public class PhoneContactsCSV {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		List<Contatto> contatti = new ArrayList<>();
-		contatti.add(new Contatto("Lorenzo", "Rossi", "333", "lorenzo.rossi@gmail.com", ""));
-		contatti.add(new Contatto("Lucia", "Verdi", "444", "lucia.verdi@gmail.com", ""));
-		writeRubricaCSV(contatti, "/temp/file/CSVmanager/rubrica.txt", ";");
+//		List<Contatto> contatti = new ArrayList<>();
+//		contatti.add(new Contatto("Lorenzo", "Rossi", "333", "lorenzo.rossi@gmail.com", ""));
+//		contatti.add(new Contatto("Lucia", "Verdi", "444", "lucia.verdi@gmail.com", ""));
+//		writeRubricaCSV(contatti, "/temp/file/CSVmanager/rubrica.txt", ";");
+//		
+//		contatti.clear();
+//		contatti.add(new Contatto("Rodrigo", "Bianchi", "555", "rodrigo.bianchi@gmail.com", ""));
+//		contatti.add(new Contatto("Maria", "Rosa", "666", "maria.rosa@gmail.com", ""));
+//		writeRubricaCSV(contatti, "/temp/file/CSVmanager/rubrica.txt", ";");
 		
-		contatti.clear();
-		contatti.add(new Contatto("Rodrigo", "Bianchi", "555", "rodrigo.bianchi@gmail.com", ""));
-		contatti.add(new Contatto("Maria", "Rosa", "666", "maria.rosa@gmail.com", ""));
-		writeRubricaCSV(contatti, "/temp/file/CSVmanager/rubrica.txt", ";");
-		
-		readRubricaCSV("/temp/file/CSVmanager/info.txt", ";");
+		readRubricaCSV("/temp/file/RubricaManager/rubricaCSV.csv", ";");
 	}
 
 }
