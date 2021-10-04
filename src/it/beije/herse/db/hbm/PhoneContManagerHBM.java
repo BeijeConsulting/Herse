@@ -29,7 +29,7 @@ public class PhoneContManagerHBM {
 	private static final String pathExportXML = "/temp/file/RubricaManager/rubricaXML.xml";
 	
 	private static void menu() {
-		// HBM log
+		// HBM log all'inizio
 		PhoneContactsHBM.readRubricaHBM("id", "-1");
 		
 		do {
