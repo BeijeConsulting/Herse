@@ -167,9 +167,38 @@ public class PhoneContactsHBM {
 		}
 	}
 	
+	public static void removeDuplicateHBM() {
+		for(Contatto c : findDuplicateHBM()) {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			
+			session.remove(c);
+			
+			transaction.commit();
+			session.close();
+		}
+	}
+	
+	public static List<Contatto> findDuplicateHBM(){
+		List<Contatto> duplicates = new ArrayList<>();
+		
+		session = sessionFactory.openSession();
+		
+		String duplicateQuery = "select c from Contatto as c group by nome, cognome, telefono, email, note "
+			+"having (count(nome) > 1) and (count(cognome) > 1) and (count(telefono) > 1) and "
+				+ "(count(email) > 1) and (count(note) > 1)";
+		Query<Contatto> query = session.createQuery(duplicateQuery);
+		
+		duplicates = query.list(); 
+		session.close();
+		
+		return duplicates;
+	}
+	
 	public static void main(String[] args) {
 //		// INSERT
 //		List<Contatto> rubrica = new ArrayList<>();
+//		rubrica.add(new Contatto("Mario", "Rossi", "333444555", "m.red@gmail.com", ""));
 //		rubrica.add(new Contatto("Mario", "Rossi", "333444555", "m.red@gmail.com", ""));
 //		rubrica.add(new Contatto("Lucia", "Verdi", "333666888", "", ""));
 //		insertRubricaHBM(rubrica);
@@ -177,8 +206,15 @@ public class PhoneContactsHBM {
 //		// DELETE
 //		deleteRubricaHBM("nome", "Federico");
 		
-//		//UPDATE
+//		// UPDATE
 //		modifyRubricaHBM("nome", "Federico", "id", "5");
+		
+//		// FIND DUPLICATES
+//		System.out.println("DUPLICATI: ");
+//		printRubrica(findDuplicateHBM());
+		
+//		// REMOVE DUPLICATES
+//		removeDuplicateHBM();
 		
 		// SELECT *
 		printRubrica(readRubricaHBM());

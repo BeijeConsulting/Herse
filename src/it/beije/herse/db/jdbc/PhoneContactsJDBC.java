@@ -394,13 +394,11 @@ public class PhoneContactsJDBC {
 //			Delete in caso di errori
 //			statement.executeUpdate("DELETE FROM rubrica WHERE id = 8 OR id = 9");
 			
-			String query = "select id, nome, count(nome), cognome, count(cognome), telefono, count(telefono), "
-					+ "email, count(email), note, count(note) "
-				+"from rubrica group by nome, cognome, telefono, email, note "
+			String duplicateQuery = "select * from rubrica group by nome, cognome, telefono, email, note "
 				+"having (count(nome) > 1) and (count(cognome) > 1) and (count(telefono) > 1) and "
 					+ "(count(email) > 1) and (count(note) > 1)";
 			
-			rs = statement.executeQuery(query);
+			rs = statement.executeQuery(duplicateQuery);
 			while (rs.next()) {
 				Contatto c = new Contatto();
 				c.setId(rs.getInt("id"));
