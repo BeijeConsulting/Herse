@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order {
 
 	@Id
@@ -27,7 +27,6 @@ public class Order {
 	
 	@Column(name="creation_datetime")
 	private LocalDateTime dateTime;
-
 	
 	public Integer getId() {
 		return id;
@@ -37,7 +36,6 @@ public class Order {
 		this.id = id;
 	}
 
-	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -45,7 +43,6 @@ public class Order {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
 	
 	public Double getAmount() {
 		return amount;
@@ -54,7 +51,6 @@ public class Order {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-
 	
 	public LocalDateTime getDateTime() {
 		return dateTime;
@@ -64,7 +60,6 @@ public class Order {
 		this.dateTime = dateTime;
 	}
 	
-
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
 				.append(", userId: ").append(userId)

@@ -19,7 +19,7 @@ public class Product {
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="desc")
+	@Column(name="description")
 	private String description;
 	
 	@Column(name="price")
@@ -27,7 +27,6 @@ public class Product {
 	
 	@Column(name="quantity")
 	private Integer quantity;
-
 	
 	public Integer getId() {
 		return id;
@@ -36,7 +35,6 @@ public class Product {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	
 	public String getName() {
 		return name;
@@ -45,7 +43,6 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	
 	public String getDescription() {
 		return description;
@@ -54,7 +51,6 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	
 	public Double getPrice() {
 		return price;
@@ -63,7 +59,6 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
 	
 	public Integer getQuantity() {
 		return quantity;
@@ -72,7 +67,6 @@ public class Product {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{id: ").append(id)
