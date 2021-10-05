@@ -39,10 +39,7 @@ public class DBhibernate {
 //		
 //		
 //		session.save(contatti.get(0));
-		session.cre
-		
-		transaction.commit();
-		
+
 		
 
 		
