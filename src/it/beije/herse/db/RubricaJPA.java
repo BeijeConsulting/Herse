@@ -14,13 +14,10 @@ public class RubricaJPA {
 
 	public static void main(String[] args) {
 		
-<<<<<<< HEAD
+
 //		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Herse");
 //		EntityManager entityManager = entityManagerFactory.createEntityManager();
-=======
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("herse-rubrica");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
->>>>>>> refs/remotes/origin/main
+
 		
 //		Contatto contatto = entityManager.find(Contatto.class, 12);
 		//System.out.println(contatto);
