@@ -3,21 +3,21 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 @Entity
-@Table(name="order")
+@Table(name="'order'")
 public class Order {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
 
-	@Column(name="amount")
-	private Double amount;
-
-	@Column(name="user_id")
-	private Integer userId;
-
 	@Column(name="creation_datetime")
 	private LocalDateTime dateTime;
+	
+	@Column(name="amount")
+	private Double amount;
+	
+	@Column(name="user_id")
+	private Integer userId;
 
 	public Integer getId() {
 		return id;

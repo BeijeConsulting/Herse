@@ -11,13 +11,13 @@ public class Product {
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="desc")
+	@Column(name="description")
 	private String desc;
 	
 	@Column(name="price")
 	private Double price;
 	
-	@Column(name="quantiy")
+	@Column(name="quantity")
 	private Integer qty;
 
 	public Integer getId() {
