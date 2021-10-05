@@ -14,11 +14,13 @@ public class RubricaJPA {
 
 	public static void main(String[] args) {
 		
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Herse");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
+//		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Herse");
+//		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
 //		Contatto contatto = entityManager.find(Contatto.class, 12);
 		//System.out.println(contatto);
+		
+		EntityManager entityManager = Singleton.getIstance();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
@@ -53,7 +55,10 @@ public class RubricaJPA {
 			System.out.println(c);
 		}
 		
-		entityManager.close();
+//		entityManager.close();
+		Singleton.closeIstance();
+		
+		EntityManager entityManager1 = Singleton.getIstance();
 	}
 
 }
