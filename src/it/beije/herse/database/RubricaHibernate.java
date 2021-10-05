@@ -14,7 +14,7 @@ import it.beije.herse.file.Contatto;
 public class RubricaHibernate {
 
 	public static void main(String[] args) {
-		//menu();
+		menu();
 		
 	}
 
@@ -36,7 +36,11 @@ public class RubricaHibernate {
 			System.out.println("Inserisci il contatto che vuoi inserire");
 			
 			System.out.println("Inserisci il nome");
+			
+			scanner.nextLine();
+			
 			String nome = scanner.nextLine();
+			
 			System.out.println("Inserisci il cognome");
 			String cognome = scanner.nextLine();
 			System.out.println("Inserisci il telefono");
@@ -54,8 +58,10 @@ public class RubricaHibernate {
 			int id = scanner.nextInt();
 			
 			System.out.println("Inserisci i dati che vuoi modificare del contatto");
-			
 			System.out.println("Inserisci il nome");
+			
+			scanner.nextLine();
+			
 			String name = scanner.nextLine();
 			System.out.println("Inserisci il cognome");
 			String surname = scanner.nextLine();
@@ -76,6 +82,7 @@ public class RubricaHibernate {
 			
 			break;
 		case 0:
+			System.out.println("exit");
 			scanner.close();
 		}
 	}
@@ -94,6 +101,7 @@ public class RubricaHibernate {
 
 		Transaction transaction = session.beginTransaction();
 		session.save(c);
+		System.out.println("Contatto has been added");
 		//transaction.commit();
 		session.close();
 	}
@@ -141,6 +149,7 @@ public class RubricaHibernate {
 		session.save(contatto);
 
 		transaction.commit();
+		System.out.println("Contatto has been updated");
 		session.close();
 	}
 

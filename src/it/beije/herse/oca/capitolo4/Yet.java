@@ -2,6 +2,9 @@ package it.beije.herse.oca.capitolo4;
 
 
 public class Yet {
+	
+	
+	
 
 	static { add(2); }
 	static void add(int num) { System.out.print(num + " "); }
@@ -17,3 +20,5 @@ public class Yet {
 
 	
 }
+
+
