@@ -9,7 +9,9 @@ public class Test {
 		//myDbManager.addContact();
 //		myDbManager.updateClause();
 //		myDbManager.resetToId();
-		myDbManager.getTable();
+//		myDbManager.deleteClause();
+		myDbManager.getInformationById();
+//		myDbManager.getTable();
 	}
 
 }

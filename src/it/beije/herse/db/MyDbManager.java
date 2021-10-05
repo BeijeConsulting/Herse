@@ -97,21 +97,50 @@ public class MyDbManager {
 		System.out.println("Rows affected: " + result);
 		closeSession(session);
 	}
-	
+
+	// per eliminare una riga del DB e aggiungere la riga ad un altra table
 	public void deleteClause() {
 		Session session = startSession();
 		String tableName = "Contatto";
 		String hql = "DELETE FROM " + tableName + " WHERE (id = :id)";
+		// String hqlGetInfo = "SELECT c FROM " + tableName + " as c WHERE id =
+		// :idInsert";
 		Query query = session.createQuery(hql);
+		// Query<Contatto> queryForGet = session.createQuery(hqlGetInfo);
 		Scanner scanner = new Scanner(System.in);
 		Transaction transaction = session.beginTransaction();
 
 		System.out.println("Inserire id da eliminare: ");
-		query.setParameter("id", scanner.nextInt());
+		int idToDelete = scanner.nextInt();
+		// Contatto contatto = new Contatto();
+		// contatto = queryForGet.list().get(0);
+		query.setParameter("id", idToDelete);
 
 		int result = query.executeUpdate();
 		transaction.commit();
 		System.out.println("Rows affected: " + result);
+		closeSession(session);
+		// fixId(session, idToDelete);
+	}
+
+	public void getInformationById() {
+		Session session = startSession();
+		Contatto contatto = new Contatto();
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Inserire id per vedere le info: ");
+		int id = scanner.nextInt();
+
+		Query<Contatto> allContacts = session.createQuery("SELECT c FROM Contatto as c WHERE id= :id");
+		allContacts.setParameter("id", id);
+		if (allContacts.list().size() != 0) {
+			contatto = allContacts.list().get(0);
+			System.out.println(contatto);
+		}else {
+			System.out.println("id assente, controlla i tuoi contatti");
+			getTable();
+		}
+
 		closeSession(session);
 	}
 
