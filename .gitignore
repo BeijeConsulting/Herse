@@ -34,3 +34,4 @@ hs_err_pid*
 /target/
 /.settings/
 >>>>>>> refs/remotes/origin/main
+/.metadata/
