@@ -14,7 +14,7 @@ import it.beije.herse.file.Contatto;
 
 public class PhoneContactsJPA {
 	
-	private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Herse");
+	private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("herse-rubrica");
 	private static EntityManager entityManager;
 	private static EntityTransaction transaction;
 
