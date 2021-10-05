@@ -1,4 +1,4 @@
-package it.beije.herse.db;
+package it.beije.herse.borgese.db;
 
 import it.beije.herse.file.RubricaFile;
 

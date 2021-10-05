@@ -1,4 +1,4 @@
-package it.beije.herse.db;
+package it.beije.herse.borgese.db;
 
 import java.sql.DriverManager;
 import java.util.ArrayList;
