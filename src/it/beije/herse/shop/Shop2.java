@@ -96,18 +96,6 @@ public class Shop2 {
 		transaction.commit();
 	}
 	
-	public static void updateProduct(Product product) {
-		EntityTransaction transaction = manager.getTransaction();
-		transaction.begin();
-		
-		int quantity = product.getQuantity()-1;
-		System.out.println(product);
-		product.setQuantity(quantity);
-		
-		manager.persist(product);
-		System.out.println("Product post update: " + product);
-		transaction.commit();
-	}
 	
 	public static void readOrder(Order order, int idUtente) {
 		String selectFromOrder = "SELECT o FROM Order as o WHERE userId = " + idUtente;
@@ -154,9 +142,18 @@ public class Shop2 {
 		transaction.begin();
 		
 		double total= 0;
+		int quantity = 0;
+		
+		int productid = 0;
 		
 		for(OrderItem oi: orderItem) {
 			total += oi.getSellPrice();
+			quantity = oi.getQuantity();
+			total = total * quantity;
+			
+			//updateProduct(oi.getProductId(), quantity); 
+			//	Bisogna capire dove metterlo, percè se no ogni volta che si guarda quest'orine 
+			//  si toglie la quantità.
 		}
 		
 		String selectFromOrder = "SELECT o FROM Order as o WHERE id = " + orderId;
@@ -186,6 +183,22 @@ public class Shop2 {
 		}
 
 		transaction.commit();
+	}
+	
+	public static void updateProduct(Integer productId, int quantity) {
+		EntityTransaction transaction = manager.getTransaction();
+		transaction.begin();
+		
+		String selectProduct = "SELECT p FROM Product WHERE id = " + productId;
+		Query query = manager.createQuery(selectProduct);
+		List<Product> product = query.getResultList();
+		
+		for(Product p: product) {
+			p.setQuantity(p.getQuantity()-quantity);
+			transaction.commit();
+			System.out.println("product con quantity cambiata");
+		}
+		
 	}
 
 	public static void main(String[] args) {

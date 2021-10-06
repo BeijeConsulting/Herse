@@ -78,6 +78,7 @@ public class OrderItem {
 				.append(", orderId: ").append(orderId)
 				.append(", productId: ").append(productId)
 				.append(", sellPrice: ").append(sellPrice)
+				.append(", quantity: ").append(quantity)
 				.append("}");
 		
 		return builder.toString();
