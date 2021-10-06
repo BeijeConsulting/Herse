@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import it.beije.herse.file.Contatto;
+import it.beije.herse.shop.Order;
 import it.beije.herse.shop.Product;
 import it.beije.herse.shop.ShopEntityManager;
 import it.beije.herse.shop.User;
@@ -88,4 +89,36 @@ public class UserManager {
 		manager.close();
 	}
 	
+	public static void printOrderHistory(Integer id) {
+		EntityManager manager = ShopEntityManager.newEntityManager();
+		
+		User u = manager.find(User.class, id);
+		String orderHistoryQuery = "SELECT o FROM Order as o WHERE userId= "+id;
+		List<Order> orderHistory = manager.createQuery(orderHistoryQuery).getResultList();
+		
+		System.out.println("USER: "+u);
+		System.out.println("ORDER: ");
+		OrderManager.printOrders(orderHistory);
+		
+		manager.close();
+	}
+	
+	public static Boolean loginUser(String email, String password) {
+		EntityManager manager = ShopEntityManager.newEntityManager();
+		
+		String loginQuery = "SELECT u FROM User as u WHERE email= "+email+" AND password= "+password;
+		List<User> userList = manager.createQuery(loginQuery).getResultList();;
+		
+		manager.close();
+		
+		if(userList == null) return false;
+		else if(userList.size()!=1) {
+			System.out.println("ERROR");
+			System.exit(0);
+		}
+		User u = userList.get(0);
+		if(u.getName()!=null && u.getSurname()!=null) System.out.println("WELCOME "+u.getName()+" "+u.getSurname());
+		else System.out.println("WELCOME "+u.getEmail());
+		return true;
+	}
 }

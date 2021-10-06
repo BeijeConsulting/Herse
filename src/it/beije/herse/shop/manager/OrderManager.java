@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import it.beije.herse.shop.ShopEntityManager;
 import it.beije.herse.shop.Order;
 import it.beije.herse.shop.OrderItem;
+import it.beije.herse.shop.Product;
 
 public class OrderManager {
 
@@ -23,7 +24,11 @@ public class OrderManager {
 			
 			Query itemsQuery = manager.createQuery("Select o From OrderItem as o Where orderId = "+o.getId());
 			List<OrderItem> items = itemsQuery.getResultList();
-			for(OrderItem i : items) System.out.println("--> "+i);
+			for(OrderItem i : items) {
+				Product p = manager.find(Product.class, i.getProductId());
+				System.out.println("--> "+i+
+						" PRODUCT: {name: "+p.getName()+", description: "+p.getDescription()+"}");
+			}
 			
 			System.out.println();
 		}
@@ -75,7 +80,11 @@ public class OrderManager {
 		for(OrderItem oi : items) {
 			Order o = manager.find(Order.class, oi.getOrderId());
 			if(o!=null) {
-				o.setAmount(o.getAmount()+oi.getSellPrice());
+				Product p = manager.find(Product.class, oi.getProductId());
+				p.setQuantity(p.getQuantity()-1);
+				manager.persist(p);
+				
+				o.setAmount(o.getAmount()+oi.getSellPrice()*oi.getQuantity());
 				manager.persist(oi);
 			}
 		}
@@ -110,29 +119,32 @@ public class OrderManager {
 		manager.close();
 	}
 	
-//	public static void updateOrderI(String col, String colVal, Integer id) {
-//		EntityManager manager = ShopEntityManager.newEntityManager();
-//		EntityTransaction transaction = manager.getTransaction();
-//		transaction.begin();
-//		
-//		Order u = manager.find(Order.class, id);
-//		switch(col.toUpperCase()) {
-//		case "USERID":
-//			u.setUserId(Integer.valueOf(colVal));
-//			break;
-//		case "AMOUNT":
-//			u.setAmount(Double.valueOf(colVal));
-//			break;
-//		case "DATETIME":
-//			u.setDateTime(LocalDateTime.parse(colVal));
-//			break;
-//		default:
-//			System.out.println("No columns found");
-//			break;
-//		}
-//		manager.persist(u);
-//		
-//		transaction.commit();
-//		manager.close();
-//	}
+	public static void updateOrderItems(String col, String colVal, Integer id) {
+		EntityManager manager = ShopEntityManager.newEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		transaction.begin();
+		
+		OrderItem i = manager.find(OrderItem.class, id);
+		switch(col.toUpperCase()) {
+		case "ORDERID":
+			i.setOrderId(Integer.valueOf(colVal));
+			break;
+		case "PRODUCTID":
+			i.setProductId(Integer.valueOf(colVal));
+			break;
+		case "SELLPRICE":
+			i.setSellPrice(Double.valueOf(colVal));
+			break;
+		case "QUANTITY":
+			i.setQuantity(Integer.valueOf(colVal));
+			break;
+		default:
+			System.out.println("No columns found");
+			break;
+		}
+		manager.persist(i);
+		
+		transaction.commit();
+		manager.close();
+	}
 }
