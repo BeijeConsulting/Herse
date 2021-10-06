@@ -2,8 +2,10 @@ package it.beije.herse.shop;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -13,32 +15,37 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 public class ShopBorgese {
 
-	static List<User> selectUser(EntityManager entityManager) {
+	static List<User> selectUser() {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		String jpqlSelect =  "SELECT u FROM User AS u";
 		Query query = entityManager.createQuery(jpqlSelect);
 		return query.getResultList();
 	}
 
-	static List<Order> selectOrder(EntityManager entityManager) {
+	static List<Order> selectOrder() {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		String jpqlSelect = "SELECT o FROM Order AS o";
 		Query query = entityManager.createQuery(jpqlSelect);
 		return query.getResultList();
 	}
 
-	static List<Product> selectProduct(EntityManager entityManager) {
+	static List<Product> selectProduct() {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		String jpqlSelect =  "SELECT p FROM Product AS p";
 		Query query = entityManager.createQuery(jpqlSelect);
 		return query.getResultList();
 	}
 
-	static List<OrderItem> selectOrderitem(EntityManager entityManager) {
+	static List<OrderItem> selectOrderitem() {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		String jpqlSelect =  "SELECT oi FROM OrderItem AS oi";
 		Query query = entityManager.createQuery(jpqlSelect);
 		return query.getResultList();
 	}
 
 	//QUESTO METODO è STATO FATTO IL 5 OTTOBRE, LO LASCIO QUI MA NON MI PIACE, NON LO USO E NE CREERO' UNO PER OGNI BIN
-	static Object selectId(Integer id, String s, EntityManager entityManager ) {
+	static Object selectId(Integer id, String s) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		Object o = new Object();
 		if(s.equalsIgnoreCase("user"))
 			o = entityManager.find(User.class, id);
@@ -51,9 +58,9 @@ public class ShopBorgese {
 		return o;
 	}
 
-	public static void insertUser(User u, EntityManager entityManager) {
+	public static void insertUser(User u) {
 
-
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 
@@ -64,8 +71,8 @@ public class ShopBorgese {
 	}
 
 
-	public static void insertProduct(Product p, EntityManager entityManager) {
-
+	public static void insertProduct(Product p) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 
@@ -76,13 +83,13 @@ public class ShopBorgese {
 
 	}
 
-	public static void insertOrder(Order o, EntityManager entityManager) {
-
+	public static void insertOrder(Order o) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		boolean esiste = false;
 		EntityTransaction transaction = entityManager.getTransaction();
 
 
-		List<User> listUsers = selectUser(entityManager);
+		List<User> listUsers = selectUser();
 
 		for(User u : listUsers) {
 			if(u.getId()==o.getUserId())
@@ -96,7 +103,8 @@ public class ShopBorgese {
 		else System.out.println("L'userId inserito non esiste");
 	}
 
-	public static void insertOrderItem(OrderItem oI, EntityManager entityManager) {
+	public static void insertOrderItem(OrderItem oI) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 
 		transaction.begin();
@@ -106,10 +114,11 @@ public class ShopBorgese {
 
 
 
-	public static void dettaglioOrdine(Integer orderId, EntityManager entityManager) {
+	public static void dettaglioOrdine(Integer orderId) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		Order o = entityManager.find(Order.class, orderId);
 
-		List<OrderItem> orderItemList = selectOrderitem(entityManager);
+		List<OrderItem> orderItemList = selectOrderitem();
 		System.out.println("Dettaglio OrderItem e prodotti");
 		for(OrderItem orderItem : orderItemList) {
 			if(orderItem.getOrderId() == orderId) {
@@ -120,22 +129,24 @@ public class ShopBorgese {
 		}
 	}
 
-	public static void storicoUser(Integer userId, EntityManager entityManager) {
-		List<Order> orders = selectOrder(entityManager);
+	public static void storicoUser(Integer userId) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		List<Order> orders = selectOrder();
 		User u = entityManager.find(User.class, userId);
 		System.out.println("Elenco ordini dell'user " +  u.getName() + " " + u.getSurname());
 		for(Order o : orders) {
 			if(o.getUserId() == userId) {
-				dettaglioOrdine(o.getId(), entityManager);
+				dettaglioOrdine(o.getId());
 			}
 		}
 	}
 
-	public static void checkAmount(Integer orderId, EntityManager entityManager) {
+	public static void checkAmount(Integer orderId) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		Order o = entityManager.find(Order.class, orderId);
 		Double amount = o.getAmount();
 		Double totSellPrice = new Double(0.0);
-		List<OrderItem> orderItems = selectOrderitem(entityManager);
+		List<OrderItem> orderItems = selectOrderitem();
 		for(OrderItem i : orderItems) {
 			if(i.getOrderId() == orderId)
 				totSellPrice += i.getSellPrice();
@@ -146,7 +157,8 @@ public class ShopBorgese {
 
 	}
 
-	public static void creaOrdine(Integer userId,  EntityManager entityManager, Integer...idProdotti) {
+	public static void creaOrdine(Integer userId, Integer...idProdotti) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		Double amount = new Double(0.0);
 		boolean existProduct = true;
 
@@ -159,14 +171,14 @@ public class ShopBorgese {
 		o.setAmount(amount);
 		o.setDateTime(LocalDateTime.now());
 		o.setUserId(userId);
-		insertOrder(o, entityManager);
-		
+		insertOrder(o);
 		//		System.out.println(o.getId());
-		creaOrderItem(o.getId(), entityManager, idProdotti);
+		creaOrderItem(o.getId(), idProdotti);
 
 	}
 
-	private static void creaOrderItem(Integer orderId, EntityManager entityManager, Integer...idProdotti) {
+	private static void creaOrderItem(Integer orderId, Integer...idProdotti) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		List<OrderItem> lista = new ArrayList<>();
 		for(int i = 0; i<idProdotti.length; i++) {
 			Product p = entityManager.find(Product.class, idProdotti[i]);
@@ -187,21 +199,96 @@ public class ShopBorgese {
 
 		}
 		for(int i = 0; i<lista.size(); i++) {
-			insertOrderItem(lista.get(i), entityManager);
+			insertOrderItem(lista.get(i));
 		}
-
-
 	}
 
+	static void aggiornaQuantityProduct(Integer...idProdotti) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		for(int i =0; i<idProdotti.length; i++) {
+			Product p = entityManager.find(Product.class, idProdotti[i]);
+			int quantity = p.getQuantity();
+			quantity--;
+			insertProduct(p);
+		}
+	}
+
+	static User findUser(Integer idUser) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		return entityManager.find(User.class, idUser);
+	}
+
+	static Product findPoduct(Integer idProduct) {
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		return entityManager.find(Product.class, idProduct);
+	}
 
 
 	public static void main(String[] args) {
 
-		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		List<Product> prodotti = selectProduct();
+		System.out.println("Benvenuto nello Shop Herse");
+		System.out.println("Inserisci il tuo id user");
+		boolean idUserCorretto = false;
+		boolean carrelloCompleto = false;
+		Scanner scanner = new Scanner(System.in);
+		String st = null;
+		Integer idUser = new Integer(0);
+		User u = new User();
+
+		while(!idUserCorretto) {
+			idUserCorretto = true;
+			try {
+				st = scanner.next();
+				idUser = Integer.valueOf(st);
+				u = findUser(idUser);
+			}catch(NullPointerException npe) {
+				System.out.println("Id inserito non corretto, riprovare");
+				idUserCorretto = false;
+			}catch(NumberFormatException nfe) {
+				System.out.println("Id inserito non corretto, riprovare");
+				idUserCorretto = false;
+			}
+
+		}
+		System.out.println("Benvenuto " + u.getName() + " " + u.getSurname() );
+		System.out.println("Ecco una lista di prodotti che puoi acquistare");
+
+		for(Product p : prodotti) 
+			System.out.println(p.getId() + "\t" + p.getName() + "\t" + p.getDescription()+ "\t" +  p.getPrice() + p.getQuantity());
+		while(!carrelloCompleto) {
+		System.out.println("Inserisci l'id dei prodotti che vuoi acquistare ");
+		int count = 0;
+		Double totale = 0.0;
+		st = scanner.next();
+		List<Integer> carrello = new ArrayList<Integer>();
 		
-		creaOrdine(1, entityManager, 1,1,3);
-
-		entityManager.close();
+			while(!st.equalsIgnoreCase("no")) {
+				try {
+					Integer idProdotto = Integer.valueOf(st);
+					carrello.add(idProdotto);
+					Product p = findPoduct(idProdotto);
+					totale +=p.getPrice();
+					count++;
+					System.out.println("Hai selezionato " + count + " prodotti per un totale di " + totale);
+					System.out.println("Vuoi inserire un altro prodotto nel carrello?");
+				}catch(NullPointerException npe) {
+					System.out.println("l'id del prodotto inserito è sbagliato");
+				}
+				st = scanner.next();
+			}
+			System.out.println("Hai selezionato " + count + " prodotti per un totale di " + totale);
+			System.out.println("Vuoi proseguire con l'ordine?" );
+			st = scanner.next();
+			if(st.equalsIgnoreCase("si")) {
+				Integer [] carrelloIntegers = new Integer[carrello.size()];
+				carrelloIntegers = carrello.toArray(carrelloIntegers);
+				creaOrdine(idUser, carrelloIntegers);
+				carrelloCompleto = true;
+			}
+			else carrelloCompleto = false;
+		}
+		scanner.close();
 	}
-
 }
+

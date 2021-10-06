@@ -1,15 +1,14 @@
 package esercizi;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Prove {
 	
-		static boolean b = true;
+		static void print(Predicate <String> a) {}
 
 
 	public static void main(String[] args) { 
-		String s = null;
-		
-		System.out.println(s);
+		print((a) -> a.startsWith("test"));
 
 	}
 
