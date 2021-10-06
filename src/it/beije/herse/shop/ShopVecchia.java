@@ -48,18 +48,29 @@ public class ShopVecchia {
 		System.out.println();
 		
 		// OrderManager
+//		List<OrderItem> items = new ArrayList<>();
+//		OrderItem oi = new OrderItem();
+//		oi.setOrderId(16);
+//		oi.setProductId(2);
+//		oi.setSellPrice(699.99);
+//		items.add(oi);
+//		oi = new OrderItem();
+//		oi.setOrderId(16);
+//		oi.setProductId(1);
+//		oi.setSellPrice(9.99);
+//		items.add(oi);
+		
 //		List<Order> orders = new ArrayList<>();
 //		Order o = new Order();
-//		o.setUserId(2);
+//		o.setUserId(1);
 //		o.setDateTime(LocalDateTime.now());
-//		o.setAmount(699.99);
 //		orders.add(o);
-//		OrderManager.insertOrders(orders);
+//		OrderManager.insertOrders(orders, items);
 		
-//		OrderManager.updateOrders(, null, null);
+//		OrderManager.updateOrders("datetime", ""+LocalDateTime.now(), 16);
 		
 		System.out.println("ORDERS: ");
-		OrderManager.printOrders(OrderManager.selectOrders());
+		OrderManager.printOrders(OrderManager.selectOrders(16));
 		System.out.println();
 	}
 }

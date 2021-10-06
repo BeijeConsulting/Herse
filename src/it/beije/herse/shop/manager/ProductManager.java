@@ -16,10 +16,6 @@ public class ProductManager {
 		for(Product p : products) System.out.println(p);
 	}
 	
-	public static void printProducts(Product p) {
-		System.out.println(p);
-	}
-	
 	public static List<Product> selectProducts(){
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		List<Product> products = new ArrayList<>();
@@ -38,14 +34,16 @@ public class ProductManager {
 		return products;
 	}
 	
-	public static Product selectProducts(Integer id){
+	public static List<Product> selectProducts(Integer id){
 		EntityManager manager = ShopEntityManager.newEntityManager();
+		List<Product> products = new ArrayList<>();
 		
 		Product p = manager.find(Product.class, id);
+		products.add(p);
 		
 		manager.close();
 		
-		return p;
+		return products;
 	}
 	
 	public static void insertProducts(List<Product> products) {
@@ -69,7 +67,7 @@ public class ProductManager {
 		case "NAME":
 			p.setName(colVal);
 			break;
-		case "DESC":
+		case "DESCRIPTION":
 			p.setDescription(colVal);
 			break;
 		case "PRICE":

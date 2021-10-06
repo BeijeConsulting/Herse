@@ -18,10 +18,6 @@ public class UserManager {
 		for(User u : users) System.out.println(u);
 	}
 	
-	public static void printUsers(User u) {
-		System.out.println(u);
-	}
-	
 	public static List<User> selectUsers(){
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		List<User> users = new ArrayList<>();
@@ -40,14 +36,16 @@ public class UserManager {
 		return users;
 	}
 	
-	public static User selectUsers(Integer id){
+	public static List<User> selectUsers(Integer id){
 		EntityManager manager = ShopEntityManager.newEntityManager();
+		List<User> users = new ArrayList<>();
 		
 		User u = manager.find(User.class, id);
+		users.add(u);
 		
 		manager.close();
 		
-		return u;
+		return users;
 	}
 	
 	public static void insertUsers(List<User> users) {
