@@ -19,13 +19,19 @@ public class ManagerCRUD {
 		
 	}
 	
-	public Object selectFromID(Class<?> typeObject, Integer id) {
+	public Object selectByID(Class<?> typeObject, Integer id) {
 		return manager.find(typeObject, id);
 	}
 	
 	public void insert(Object o) {
-		t.begin();
 		manager.persist(o);
+	}
+	
+	public void begin() {
+		t.begin();
+	}
+	
+	public void commit() {
 		t.commit();
 	}
 	

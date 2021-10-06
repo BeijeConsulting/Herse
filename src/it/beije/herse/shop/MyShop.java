@@ -95,6 +95,22 @@ public class MyShop {
 		return flag;
 	}
 	
+	public static void printDetails(Order o) {
+		
+		String query = "SELECT O FROM OrderItem AS O WHERE order_id = " + o.getId();
+		List<Object> items = manager.select(query);
+		List<Object> products = new ArrayList<>();
+		
+		for(Object item : items)
+			products.add(manager.selectByID(Product.class,((OrderItem)item).getProductId()));
+
+		for(Object prod : products)
+			System.out.println("Nome: " + ((Product)prod).getName() + ", Descrizione: " + ((Product)prod).getDescription());
+		
+		System.out.println("Totale: " + o.getAmount());
+		
+	}
+	
 	public static void main(String[] args) {
 
 		if(manager.isOpen()) {
@@ -115,6 +131,8 @@ public class MyShop {
 				}while(user == null);
 
 				setOrder(user.getId(),userOrder);
+				
+				manager.begin();
 
 				do {
 
@@ -158,7 +176,9 @@ public class MyShop {
 						manager.insert(o);
 					}
 					manager.insert(userOrder);
-					System.out.println("Ordine avvenuto con successo");
+					manager.commit();
+					System.out.println("\nOrdine avvenuto con successo\n");
+					printDetails(userOrder);
 				}
 
 			} catch (Exception e) {
