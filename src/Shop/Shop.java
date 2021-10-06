@@ -2,18 +2,17 @@ package Shop;
 public class Shop {
 
 	public static void main(String[] args) {
-		//Funzioni.inserisciUtente();
-		//Funzioni.inserisciProdotto(2);
 		//Funzioni.listaUtenti();
-//		Funzioni.listaProdotti();
+		//Funzioni.inserisciUtente();
+		//Funzioni.deleteUtente();
+		
+		
+		//Funzioni.listaProdotti();
+		//Funzioni.inserisciProdotto();
+		
 		//Funzioni.Ordine();
 		//Funzioni.listaOrdini();
-		Funzioni.stampaDettagli();
-//		
-//		Funzioni.listaProdotti();
-		//Funzioni.listaOrdiniProdotto();
-		//Funzioni.deleteUtente();
-		//Funzioni.listaUtenti();
+		//Funzioni.stampaDettagli();
 		
 	}
 

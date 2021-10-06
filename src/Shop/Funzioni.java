@@ -23,9 +23,6 @@ public class Funzioni {
 		manager.getTransaction().commit();
 	}
 
-	public static void updateUtente() {
-
-	}
 	public static void deleteUtente() {
 		manager.getTransaction().begin();
 		System.out.println("Id da eliminare: ");
@@ -53,13 +50,9 @@ public class Funzioni {
 		manager.getTransaction().commit();
 	}
 
-	public static void updateProdotto() {
-
-	}
 
 	public static void deleteProdotto() {
 		manager.getTransaction().begin();
-		Scanner scanner=new Scanner(System.in);
 		System.out.println("Id da eliminare: ");
 		manager.remove(manager.find(Product.class, Integer.parseInt(scanner.next())));
 		manager.getTransaction().commit();
