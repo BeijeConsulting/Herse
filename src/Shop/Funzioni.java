@@ -159,14 +159,8 @@ public class Funzioni {
 		OrderItem orderItem=new OrderItem();
 		int i=0;
 		for(Product c:carrello) {
-			manager.getTransaction().begin();
-			orderItem.setOrderId(orderId);
-			orderItem.setProductId(c.getId());
-			orderItem.setSellPrice(c.getPrice());
-			orderItem.setQuantity(q.get(i));
+			commit(c,q.get(i),orderId);
 			i++;
-			manager.persist(orderItem);
-			manager.getTransaction().commit();
 		}
 	}
 	public static void stampaDettagli() {
@@ -174,14 +168,23 @@ public class Funzioni {
 		System.out.println("Inserisci id ordine: ");
 		id=Integer.parseInt(scanner.next());
 		Order order=manager.find(Order.class, id);
-		List<OrderItem> orderI=manager.createQuery("SELECT o FROM OrderItem as o").getResultList();
-		for(OrderItem o:orderI) {
-			if(o.getOrderId()==id) 
+		List<OrderItem> orderI=manager.createQuery("SELECT c FROM OrderItem as c").getResultList();
+		for(OrderItem o:orderI) 
+			if(o.getOrderId()==id) {
 				System.out.print("Prodotto:"+manager.find(Product.class, o.getProductId()).getName()+" Tipologia:"+manager.find(Product.class, o.getProductId()).getDesc()+" Prezzo d'acquisto:");
-				System.out.print(o.getSellPrice()+ " Quantità acquistate:"+o.getQuantity());
-				
+				System.out.print(o.getSellPrice()+ " Quantità acquistate:"+o.getQuantity()+"\n");
 			}
 		System.out.println(" \nTotale:"+order.getAmount());
+	}
+	public static void commit(Product c,Integer i,Integer id) {
+		OrderItem orderItem=new OrderItem();
+		manager.getTransaction().begin();
+		orderItem.setOrderId(id);
+		orderItem.setProductId(c.getId());
+		orderItem.setSellPrice(c.getPrice());
+		orderItem.setQuantity(i);
+		manager.persist(orderItem);
+		manager.getTransaction().commit();
 	}
 }
 
