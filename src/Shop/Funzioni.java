@@ -26,6 +26,7 @@ public class Funzioni {
 	}
 
 	public static void updateUtente() {
+		
 	}
 	public static void deleteUtente() {
 		EntityManager manager=ShopEntityManager.newEntityManager();
@@ -63,7 +64,21 @@ public class Funzioni {
 		manager.close();
 		scanner.close();
 	}
-
+	
+	public static void updateProdotto() {
+		
+	}
+	
+	public static void deleteProdotto() {
+		EntityManager manager=ShopEntityManager.newEntityManager();
+		manager.getTransaction().begin();
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("Id da eliminare: ");
+		manager.remove(manager.find(Product.class, Integer.parseInt(scanner.next())));
+		manager.getTransaction().commit();
+		scanner.close();
+		manager.close();
+	}
 
 	/*------------------------------------------------------------------*/
 	public static void listaOrdini() {
