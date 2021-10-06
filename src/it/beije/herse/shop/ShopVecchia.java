@@ -15,6 +15,7 @@ public class ShopVecchia {
 	private static Scanner scanner = new Scanner(System.in);
 	private static User loggedUser;
 
+	// USER MENU
 	public static void login() {
 		System.out.println("INSERT EMAIL AND PASSWORD");
 		System.out.print("EMAIL: ");
@@ -175,7 +176,7 @@ public class ShopVecchia {
 		ShopVecchia.loggedUser = loggedUser;
 	}
 	
-	
+	// ADMIN MENU
 	public static void menu() {
 		// JPA log at the start
 		UserManager.selectUsers();
