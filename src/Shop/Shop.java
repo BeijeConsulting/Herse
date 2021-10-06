@@ -2,13 +2,14 @@ package Shop;
 public class Shop {
 
 	public static void main(String[] args) {
-		//Funzioni.inserisciUtente(2);
+		//Funzioni.inserisciUtente();
 		//Funzioni.inserisciProdotto(2);
-//		Funzioni.listaUtenti();
+		//Funzioni.listaUtenti();
 //		Funzioni.listaProdotti();
-		/* non funziona
+		Funzioni.Ordine();
 		Funzioni.listaOrdini();
-		*/
+//		
+//		Funzioni.listaProdotti();
 		//Funzioni.listaOrdiniProdotto();
 		//Funzioni.deleteUtente();
 		//Funzioni.listaUtenti();
