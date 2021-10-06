@@ -8,10 +8,10 @@ import javax.persistence.Query;
 
 public class ManagerCRUD {
 	
-	private final EntityManager manager = ShopEntityManager.newEntityManager();
-	private final EntityTransaction t = manager.getTransaction();
+	private EntityManager manager = ShopEntityManager.newEntityManager();
+	private EntityTransaction t = manager.getTransaction();
 
-	public List<Object> selectAll(String query) {
+	public List<Object> select(String query) {
 		
 		Query select = manager.createQuery(query);
 		
@@ -26,12 +26,19 @@ public class ManagerCRUD {
 	public void insert(Object o) {
 		t.begin();
 		manager.persist(o);
-		t.commit();		
+		t.commit();
 	}
 	
-	public boolean close() {
+	public void close() {
 		manager.close();
-		return !manager.isOpen();
 	}
-
+	
+	public void open() {
+		manager = ShopEntityManager.newEntityManager();
+	}
+	
+	public boolean isOpen() {
+		return manager.isOpen();
+	}
+	
 }
