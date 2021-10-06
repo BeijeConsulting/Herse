@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import it.beije.herse.db.jpa.PhoneContactsJPA;
 import it.beije.herse.shop.manager.OrderManager;
 import it.beije.herse.shop.manager.ProductManager;
 import it.beije.herse.shop.manager.UserManager;
@@ -32,7 +31,7 @@ public class ShopVecchia {
 				System.out.println("2 - SIGN IN");
 				System.out.println("3 - EXIT");
 				
-				select = scanner.nextInt();
+				select = Integer.valueOf(scanner.nextLine());
 				switch(select) {
 				case 1: 
 					break SELECT;
@@ -44,6 +43,7 @@ public class ShopVecchia {
 					uList.add(u);
 					UserManager.insertUsers(uList);
 					System.out.println("SIGNED IN");
+					System.out.println();
 					break SELECT;
 				case 3: 
 					System.exit(0);
@@ -61,12 +61,13 @@ public class ShopVecchia {
 		do {
 			System.out.println();
 			System.out.println("SELECT AN ACTION: ");
-			System.out.println("1 - PRINT MY DATA");
-			System.out.println("2 - PRINT MY ORDER HISTORY");
+			System.out.println("1 - SHOW MY DATA");
+			System.out.println("2 - SHOW MY ORDER HISTORY");
 			System.out.println("3 - NEW ORDER");
-			System.out.println("4 - EXIT");
+			System.out.println("4 - UPDATE FIELDS");
+			System.out.println("5 - EXIT");
 			
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			switch(select) {
 			case 1: 
 				System.out.print("USER: ");
@@ -79,6 +80,9 @@ public class ShopVecchia {
 				newOrder();
 				break;
 			case 4: 
+				updateData();
+				break;
+			case 5: 
 				System.exit(0);
 				break;
 			default:
@@ -95,11 +99,11 @@ public class ShopVecchia {
 			OrderItem item = new OrderItem();
 			System.out.println("SELECT PRODUCT TO ADD (INSERT ID): ");
 			ProductManager.printProducts(ProductManager.selectProducts());
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			item.setProductId(select);
 			
 			System.out.println("INSERT QUANTITY: ");
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			item.setQuantity(select);
 
 			items.add(item);
@@ -121,6 +125,57 @@ public class ShopVecchia {
 		System.out.println("ORDER ADDED");
 	}
 
+	private static void updateData() {
+	
+		do {
+			System.out.println("SELECT WHICH FIELD TO UPDATE: ");
+			System.out.println("0 - BACK");
+			System.out.println("1 - \"NAME\"");
+			System.out.println("2 - \"SURNAME\"");
+			System.out.println("3 - \"EMAIL\"");
+			System.out.println("4 - \"PASSWORD\"");
+			System.out.println("5 - EXIT");
+			
+			select = Integer.valueOf(scanner.nextLine());
+			switch(select) {
+			case 0: break;
+			case 1:
+				System.out.print("INSERT NEW NAME: ");
+				String name = scanner.nextLine();
+				UserManager.updateUsers("name", name, loggedUser.getId());
+				System.out.println("NAME UPDATED");
+				break;
+			case 2:
+				System.out.print("INSERT NEW SURNAME: ");
+				String surname = scanner.nextLine();
+				UserManager.updateUsers("surname", surname, loggedUser.getId());
+				System.out.println("SURNAME UPDATED");
+				break;
+			case 3:
+				System.out.println("INSERT NEW EMAIL: ");
+				String email = scanner.nextLine();
+				UserManager.updateUsers("email", email, loggedUser.getId());
+				System.out.println("EMAIL UPDATED");
+				break;
+			case 4:
+				System.out.println("INSERT NEW PASSWORD: ");
+				String password = scanner.nextLine();
+				UserManager.updateUsers("password", password, loggedUser.getId());
+				System.out.println("PASSWORD UPDATED");
+				break;
+			case 5:
+				System.exit(0);
+				break;
+			}
+		}while(select!=0);
+		System.out.println();
+	}
+	
+	public static void setLoggedUser(User loggedUser) {
+		ShopVecchia.loggedUser = loggedUser;
+	}
+	
+	
 	public static void menu() {
 		// JPA log at the start
 		UserManager.selectUsers();
@@ -133,7 +188,7 @@ public class ShopVecchia {
 			System.out.println("3 - PRINT ORDERS");
 			System.out.println("4 - EXIT");
 			
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			switch(select) {
 			case 1: 
 				printUsers();
@@ -163,7 +218,7 @@ public class ShopVecchia {
 			System.out.println("2 - PRINT ONE ORDER");
 			System.out.println("3 - EXIT");
 			
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			switch(select) {
 			case 0: break;
 			case 1: 
@@ -172,7 +227,7 @@ public class ShopVecchia {
 				break;
 			case 2: 
 				System.out.println("INSERT ORDER'S ID: ");
-				select = scanner.nextInt();
+				select = Integer.valueOf(scanner.nextLine());
 				System.out.println("ORDER: ");
 				OrderManager.printOrders(OrderManager.selectOrders(select));
 				break;
@@ -195,7 +250,7 @@ public class ShopVecchia {
 			System.out.println("2 - PRINT ONE PRODUCT");
 			System.out.println("3 - EXIT");
 			
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			switch(select) {
 			case 0: break;
 			case 1: 
@@ -204,7 +259,7 @@ public class ShopVecchia {
 				break;
 			case 2: 
 				System.out.println("INSERT PRODUCT'S ID: ");
-				select = scanner.nextInt();
+				select = Integer.valueOf(scanner.nextLine());
 				System.out.print("PRODUCT: ");
 				ProductManager.printProducts(ProductManager.selectProducts(select));
 				break;
@@ -228,7 +283,7 @@ public class ShopVecchia {
 			System.out.println("3 - PRINT USER'S ORDER HISTORY");
 			System.out.println("4 - EXIT");
 			
-			select = scanner.nextInt();
+			select = Integer.valueOf(scanner.nextLine());
 			switch(select) {
 			case 0: break;
 			case 1: 
@@ -237,13 +292,13 @@ public class ShopVecchia {
 				break;
 			case 2: 
 				System.out.println("INSERT USER'S ID: ");
-				select = scanner.nextInt();
+				select = Integer.valueOf(scanner.nextLine());
 				System.out.print("USER: ");
 				UserManager.printUsers(UserManager.selectUsers(select));
 				break;
 			case 3: 
 				System.out.println("INSERT USER'S ID: ");
-				select = scanner.nextInt();
+				select = Integer.valueOf(scanner.nextLine());
 				UserManager.printOrderHistory(select);
 				break;
 			case 4: 
@@ -254,10 +309,6 @@ public class ShopVecchia {
 				break;
 			}
 		}while(select!=0);
-	}
-
-	public static void setLoggedUser(User loggedUser) {
-		ShopVecchia.loggedUser = loggedUser;
 	}
 
 	public static void main(String[] args) {

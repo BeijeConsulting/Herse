@@ -40,6 +40,8 @@ public class OrderManager {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		List<Order> orders = new ArrayList<>();
 		
+		
+		// Non funziona: id passa da 1 a 3
 //		int id=1;
 //		Order o = manager.find(Order.class, id);
 //		while(o!=null) {
