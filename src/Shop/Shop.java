@@ -6,8 +6,9 @@ public class Shop {
 		//Funzioni.inserisciProdotto(2);
 		//Funzioni.listaUtenti();
 //		Funzioni.listaProdotti();
-		Funzioni.Ordine();
-		Funzioni.listaOrdini();
+		//Funzioni.Ordine();
+		//Funzioni.listaOrdini();
+		Funzioni.stampaDettagli();
 //		
 //		Funzioni.listaProdotti();
 		//Funzioni.listaOrdiniProdotto();

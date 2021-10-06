@@ -169,5 +169,19 @@ public class Funzioni {
 			manager.getTransaction().commit();
 		}
 	}
+	public static void stampaDettagli() {
+		Integer id;
+		System.out.println("Inserisci id ordine: ");
+		id=Integer.parseInt(scanner.next());
+		Order order=manager.find(Order.class, id);
+		List<OrderItem> orderI=manager.createQuery("SELECT o FROM OrderItem as o").getResultList();
+		for(OrderItem o:orderI) {
+			if(o.getOrderId()==id) 
+				System.out.print("Prodotto:"+manager.find(Product.class, o.getProductId()).getName()+" Tipologia:"+manager.find(Product.class, o.getProductId()).getDesc()+" Prezzo d'acquisto:");
+				System.out.print(o.getSellPrice()+ " Quantità acquistate:"+o.getQuantity());
+				
+			}
+		System.out.println(" \nTotale:"+order.getAmount());
+	}
 }
 
