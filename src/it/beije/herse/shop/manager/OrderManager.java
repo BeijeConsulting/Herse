@@ -67,26 +67,30 @@ public class OrderManager {
 		return order;
 	}
 	
-	public static void insertOrders(List<Order> orders, List<OrderItem> items) {
+	public static void insertOrder(Order order, List<OrderItem> items) {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
 		
-		for (Order o : orders) {
-			if(o.getAmount()==null) o.setAmount(0.0);
-			manager.persist(o);
-		}
+		if(order.getAmount()==null) order.setAmount(0.0);
+		manager.persist(order);
 		
 		for(OrderItem oi : items) {
-			Order o = manager.find(Order.class, oi.getOrderId());
-			if(o!=null) {
-				Product p = manager.find(Product.class, oi.getProductId());
-				p.setQuantity(p.getQuantity()-1);
-				manager.persist(p);
+			
+			if(oi.getQuantity()<1) break;
+			
+			oi.setOrderId(order.getId());
 				
-				o.setAmount(o.getAmount()+oi.getSellPrice()*oi.getQuantity());
-				manager.persist(oi);
-			}
+			Product p = manager.find(Product.class, oi.getProductId());
+			if(p.getQuantity()>0 && p.getQuantity()>oi.getQuantity()) 
+				p.setQuantity(p.getQuantity()-oi.getQuantity());
+			else throw new IllegalArgumentException();
+			oi.setSellPrice(p.getPrice());
+			manager.persist(p);
+				
+			order.setAmount(order.getAmount()+oi.getSellPrice()*oi.getQuantity());
+			manager.persist(oi);
+			
 		}
 		
 		transaction.commit();

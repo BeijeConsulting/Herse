@@ -11,6 +11,7 @@ import it.beije.herse.file.Contatto;
 import it.beije.herse.shop.Order;
 import it.beije.herse.shop.Product;
 import it.beije.herse.shop.ShopEntityManager;
+import it.beije.herse.shop.ShopVecchia;
 import it.beije.herse.shop.User;
 
 public class UserManager {
@@ -106,19 +107,23 @@ public class UserManager {
 	public static Boolean loginUser(String email, String password) {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		
-		String loginQuery = "SELECT u FROM User as u WHERE email= "+email+" AND password= "+password;
+		String loginQuery = "SELECT u FROM User as u WHERE email= '"+email+"' AND password= '"+password+"'";
 		List<User> userList = manager.createQuery(loginQuery).getResultList();;
+		
+//		System.out.println("TEST PRINT");
+//		for(User u : userList) System.out.println(u);
 		
 		manager.close();
 		
-		if(userList == null) return false;
-		else if(userList.size()!=1) {
+		if(userList.size()==0) return false;
+		else if(userList.size()>1) {
 			System.out.println("ERROR");
 			System.exit(0);
 		}
 		User u = userList.get(0);
 		if(u.getName()!=null && u.getSurname()!=null) System.out.println("WELCOME "+u.getName()+" "+u.getSurname());
 		else System.out.println("WELCOME "+u.getEmail());
+		ShopVecchia.setLoggedUser(u);
 		return true;
 	}
 }
