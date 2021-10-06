@@ -1,6 +1,7 @@
 package it.beije.herse.db;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,7 +59,7 @@ public class Order {
 	
 	public Order() {}
 	public Order(int userId, Double amount) {
-		
+	
 		LocalDateTime dateTime = LocalDateTime.now();
 		
 		this.creationDateTime=dateTime;
@@ -77,8 +78,13 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", creationDateTime=" + creationDateTime + ", amount=" + amount + ", userId="
-				+ userId + "]";
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yy");
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
+		String s= creationDateTime.format(formatter);
+		String s2= creationDateTime.format(formatter2);
+		
+		return "Ordine numero: " + id + ", del " + s + " ore "+ s2 + ". Spesa totale= " + amount + ";";
 	}
 	
 	

@@ -36,7 +36,7 @@ public class RubricaJPA {
 //		//UPDATE
 //		contatto.setCognome("Fumagalli");
 //		contatto.setTelefono("43214342");
-//		entityManager.persist(contatto);
+//		entityManager.persist(contatto); 
 		
 //		//DELETE
 //		entityManager.remove(contatto);
