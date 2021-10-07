@@ -10,6 +10,10 @@ import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
@@ -43,7 +47,7 @@ public class ShopBorgese {
 		return query.getResultList();
 	}
 
-	//QUESTO METODO è STATO FATTO IL 5 OTTOBRE, LO LASCIO QUI MA NON MI PIACE, NON LO USO E NE CREERO' UNO PER OGNI BIN
+	
 	static Object selectId(Integer id, String s) {
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		Object o = new Object();
@@ -58,6 +62,56 @@ public class ShopBorgese {
 		return o;
 	}
 
+	static List<User> selectUserCriteria(){
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+		Root<User> from = criteriaQuery.from(User.class);
+		
+		CriteriaQuery<User> select = criteriaQuery.select(from);
+		TypedQuery<User> typedQuery = entityManager.createQuery(select);
+		return typedQuery.getResultList();
+	}
+	
+	static List<Product> selectProductCriteria(){
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+		Root<Product> from = criteriaQuery.from(Product.class);
+		
+		CriteriaQuery<Product> select = criteriaQuery.select(from);
+		TypedQuery<Product> typedQuery = entityManager.createQuery(select);
+		return typedQuery.getResultList();
+	}
+	
+	static List<Order> selectOrderCriteria(){
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
+		Root<Order> from = criteriaQuery.from(Order.class);
+		
+		CriteriaQuery<Order> select = criteriaQuery.select(from);
+		TypedQuery<Order> typedQuery = entityManager.createQuery(select);
+		return typedQuery.getResultList();
+		
+	}
+	
+	static List<OrderItem> selectOrderItemCriteria(){
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<OrderItem> criteriaQuery = criteriaBuilder.createQuery(OrderItem.class);
+		Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
+		
+		CriteriaQuery<OrderItem> select = criteriaQuery.select(from);
+		TypedQuery<OrderItem> typedQuery = entityManager.createQuery(select);
+		return typedQuery.getResultList();
+		
+	}
+	
 	public static void insertUser(User u) {
 
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
@@ -223,9 +277,7 @@ public class ShopBorgese {
 		return entityManager.find(Product.class, idProduct);
 	}
 
-
-	public static void main(String[] args) {
-
+	static void menu() {
 		List<Product> prodotti = selectProduct();
 		System.out.println("Benvenuto nello Shop Herse");
 		System.out.println("Inserisci il tuo id user");
@@ -257,12 +309,12 @@ public class ShopBorgese {
 		for(Product p : prodotti) 
 			System.out.println(p.getId() + "\t" + p.getName() + "\t" + p.getDescription()+ "\t" +  p.getPrice() + p.getQuantity());
 		while(!carrelloCompleto) {
-		System.out.println("Inserisci l'id dei prodotti che vuoi acquistare ");
-		int count = 0;
-		Double totale = 0.0;
-		st = scanner.next();
-		List<Integer> carrello = new ArrayList<Integer>();
-		
+			System.out.println("Inserisci l'id dei prodotti che vuoi acquistare ");
+			int count = 0;
+			Double totale = 0.0;
+			st = scanner.next();
+			List<Integer> carrello = new ArrayList<Integer>();
+
 			while(!st.equalsIgnoreCase("no")) {
 				try {
 					Integer idProdotto = Integer.valueOf(st);
@@ -290,5 +342,24 @@ public class ShopBorgese {
 		}
 		scanner.close();
 	}
+
+
+
+	public static void main(String[] args) {
+		
+	
+		List<User> utenti = selectUserCriteria();
+		System.out.println(utenti);
+		
+		List<Product> prodotti = selectProductCriteria();
+		System.out.println(prodotti);
+		
+		List<Order> ordini = selectOrderCriteria();
+		System.out.println(ordini);
+		
+		List<OrderItem> orderItem = selectOrderItemCriteria();
+		System.out.println(orderItem);
+		
+	}	
 }
 
