@@ -15,7 +15,7 @@ public class Shop2 {
 	final static EntityManager manager = ShopEntityManager.newEntityManager();
 	
 	
-	public static void select(String strQuery) {
+	public static List<Object> select(String strQuery) {
 		
 		Query query = manager.createQuery(strQuery);
 		List<Object> objs = query.getResultList();
@@ -25,9 +25,10 @@ public class Shop2 {
 		}
 		
 		System.out.println();
+		return objs;
 	}
 	
-	public static void select(Query query) {
+	public static List<Object> select(Query query) {
 		List<Object> objs = query.getResultList();
 		
 		for(Object ob : objs) {
@@ -35,9 +36,10 @@ public class Shop2 {
 		}
 		
 		System.out.println();
+		return objs;
 	}
 	
-	public static void insert(String str) {
+	public static Object insert(String str) {
 		if(str.equalsIgnoreCase("user")){
 			EntityTransaction transaction = manager.getTransaction();
 			transaction.begin();
@@ -50,6 +52,7 @@ public class Shop2 {
 			manager.persist(user);
 			System.out.println("POST " +user);
 			transaction.commit();
+			return user;
 		}
 		if(str.equalsIgnoreCase("order")){
 			EntityTransaction transaction = manager.getTransaction();
@@ -57,11 +60,12 @@ public class Shop2 {
 			Order order = new Order();
 			order.setUserId(1);
 			order.setAmount(40.21);
-			order.setDateTime(LocalDateTime.of(2021, 12, 05, 0, 0));
-			System.out.println("PRE " +order);
+			order.setDateTime(LocalDateTime.now());
+//			System.out.println("PRE " +order);
 			manager.persist(order);
-			System.out.println("POST " +order);
+//			System.out.println("POST " +order);
 			transaction.commit();
+			return order;
 		}
 		if(str.equalsIgnoreCase("product")){
 			EntityTransaction transaction = manager.getTransaction();
@@ -75,6 +79,7 @@ public class Shop2 {
 			manager.persist(product);
 			System.out.println("POST " +product);
 			transaction.commit();
+			return product;
 		}
 		if(str.equalsIgnoreCase("orderitem")){
 			EntityTransaction transaction = manager.getTransaction();
@@ -82,16 +87,21 @@ public class Shop2 {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setOrderId(1);
 			orderItem.setProductId(1);
-			orderItem.setSellPrice(12.01);
+			orderItem.setSellPrice(0.0);
+			orderItem.setQuantity(0);
 			System.out.println("PRE " +orderItem);
 			manager.persist(orderItem);
 			System.out.println("POST " +orderItem);
 			transaction.commit();
+			return orderItem;
 		}
+		return null;
 	}
 	
-	private static void insert(EntityTransaction transaction, Object obj) {
+	public static void insert(EntityTransaction transaction, Object obj) {
 		System.out.println(obj);
+		manager.persist(obj);
+		System.out.println("classe" + obj.getClass());
 		System.out.println("POST " +obj);
 		transaction.commit();
 	}
@@ -129,7 +139,7 @@ public class Shop2 {
 			int productid = o.getProductId();
 			Product product = manager.find(Product.class, productid);
 			System.out.println("Prodotto associato all'ordine " + orderId + ": " + product);
-			OrderItemSetPrice(objs, product);
+			orderItemSetPrice(objs, product);
 			orderSetAmount(objs, orderId);
 		}
 		System.out.println();
@@ -168,7 +178,7 @@ public class Shop2 {
 		transaction.commit();
 	}
 	
-	public static void OrderItemSetPrice(List<OrderItem> orderItem, Product product) {
+	public static void orderItemSetPrice(List<OrderItem> orderItem, Product product) {
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
 		
@@ -189,14 +199,16 @@ public class Shop2 {
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
 		
-		String selectProduct = "SELECT p FROM Product WHERE id = " + productId;
+		String selectProduct = "SELECT p FROM Product as WHERE id = " + productId;
 		Query query = manager.createQuery(selectProduct);
 		List<Product> product = query.getResultList();
 		
 		for(Product p: product) {
-			p.setQuantity(p.getQuantity()-quantity);
+			int q = p.getQuantity() - quantity;
+			p.setQuantity(q);
+			manager.persist(product);
 			transaction.commit();
-			System.out.println("product con quantity cambiata");
+			System.out.println("product con quantity cambiata: " + p);
 		}
 		
 	}
@@ -215,6 +227,8 @@ public class Shop2 {
 //		String selectOrderItem = "SELECT oi FROM OrderItem as oi";
 //		select(selectOrderItem);
 		
+		insert("product");
+		
 		String selectU = "SELECT u FROM User as u";
 		Query queryUser = manager.createQuery(selectU);
 		select(queryUser);
@@ -230,8 +244,6 @@ public class Shop2 {
 		String selectOI = "SELECT oi FROM OrderItem as oi";
 		Query queryOrderItem = manager.createQuery(selectOI);
 		select(queryOrderItem);
-		
-//		insert("product");
 		
 //		EntityTransaction transactionUser = manager.getTransaction();
 //		transactionUser.begin();

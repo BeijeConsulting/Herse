@@ -20,7 +20,7 @@ public class RubricaJPA {
 
 		
 //		Contatto contatto = entityManager.find(Contatto.class, 12);
-		//System.out.println(contatto);
+//		System.out.println(contatto);
 		
 		EntityManager entityManager = Singleton.getIstance();
 		
