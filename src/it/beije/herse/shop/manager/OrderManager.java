@@ -7,8 +7,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import it.beije.herse.shop.ShopEntityManager;
+import it.beije.herse.shop.User;
 import it.beije.herse.shop.Order;
 import it.beije.herse.shop.OrderItem;
 import it.beije.herse.shop.Product;
@@ -22,8 +26,17 @@ public class OrderManager {
 			System.out.println(o);
 			System.out.println("ITEMS: ");
 			
-			Query itemsQuery = manager.createQuery("Select o From OrderItem as o Where orderId = "+o.getId());
-			List<OrderItem> items = itemsQuery.getResultList();
+			// Criteria Query
+			CriteriaBuilder cb = manager.getCriteriaBuilder();
+			CriteriaQuery<OrderItem> query = cb.createQuery(OrderItem.class);
+			Root<OrderItem> oi = query.from(OrderItem.class);
+			query.select(oi).where(oi.get("orderId").in(o.getId()));
+					
+			List<OrderItem> items = manager.createQuery(query).getResultList();
+			
+			// SQL
+//			Query itemsQuery = manager.createQuery("Select o From OrderItem as o Where orderId = "+o.getId());
+//			List<OrderItem> items = itemsQuery.getResultList();
 			for(OrderItem i : items) {
 				Product p = manager.find(Product.class, i.getProductId());
 				System.out.println("--> "+i+
@@ -40,7 +53,15 @@ public class OrderManager {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		List<Order> orders = new ArrayList<>();
 		
+		// Criteria Query
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Order> query = cb.createQuery(Order.class);
+		Root<Order> ord = query.from(Order.class);
+		query.select(ord);
+				
+		orders = manager.createQuery(query).getResultList();
 		
+		//SQL
 		// Non funziona: id passa da 1 a 3
 //		int id=1;
 //		Order o = manager.find(Order.class, id);
@@ -49,9 +70,9 @@ public class OrderManager {
 //			id++;
 //			o = manager.find(Order.class, id);
 //		}
+//		Query selectAllQuery = manager.createQuery("SELECT u FROM Order as u");
+//		orders = selectAllQuery.getResultList();
 		
-		Query selectAllQuery = manager.createQuery("SELECT u FROM Order as u");
-		orders = selectAllQuery.getResultList();
 		manager.close();
 		
 		return orders;

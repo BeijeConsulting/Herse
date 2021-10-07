@@ -6,12 +6,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import it.beije.herse.file.Contatto;
 import it.beije.herse.shop.Order;
 import it.beije.herse.shop.Product;
 import it.beije.herse.shop.ShopEntityManager;
-import it.beije.herse.shop.ShopVecchia;
 import it.beije.herse.shop.User;
 
 public class UserManager {
@@ -24,15 +26,24 @@ public class UserManager {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		List<User> users = new ArrayList<>();
 		
-		int id=1;
-		User u = manager.find(User.class, id);
-		while(u!=null) {
-			users.add(u);
-			u = manager.find(User.class, ++id);
-		}
+		// Criteria Query
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<User> query = cb.createQuery(User.class);
+		Root<User> user = query.from(User.class);
+		query.select(user);
 		
+		users = manager.createQuery(query).getResultList();
+		
+		// SQL
+//		int id=1;
+//		User u = manager.find(User.class, id);
+//		while(u!=null) {
+//			users.add(u);
+//			u = manager.find(User.class, ++id);
+//		}
 //		Query selectAllQuery = manager.createQuery("SELECT u FROM User as u");
 //		users = selectAllQuery.getResultList();
+		
 		manager.close();
 		
 		return users;
@@ -94,8 +105,18 @@ public class UserManager {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		
 		User u = manager.find(User.class, id);
-		String orderHistoryQuery = "SELECT o FROM Order as o WHERE userId= "+id;
-		List<Order> orderHistory = manager.createQuery(orderHistoryQuery).getResultList();
+		
+		// Criteria Query
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Order> query = cb.createQuery(Order.class);
+		Root<Order> order = query.from(Order.class);
+		query.select(order).where(order.get("userId").in(u.getId()));
+				
+		List<Order> orderHistory = manager.createQuery(query).getResultList();
+		
+		//SQL
+//		String orderHistoryQuery = "SELECT o FROM Order as o WHERE userId= "+id;
+//		List<Order> orderHistory = manager.createQuery(orderHistoryQuery).getResultList();
 		
 		System.out.println("USER: "+u);
 		System.out.println("ORDER: ");

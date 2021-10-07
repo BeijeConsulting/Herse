@@ -1,13 +1,13 @@
-package it.beije.herse.shop;
+package it.beije.herse.shop.manager;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import it.beije.herse.shop.manager.OrderManager;
-import it.beije.herse.shop.manager.ProductManager;
-import it.beije.herse.shop.manager.UserManager;
+import it.beije.herse.shop.Order;
+import it.beije.herse.shop.OrderItem;
+import it.beije.herse.shop.User;
 
 public class ShopVecchia {
 	
@@ -177,7 +177,7 @@ public class ShopVecchia {
 	}
 	
 	// ADMIN MENU
-	public static void menu() {
+	public static void adminMenu() {
 		// JPA log at the start
 		UserManager.selectUsers();
 		
@@ -314,6 +314,7 @@ public class ShopVecchia {
 
 	public static void main(String[] args) {
 		login();
+		//adminMenu();
 		
 		// UserManager
 //		List<User> users = new ArrayList<>();

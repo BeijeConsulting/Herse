@@ -6,9 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import it.beije.herse.shop.Product;
 import it.beije.herse.shop.ShopEntityManager;
+import it.beije.herse.shop.User;
 
 public class ProductManager {
 	
@@ -20,15 +24,24 @@ public class ProductManager {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		List<Product> products = new ArrayList<>();
 		
-		int id=1;
-		Product p = manager.find(Product.class, id);
-		while(p!=null) {
-			products.add(p);
-			p = manager.find(Product.class, ++id);
-		}
-		
+		// Criteria Query
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Product> query = cb.createQuery(Product.class);
+		Root<Product> prod = query.from(Product.class);
+		query.select(prod);
+				
+		products = manager.createQuery(query).getResultList();
+				
+		// SQL
+//		int id=1;
+//		Product p = manager.find(Product.class, id);
+//		while(p!=null) {
+//			products.add(p);
+//			p = manager.find(Product.class, ++id);
+//		}
 //		Query selectAllQuery = manager.createQuery("SELECT p FROM Product as p");
 //		products = selectAllQuery.getResultList();
+				
 		manager.close();
 		
 		return products;
