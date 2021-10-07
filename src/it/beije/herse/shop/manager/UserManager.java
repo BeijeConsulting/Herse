@@ -6,12 +6,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 
 import it.beije.herse.file.Contatto;
 import it.beije.herse.shop.Order;
+import it.beije.herse.shop.OrderItem;
 import it.beije.herse.shop.Product;
 import it.beije.herse.shop.ShopEntityManager;
 import it.beije.herse.shop.User;
@@ -125,6 +128,40 @@ public class UserManager {
 		manager.close();
 	}
 	
+	public static void printJoin(Integer id) {
+		EntityManager manager = ShopEntityManager.newEntityManager();
+		
+		User u = manager.find(User.class, id);
+		
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Tuple> query = cb.createQuery(Tuple.class);
+		Root<Order> order = query.from(Order.class);
+		Root<Product> product = query.from(Product.class);
+		Root<User> user = query.from(User.class);
+		Root<OrderItem> item = query.from(OrderItem.class);
+		//select *
+		query.multiselect(order, user, product, item);
+		
+		//from ((user as u join `order` as o on u.id=o.user_id) 
+		//join order_item as i on i.order_id = o.id) 
+		//join product as p on p.id=i.product_id
+		query.where(cb.equal(user.get("id"), order.get("userId")),
+						cb.equal(order.get("id"), item.get("orderId")),
+						cb.equal(product.get("id"), item.get("productId")));
+		
+		query.orderBy(cb.asc(user.get("id")), cb.asc(order.get("id")), cb.asc(item.get("id")), cb.asc(product.get("id")));
+//		query.groupBy(user, order);
+		
+		List<Tuple> l = manager.createQuery(query).getResultList();
+		for(Tuple c : l) {
+			
+			System.out.println("USER: "+c.get(1));
+			System.out.println("\tORDER: "+c.get(0));
+			System.out.println("\t\tITEM: "+c.get(3));
+			System.out.println("\t\tPRODUCT: "+c.get(2));
+		}
+	}
+	
 	public static Boolean loginUser(String email, String password) {
 		EntityManager manager = ShopEntityManager.newEntityManager();
 		
@@ -146,5 +183,9 @@ public class UserManager {
 		else System.out.println("WELCOME "+u.getEmail());
 		ShopVecchia.setLoggedUser(u);
 		return true;
+	}
+	
+	public static void main(String... args) {
+		printJoin(0);
 	}
 }

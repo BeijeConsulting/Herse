@@ -1,4 +1,4 @@
-package it.beije.herse.db.jpa;
+package it.beije.herse.db.jpa.criteria;
 
 import java.util.ArrayList;
 import java.util.List;
