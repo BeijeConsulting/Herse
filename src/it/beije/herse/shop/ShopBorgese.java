@@ -13,7 +13,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
@@ -47,7 +49,7 @@ public class ShopBorgese {
 		return query.getResultList();
 	}
 
-	
+
 	static Object selectId(Integer id, String s) {
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		Object o = new Object();
@@ -65,53 +67,53 @@ public class ShopBorgese {
 	static List<User> selectUserCriteria(){
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		
+
 		CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 		Root<User> from = criteriaQuery.from(User.class);
-		
+
 		CriteriaQuery<User> select = criteriaQuery.select(from);
 		TypedQuery<User> typedQuery = entityManager.createQuery(select);
 		return typedQuery.getResultList();
 	}
-	
+
 	static List<Product> selectProductCriteria(){
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		
+
 		CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
 		Root<Product> from = criteriaQuery.from(Product.class);
-		
+
 		CriteriaQuery<Product> select = criteriaQuery.select(from);
 		TypedQuery<Product> typedQuery = entityManager.createQuery(select);
 		return typedQuery.getResultList();
 	}
-	
+
 	static List<Order> selectOrderCriteria(){
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		
+
 		CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
 		Root<Order> from = criteriaQuery.from(Order.class);
-		
+
 		CriteriaQuery<Order> select = criteriaQuery.select(from);
 		TypedQuery<Order> typedQuery = entityManager.createQuery(select);
 		return typedQuery.getResultList();
-		
+
 	}
-	
+
 	static List<OrderItem> selectOrderItemCriteria(){
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		
+
 		CriteriaQuery<OrderItem> criteriaQuery = criteriaBuilder.createQuery(OrderItem.class);
 		Root<OrderItem> from = criteriaQuery.from(OrderItem.class);
-		
+
 		CriteriaQuery<OrderItem> select = criteriaQuery.select(from);
 		TypedQuery<OrderItem> typedQuery = entityManager.createQuery(select);
 		return typedQuery.getResultList();
-		
+
 	}
-	
+
 	public static void insertUser(User u) {
 
 		EntityManager entityManager = ShopEntityManager.newEntityManager();
@@ -343,23 +345,46 @@ public class ShopBorgese {
 		scanner.close();
 	}
 
+	static void stampaRiepilogoUtente(int userId) {
+
+		User utente = findUser(userId);
+
+		EntityManager entityManager = ShopEntityManager.newEntityManager();
+
+
+
+		/*
+		 * SELECT riepilogo FROM user,order,order_item WHERE order.userId = user.id AND order.id = order_item.orderId;
+		 */
+		String userSelect = "SELECT u FROM User AS u, Order as o, OrderItem as oi WHERE o.userId=u.id AND o.id=oi.orderId AND u.id=" + userId;
+		String orderSelect = "SELECT o FROM User AS u, Order as o, OrderItem as oi WHERE o.userId=u.id AND o.id=oi.orderId AND u.id=" + userId;
+		String orderItemSelect = "SELECT oi FROM User AS u, Order as o, OrderItem as oi WHERE o.userId=u.id AND o.id=oi.orderId AND u.id=" + userId;
+
+		Query queryUser = entityManager.createQuery(userSelect);
+		Query queryOrder = entityManager.createQuery(orderSelect);
+		Query queryItem = entityManager.createQuery(orderItemSelect);
+
+		List<User> utenti = queryUser.getResultList();
+		List<Order> ordini = queryOrder.getResultList();
+		List<OrderItem> items = queryItem.getResultList();
+
+		System.out.println("Riepilogo ordini utente " + utente.getName() + " " + utente.getSurname() + " " + utente.getId());
+		for(int i = 0; i<ordini.size(); i++) {
+			User u = utenti.get(i);
+			Order o = ordini.get(i);
+			OrderItem item = items.get(i);
+
+			System.out.print("Ordine " + o.getId() + "effettuato " + o.getDateTime() + "dell'item " + item.getProductId());
+		}
+
+		entityManager.close();
+
+	}
 
 
 	public static void main(String[] args) {
-		
-	
-		List<User> utenti = selectUserCriteria();
-		System.out.println(utenti);
-		
-		List<Product> prodotti = selectProductCriteria();
-		System.out.println(prodotti);
-		
-		List<Order> ordini = selectOrderCriteria();
-		System.out.println(ordini);
-		
-		List<OrderItem> orderItem = selectOrderItemCriteria();
-		System.out.println(orderItem);
-		
+		stampaRiepilogoUtente(1);
+
 	}	
 }
 
