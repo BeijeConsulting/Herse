@@ -1,5 +1,8 @@
 package it.beije.herse.database;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,12 +12,20 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import it.beije.herse.file.Contatto;
+import it.beije.herse.shop.Order;
+import it.beije.herse.shop.OrderItem;
+import it.beije.herse.shop.Product;
+import it.beije.herse.shop.ShopEntityManager;
+import it.beije.herse.shop.User;
 
 public class RubricaJpa {
 
 	public static void main(String[] args) {
 		//Contatto con = new Contatto("Mario", "Casalini", "1890", "mc@gmail.it", "nuovo contatto");
+
 	}
+	
+	
 
 	public static EntityManager openEntityManager() {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Herse");
