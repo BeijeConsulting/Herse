@@ -192,6 +192,9 @@ public class GestoreShop {
 
 			}
 		} else System.out.println("Non ci sono ordini nel tuo storico");
+		
+		System.out.println();
+		menu();
 	}
 
 	private static void menu() {
