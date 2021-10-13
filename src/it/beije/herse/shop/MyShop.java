@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class MyShop {
 
-	private static ManagerCRUD manager = new ManagerCRUD();
+	public static ManagerCRUD manager = new ManagerCRUD();;
 
 	private static Scanner scan = new Scanner(System.in);
 
-	private static User getUser(String email, String password) {
+	public static User getUser(String email, String password) {
 
 		User user = null;
 		String query = "SELECT U FROM User as U WHERE email = '" + email + "' AND password = '" + password + "'";
@@ -50,7 +50,7 @@ public class MyShop {
 		return getUser(email, psw);
 	}
 
-	private static LocalDateTime getDateTime() {
+	public static LocalDateTime getDateTime() {
 		DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
 		return LocalDateTime.parse(LocalDateTime.now().format(f), f);
 	}
@@ -72,7 +72,7 @@ public class MyShop {
 
 	}
 
-	private static Product controlOrderId(String prodId, List<Product> prod) {
+	public static Product controlOrderId(String prodId, List<Product> prod) {
 
 		for(Product p : prod)
 			if(p.getId().equals(Integer.valueOf(prodId)))
@@ -81,7 +81,7 @@ public class MyShop {
 		return null;
 	}
 
-	private static boolean controlQta(String qta, Product p) {
+	public static boolean controlQta(String qta, Product p) {
 		
 		boolean flag = false;
 		

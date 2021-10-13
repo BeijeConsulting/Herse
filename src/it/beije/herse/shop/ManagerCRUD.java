@@ -4,11 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 public class ManagerCRUD {
 	
@@ -17,25 +12,6 @@ public class ManagerCRUD {
 
 	public List<Object> select(String query) {	
 		return (manager.createQuery(query)).getResultList();	
-	}
-	
-	//prova
-	public List<Order> select(){
-		
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		
-		CriteriaQuery<Order> cq = cb.createQuery(Order.class);
-		
-		Root<Order> root = cq.from(Order.class);
-		
-		cq = cq.select(root);
-		
-		cq = cq.where(cb.equal(root.get("userId"),1));
-		
-		TypedQuery<Order> result = manager.createQuery(cq); 
-		
-		return result.getResultList();
-		
 	}
 	
 	public Object selectByID(Class<?> typeObject, Integer id) {
