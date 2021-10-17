@@ -149,28 +149,28 @@ public class ShopJpa {
 		transaction.begin();
 
 		Product product = manager.find(Product.class, idProduct);
-		prova(manager, transaction, product);
+		//prova(manager, transaction, product);
 		
 		OrderItem orderItem = new OrderItem();
-//		orderItem.setOrderId(idOrder);
-//		orderItem.setProductId(idProduct);
-//		orderItem.setSellPrice(product.getPrice());
-//
-//		// verifica sulla quantita
-//		if (product.getQuantity() >= quantity) {
-//			orderItem.setQuantity(quantity);
-//			product.setQuantity(product.getQuantity() - quantity);
-//			System.out.println(product);
-//			manager.persist(orderItem);
-//			manager.persist(product);
-//			transaction.commit();
-//
-//			fixPriceOrder(idOrder);
-//
-//		} else if (product.getQuantity() < quantity) {
-//			System.out.println("Quantità di prodotti limitata");
-//			transaction.rollback();
-//		}
+		orderItem.setOrderId(idOrder);
+		orderItem.setProductId(idProduct);
+		orderItem.setSellPrice(product.getPrice());
+
+		// verifica sulla quantita
+		if (product.getQuantity() >= quantity) {
+			orderItem.setQuantity(quantity);
+			product.setQuantity(product.getQuantity() - quantity);
+			System.out.println(product);
+			manager.persist(orderItem);
+			manager.persist(product);
+			transaction.commit();
+
+			fixPriceOrder(idOrder);
+
+		} else if (product.getQuantity() < quantity) {
+			System.out.println("Quantità di prodotti limitata");
+			transaction.rollback();
+		}
 
 		//manager.close();
 		return orderItem;
