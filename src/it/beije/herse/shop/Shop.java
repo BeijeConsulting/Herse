@@ -12,6 +12,10 @@ public class Shop {
 		
 		System.out.println(user);
 		
+		Order order = manager.find(Order.class, 1);
+		
+		System.out.println(order);
+		
 		manager.close();
 	}
 
