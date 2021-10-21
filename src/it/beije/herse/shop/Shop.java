@@ -1,18 +1,53 @@
 package it.beije.herse.shop;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import it.beije.herse.shop.*;
+
 import javax.persistence.EntityManager;
 
-public class Shop {
+import org.hibernate.exception.SQLGrammarException;
 
-	public static void main(String[] args) {
+public class Shop {
+public static void main(String[] args) {
+	
+/*METODI USER*/
+	//	MetodiJPA.insertUser();
+		//MetodiJPA.insertUser();
+	//System.out.println(MetodiJPA.printUsers());
+		//	MetodiJPA.deleteUser();
+		//	System.out.println(MetodiJPA.printUsers());
+//				try {
+//					System.out.println(MetodiJPA.printUser(0));
+//				} catch (Exception e) {
+//					System.out.println("Inserisci un id >0");
+//					e.printStackTrace();
+//				}
 		
-		EntityManager manager = ShopEntityManager.newEntityManager();
+/*METODI PRODUCT*/
+	
+//			MetodiJPA.insertProducts();
+		   //  MetodiJPA.printProducts();
+					
+//			    try {
+//				MetodiJPA.printProductFromID(1);
+//				} catch (Exception e) {
+//				System.out.println("Inserisci un id >0");
+//				e.printStackTrace();
+//				}	
+//				System.out.println( MetodiJPA.printProducts());
 		
-		User user = manager.find(User.class, 1);
+
 		
-		System.out.println(user);
+/*METODI ORDER*/
+	//System.out.println(MetodiJPA.printOrders());
+	MetodiJPA.login("ale@gmail.com");
+	
 		
-		manager.close();
-	}
+			
+	} 
 
 }

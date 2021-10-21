@@ -14,7 +14,7 @@ public class RubricaJPA {
 
 	public static void main(String[] args) {
 		
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("herse-rubrica");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("herse");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
 //		Contatto contatto = entityManager.find(Contatto.class, 12);
