@@ -7,9 +7,11 @@ import java.util.List;
 
 public  class Prova {
 
+	public void nested() {}
 
-	 public static void main(String[] args) {
-		 List<String> list = new ArrayList<>();
-		 list.removeIf((String s)->s.isEmpty());
+
+	public static void main(String[] args) {
+		int Object = 4;
 	}
 }
+
